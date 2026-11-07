@@ -1479,6 +1479,11 @@ def render_leiria_html(
     .slide--map {{
       color: #f4f4f0; background: #010101;
     }}
+    .slide--end {{
+      background: var(--coral);
+      color: #fff;
+    }}
+    .slide--end a {{ color: #fff; }}
     .slide--map .lead {{ opacity: 0.85; }}
     .slide h1, .slide h2 {{
       margin: 0 0 0.4em;
@@ -1728,7 +1733,7 @@ def render_leiria_html(
       <a href="data.json">data.json</a>
     </p>
   </section>
-  <section class="slide" id="s6" data-title="Fontes">
+  <section class="slide slide--end" id="s6" data-title="Fontes">
     <h2 class="reveal">Fontes</h2>
     <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
     de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao

@@ -239,6 +239,7 @@ def test_render_leiria_scope():
     assert "leiria.geojson" in html_out
     assert "['#f4ea15', '#eb5423', '#010101']" in html_out
     assert "i <= 3" in html_out
+    assert 'class="slide slide--end" id="s6" data-title="Fontes"' in html_out
     assert "Realização: code for portugal" in html_out
     assert 'class="cfp-bar"' in html_out
     assert 'href="../assets/favicon.png"' in html_out

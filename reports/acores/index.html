@@ -103,6 +103,11 @@
     .slide--map {
       color: #f4f4f0; background: #010101;
     }
+    .slide--end {
+      background: var(--coral);
+      color: #fff;
+    }
+    .slide--end a { color: #fff; }
     .slide--map .lead { opacity: 0.85; }
     .slide h1, .slide h2 {
       margin: 0 0 0.4em;
@@ -352,7 +357,7 @@
       <a href="data.json">data.json</a>
     </p>
   </section>
-  <section class="slide" id="s6" data-title="Fontes">
+  <section class="slide slide--end" id="s6" data-title="Fontes">
     <h2 class="reveal">Fontes</h2>
     <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
     de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
@@ -478,7 +483,7 @@
     });
     (function drawLeiriaMap() {
       if (!document.getElementById('mapLeiria')) return;
-      const night = ['#f4ea15', '#fd5288', '#eb5423', '#3a2a22', '#0a0a0c'];
+      const bands = ['#f4ea15', '#eb5423', '#010101'];
       const zeroFill = '#f4f4f0';
       function fold(s) {
         return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
@@ -500,8 +505,8 @@
         const values = Object.values(placeData).filter((v) => v > 0).sort((a, b) => a - b);
         const cuts = [];
         if (values.length) {
-          for (let i = 1; i <= 5; i++) {
-            const idx = Math.min(values.length - 1, Math.ceil((i / 5) * values.length) - 1);
+          for (let i = 1; i <= 3; i++) {
+            const idx = Math.min(values.length - 1, Math.ceil((i / 3) * values.length) - 1);
             cuts.push(values[idx]);
           }
         }
@@ -534,11 +539,11 @@
               };
             }
             return {
-              color: b <= 2 ? '#ffe9a0' : '#1c1c22',
+              color: b === 1 ? '#ffe9a0' : '#1c1c22',
               weight: 1.2,
-              fillColor: night[b - 1],
+              fillColor: bands[b - 1],
               fillOpacity: 0.98,
-              className: b <= 2 ? 'night-lit' : ''
+              className: b === 1 ? 'night-lit' : ''
             };
           },
           onEachFeature: function (feat, lyr) {
@@ -557,7 +562,7 @@
         setTimeout(fit, 200);
         document.getElementById('mapLeiriaLegend').innerHTML =
           'NUTS II · <span style="background:' + zeroFill + '"></span>0 € · ' +
-          night.map((c, i) => '<span style="background:' + c + '"></span>' + binLabel(i + 1)).join(' · ');
+          bands.map((c, i) => '<span style="background:' + c + '"></span>' + binLabel(i + 1)).join(' · ');
       }
       fetch('acores.geojson')
         .then((r) => r.json())
