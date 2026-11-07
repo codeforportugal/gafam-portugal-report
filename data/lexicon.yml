@@ -1,0 +1,46 @@
+match:
+  Microsoft:
+    - Excel
+    - "Office 365"
+    - "Microsoft 365"
+    - Windows
+    - Teams
+    - Azure
+    - SharePoint
+    - OneDrive
+    - Outlook
+    - Exchange
+    - "Power BI"
+    - Word
+    - PowerPoint
+    - Microsoft
+  Apple:
+    - iPhone
+    - iPad
+    - MacBook
+    - macOS
+    - Apple
+  Google:
+    - Workspace
+    - Gmail
+    - Android
+    - Chromebook
+    - "Google Cloud"
+    - Classroom
+    - "Google Classroom"
+    - Google
+  Amazon:
+    - AWS
+    - "Amazon Web Services"
+    - Amazon
+  Meta:
+    - Facebook
+    - Instagram
+    - WhatsApp
+    - "Meta Platforms"
+
+reject:
+  - excelência
+  - excelente
+  - meta
+  - office

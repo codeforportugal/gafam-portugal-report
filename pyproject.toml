@@ -1,0 +1,145 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gafam-contratos"
+version = "0.1.0"
+description = "Rastreio de dinheiro público ligado a produtos GAFAM em Portugal"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "jsonschema>=4.20",
+  "openpyxl>=3.1",
+  "pandas>=2.0",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "bandit>=1.7",
+  "mypy>=1.13",
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.8",
+  "types-PyYAML",
+  "types-jsonschema",
+  "pandas-stubs",
+  "vulture>=2.11",
+  "yamllint",
+  "pip-audit",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+gafam_contratos = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+  "--cov=gafam_contratos",
+  "--cov-branch",
+  "--cov-fail-under=100",
+  "--cov-report=term-missing",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["gafam_contratos"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+exclude_lines = [
+  "pragma: no cover",
+  "if TYPE_CHECKING:",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["gafam_contratos"]
+mypy_path = "src"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+src = ["src", "tests"]
+exclude = ["build", ".venv", "dist"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "COM812",
+  "ISC001",
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "D105",
+  "D107",
+  "D203",
+  "D213",
+  "CPY001",
+  "TC001",
+  "TC003",
+  "EM101",
+  "TRY003",
+  "PLR0913",
+  "PLR0911",
+  "ANN401",
+  "FBT001",
+  "FBT002",
+  "FBT003",
+  "ARG001",
+  "ARG005",
+  "PERF401",
+  "RUF001",
+  "RUF002",
+  "RUF003",
+  "DTZ001",
+  "DTZ007",
+  "Q003",
+  "PLR0124",
+  "E501",
+  "PLR2004",
+  "PLC0415",
+  "UP047",
+  "UP017",
+  "PTH201",
+  "FURB167",
+  "PLC0207",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = [
+  "S101",
+  "PLR2004",
+  "ANN201",
+  "ANN001",
+  "ANN002",
+  "ANN003",
+  "ANN202",
+  "INP001",
+  "PLC0415",
+  "PT018",
+  "PT017",
+  "F841",
+  "E501",
+  "SLF001",
+]
+"scripts/**" = [
+  "S101",
+  "T201",
+  "INP001",
+  "PLC0415",
+  "E501",
+]
+"src/gafam_contratos/__main__.py" = ["T201"]
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]
+skips = ["B101"]

@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/gafam_pt/schema/report.schema.json",
+  "title": "Relatório GAFAM — dinheiro público",
+  "description": "Transformação: 1) obter ficheiros oficiais; 2) analisar colunas; 3) filtrar anos 2022–2026; 4) corresponder léxico GAFAM; 5) classificar instituição; 6) mapear região; 7) substituir precoContratual por modifContratoPrecoAlterado quando existir; 8) marcar PRR; 9) excluir tetos de acordo quadro e beneficiários privados dos totais; 10) agregar. Colunas de origem → campos: precoContratual/PrecoBase/Fundo Total Aprovado → amount_eur; objectoContrato/descricaoAnuncio/Nome da operação → excerpt; adjudicante/designacaoEntidade/Nome do Beneficiário → buyer; localExecucao/NUTS II → region; distrito/concelho → district/place.",
+  "type": "object",
+  "required": [
+    "sources",
+    "keywords",
+    "generated_at",
+    "totals",
+    "breakdowns",
+    "prr",
+    "sciproj",
+    "skipped",
+    "press",
+    "press_errors",
+    "records"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/source" }
+    },
+    "keywords": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/keyword" }
+    },
+    "generated_at": { "type": "string", "minLength": 1 },
+    "totals": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["committed", "requested", "grants"],
+        "properties": {
+          "committed": { "type": "number" },
+          "requested": { "type": "number" },
+          "grants": { "type": "number" }
+        }
+      }
+    },
+    "breakdowns": { "type": "object" },
+    "prr": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "sciproj": {
+      "type": "object",
+      "required": ["total", "count"],
+      "properties": {
+        "total": { "type": "number" },
+        "count": { "type": "integer" }
+      }
+    },
+    "skipped": {
+      "type": "object",
+      "additionalProperties": { "type": "integer" }
+    },
+    "press": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/press" }
+    },
+    "press_errors": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "press_note": { "type": "string" },
+    "private_grants_count": { "type": "integer", "minimum": 0 },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/record" }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["id", "publisher", "title", "url", "file_name", "licence", "coverage", "updated"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "publisher": { "type": "string" },
+        "title": { "type": "string" },
+        "url": { "type": "string" },
+        "file_name": { "type": "string" },
+        "licence": { "type": "string" },
+        "coverage": { "type": "string" },
+        "updated": { "type": "string" }
+      }
+    },
+    "keyword": {
+      "type": "object",
+      "required": ["pattern", "vendor", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "pattern": { "type": "string" },
+        "vendor": { "type": "string" },
+        "kind": { "type": "string", "enum": ["match", "reject"] }
+      }
+    },
+    "record": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "channel",
+        "buyer",
+        "excerpt",
+        "amount_eur",
+        "region",
+        "category",
+        "vendor",
+        "fundos",
+        "year",
+        "headline"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "source_id": { "type": "string" },
+        "channel": {
+          "type": "string",
+          "enum": ["committed", "requested", "grant", "sciproj"]
+        },
+        "buyer": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "amount_eur": { "type": "number" },
+        "region": { "type": "string" },
+        "category": { "type": "string" },
+        "vendor": { "type": "string" },
+        "fundos": { "type": "string" },
+        "year": { "type": "integer" },
+        "headline": { "type": "boolean" },
+        "product": { "type": "string" },
+        "url": { "type": "string" }
+      }
+    },
+    "press": {
+      "type": "object",
+      "required": ["title", "url", "date", "product", "buyer", "sources"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string" },
+        "url": { "type": "string" },
+        "date": { "type": "string" },
+        "product": { "type": "string" },
+        "buyer": { "type": "string" },
+        "sources": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

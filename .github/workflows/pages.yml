@@ -1,0 +1,80 @@
+name: pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Refresh national datasets weekly (UTC).
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Gerar com fixtures ou corrida nacional (--full)"
+        required: true
+        default: full
+        type: choice
+        options:
+          - full
+          - fixtures
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Cache dataset downloads
+        uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: gafam-cache-${{ hashFiles('data/lexicon.yml', 'src/gafam_contratos/**') }}
+          restore-keys: |
+            gafam-cache-
+
+      - name: Build reports
+        env:
+          PYTHONPATH: src
+          MODE: ${{ github.event.inputs.mode || 'full' }}
+        run: |
+          set -euo pipefail
+          if [ "$MODE" = "fixtures" ]; then
+            python -m gafam_contratos
+          else
+            python -m gafam_contratos --full
+          fi
+          touch reports/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: reports
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

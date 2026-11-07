@@ -1,0 +1,13 @@
+services:
+  gafam:
+    build:
+      context: .
+      target: runtime
+    # Image USER is non-root `gafam`. Ensure bind mounts are writable:
+    #   mkdir -p reports data/cache && chmod -R a+rwX reports data/cache
+    volumes:
+      - ./reports:/app/reports
+      - ./data/cache:/app/data/cache
+      - ./src:/app/src:ro
+    working_dir: /app
+    command: ["python", "-m", "gafam_contratos"]

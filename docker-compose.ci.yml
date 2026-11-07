@@ -1,0 +1,8 @@
+services:
+  quality:
+    build:
+      context: .
+      target: ci
+    network_mode: none
+    working_dir: /app
+    command: ["bash", "scripts/quality.sh"]
