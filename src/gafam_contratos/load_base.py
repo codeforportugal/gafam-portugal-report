@@ -20,12 +20,12 @@ from gafam_contratos.classify import (
     place_parts,
     region_from_local,
 )
-from gafam_contratos.paths import data_dir
 from gafam_contratos.columns import pick_column
 from gafam_contratos.constants import YEARS
 from gafam_contratos.http_cache import cached_get
 from gafam_contratos.lexicon import Keyword, MatchHit, find_match
 from gafam_contratos.models import Record, SourceMeta
+from gafam_contratos.paths import data_dir
 from gafam_contratos.retry import http_get
 
 _col = pick_column
@@ -148,9 +148,8 @@ def load_contracts(
             if cid in prr_ids or nif in prr_ids or (composite and composite in prr_ids)
             else ""
         )
-        for reg, share, district, place in region:
-            if not place:
-                place = infer_place_from_buyer(buyer, labels)
+        for reg, share, district, raw_place in region:
+            place = raw_place or infer_place_from_buyer(buyer, labels)
             records.append(
                 Record(
                     source_id=cid or f"c-{len(records)}",

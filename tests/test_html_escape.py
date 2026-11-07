@@ -16,7 +16,7 @@ def _base_payload(**overrides):
             ],
             "press": [
                 {
-                    "title": '<img src=x onerror=alert(1)>',
+                    "title": "<img src=x onerror=alert(1)>",
                     "url": "javascript:evil()",
                     "date": "2025-01-02",
                     "product": "Excel",
@@ -82,9 +82,11 @@ def test_render_escapes_injected_fields():
     assert "Esta conta é só dinheiro público" in html_out
     assert "Portugal à noite" not in html_out
     assert "Pedido ao mercado fica no cartão" not in html_out
-    assert "sem pedido ao mercado" in html_out
-    assert "pedido estava" not in html_out
-    assert "Não some" not in html_out
+    assert (
+        "sem pedido ao mercado" in html_out
+        and "pedido estava" not in html_out
+        and "Não some" not in html_out
+    )
     assert "Cinco anos de contratos assinados" in html_out
     assert "Na imprensa" not in html_out
     assert "yearLabels.map((y, i)" in html_out

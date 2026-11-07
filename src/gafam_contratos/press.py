@@ -129,9 +129,7 @@ def _text_ok(
 
 def _url_ok(url: str) -> bool:
     low = url.lower()
-    if "/tag/" in low or "/amp/" in low:
-        return False
-    return True
+    return "/tag/" not in low and "/amp/" not in low
 
 
 def fetch_arquivo(

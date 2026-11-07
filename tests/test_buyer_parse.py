@@ -2,9 +2,9 @@ from pathlib import Path
 
 import pandas as pd
 
+from gafam_contratos.lexicon import load_lexicon
 from gafam_contratos.load_base import _nif_and_name
 from gafam_contratos.load_prr import _as_id, load_prr_flags
-from gafam_contratos.lexicon import load_lexicon
 from gafam_contratos.paths import data_dir
 
 

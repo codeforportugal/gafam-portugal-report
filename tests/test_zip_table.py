@@ -1,8 +1,9 @@
-from pathlib import Path
 import zipfile
+from pathlib import Path
+
+import pandas as pd
 
 from gafam_contratos.load_base import _read_table
-import pandas as pd
 
 
 def test_read_table_zip(tmp_path: Path):

@@ -134,9 +134,7 @@ def _exchange_is_false_friend(folded: str) -> bool:
         return False
     if any(token in folded for token in _EXCHANGE_HARDWARE):
         return True
-    if re.search(r"\b\d+\s*ea\b", folded):
-        return True
-    return False
+    return bool(re.search(r"\b\d+\s*ea\b", folded))
 
 
 def is_rejected_false_friend(text: str, keywords: list[Keyword]) -> bool:
