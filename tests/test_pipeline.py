@@ -19,6 +19,18 @@ def test_brand_dir_falls_back_without_commons(monkeypatch, tmp_path: Path):
     assert report._brand_dir() == report.data_dir() / "brand"
 
 
+def test_brand_dir_uses_shared_assets(monkeypatch, tmp_path: Path):
+    from gafam_contratos import report
+
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    shared = tmp_path / "assets"
+    shared.mkdir()
+    (shared / "favicon.png").write_bytes(b"png")
+    monkeypatch.setattr(report, "project_root", lambda: repo)
+    assert report._brand_dir() == shared
+
+
 def test_acores_page_uses_region(tmp_path: Path):
     from gafam_contratos.lexicon import load_lexicon
     from gafam_contratos.models import Record, SourceMeta
