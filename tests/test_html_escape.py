@@ -78,11 +78,13 @@ def test_render_escapes_injected_fields():
     assert "scroll-snap" in html_out
     assert "Cloud Act" in html_out
     assert "antes de ela se tornar uma crise" not in html_out
-    assert "Onde um corte doeria mais" in html_out
+    assert "Onde o corte seria mais grave" in html_out
     assert "Esta conta é só dinheiro público" in html_out
     assert "Portugal à noite" not in html_out
     assert "Pedido ao mercado fica no cartão" not in html_out
-    assert "pedido estava" in html_out or "sem pedido ao mercado" in html_out
+    assert "sem pedido ao mercado" in html_out
+    assert "pedido estava" not in html_out
+    assert "Não some" not in html_out
     assert "Cinco anos de contratos assinados" in html_out
     assert "Na imprensa" not in html_out
     assert "yearLabels.map((y, i)" in html_out
@@ -95,7 +97,7 @@ def test_render_escapes_injected_fields():
     assert "As algemas" in html_out
     assert "cortar esses serviços" not in html_out
     assert "class='algema-grid'" not in html_out
-    assert "Sem Microsoft nem Google nos contratos assinados" in html_out
+    assert "Estes produtos não aparecem nos contratos assinados" in html_out
     assert "Portal Base" in html_out
     assert "0 anos de algemas" not in html_out
     assert "do país" in html_out
@@ -213,7 +215,7 @@ def test_render_leiria_scope():
     assert "mapLeiria" in html_out
     assert "Quem levou os contratos" in html_out
     assert "O que foi assinado e o que foi pedido" in html_out
-    assert "Onde um corte doeria mais" in html_out
+    assert "Onde o corte seria mais grave" in html_out
     assert "concelhos mais escuros" in html_out
     assert "Esta conta é só dinheiro público" in html_out
     assert "Uso nos conselhos" not in html_out
@@ -335,7 +337,7 @@ def test_render_leiria_lockin_empty_focus():
         ),
         scope="leiria",
     )
-    assert "Sem Microsoft nem Google nos contratos assinados" in html_out
+    assert "Estes produtos não aparecem nos contratos assinados" in html_out
     assert "Portal Base" in html_out
 
 
@@ -368,9 +370,9 @@ def test_year_card_pedido_percentage():
     }
     html_out = render_html(payload)
     assert "54 milhões €" in html_out
-    assert "pedido estava 10% maior" in html_out
-    assert "pedido estava 20% menor" in html_out
-    assert "pedido ao nível do contrato" in html_out
+    assert "pedido 10% acima do contrato" in html_out
+    assert "pedido 20% abaixo do contrato" in html_out
+    assert "pedido igual ao contrato" in html_out
     assert "só pedido ao mercado" in html_out
 
 

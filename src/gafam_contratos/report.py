@@ -365,11 +365,11 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
         if committed > 0 and requested > 0:
             pct = round((requested / committed - 1.0) * 100)
             if pct > 0:
-                pedido = f"pedido estava {pct}% maior"
+                pedido = f"pedido {pct}% acima do contrato"
             elif pct < 0:
-                pedido = f"pedido estava {abs(pct)}% menor"
+                pedido = f"pedido {abs(pct)}% abaixo do contrato"
             else:
-                pedido = "pedido ao nível do contrato"
+                pedido = "pedido igual ao contrato"
         elif requested > 0:
             pedido = "só pedido ao mercado"
         else:
@@ -765,9 +765,9 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
       <p class="lead reveal">Google, Amazon, Facebook, Apple e Microsoft vendem
       serviços ao Estado. Os Estados Unidos controlam essas empresas e podem
       obrigá-las a cortar o serviço. O Cloud Act é outra lei: obriga-as a
-      entregar dados que tenham sob controlo, estejam onde estiverem. O aviso
-      ao cliente pode ser adiado. Esta conta mostra só o dinheiro público em
-      que esses nomes aparecem.</p>
+      entregar dados que tenham sob controlo, em qualquer país. O aviso ao
+      cliente pode ser adiado. Esta conta mostra só o dinheiro público onde
+      esses nomes aparecem.</p>
       <div class="linkbar reveal">
         {region_buttons}
         <a href="#s1">Começar</a>
@@ -785,19 +785,19 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
     <section class="slide slide--chart" id="s2" data-title="Série">
       <h2 class="reveal">O que foi assinado e o que foi pedido</h2>
       <p class="lead reveal">A barra rosa é dinheiro de contratos já assinados.
-      A verde é o valor pedido ao mercado, que pode ainda não ter sido assinado.
-      Não some as duas.</p>
+      A verde é o valor pedido ao mercado. Esse pedido pode ainda não estar
+      assinado. As duas não se somam.</p>
       <p class="chart-title reveal">Contratos assinados e pedidos ao mercado, por ano</p>
       <div class="chart-box reveal"><canvas id="chartYears" aria-label="Contratos assinados e pedidos ao mercado, por ano"></canvas></div>
     </section>
 
     <section class="slide slide--map" id="s3" data-title="Dia 0">
-      <h2 class="reveal">Onde um corte doeria mais</h2>
+      <h2 class="reveal">Onde o corte seria mais grave</h2>
       <p class="lead reveal">Se os Estados Unidos desligarem estes serviços, as
-      regiões mais escuras são as que mais contrataram em 2025. As claras
-      dependem menos. O mapa é o continente.</p>
+      regiões mais escuras são as que mais contrataram em 2025. As mais claras
+      dependem menos. O mapa mostra o continente.</p>
       <p class="lead reveal">Esta conta é só dinheiro público. As empresas privadas
-      também dependem muito destas tecnologias, e isso não entra no mapa.</p>
+      também dependem muito destas tecnologias. Essa parte não entra no mapa.</p>
       <p class="chart-title reveal">Contratos assinados em 2025, por região</p>
       <div class="chart-box reveal">
         <div id="mapRegion" role="img" aria-label="Contratos assinados em 2025, por região do continente"></div>
@@ -841,7 +841,7 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
     <section class="slide slide--end" id="s8" data-title="Fontes">
       <h2 class="reveal">Fontes</h2>
       <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
-      de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
+      de 2026 acaba na data desses ficheiros. Contrato assinado e pedido ao
       mercado não se somam.</p>
       <ul class="list">{sources_html}</ul>
       <p class="meta reveal">Contagem das algemas</p>
@@ -1285,8 +1285,8 @@ def _algema_lead(where: str, records: list[dict[str, Any]]) -> str:
     verb = "aparece" if len(present) == 1 else "aparecem"
     return (
         f"Nos contratos assinados {where}, {names} {verb} em vários anos. "
-        "No setor público a repetição é longa: cada cartão conta esses anos, "
-        "não a duração de um único contrato."
+        "No setor público, estes nomes voltam ano após ano. "
+        "Cada cartão conta esses anos. Não conta a duração de um só contrato."
     )
 
 
@@ -1307,8 +1307,8 @@ def _algema_cards_html(records: list[dict[str, Any]]) -> str:
         )
     if not rows_html:
         return (
-            "<p class='reveal'>Sem Microsoft nem Google nos contratos assinados "
-            "deste período (Office 365, Teams, Google Cloud, Android…).</p>"
+            "<p class='reveal'>Estes produtos não aparecem nos contratos "
+            "assinados.</p>"
         )
     return f"<div class='algema-stack'>{''.join(rows_html)}</div>"
 
@@ -1360,7 +1360,7 @@ def render_leiria_html(
             f"<li class='reveal'><strong>{_esc(name)}</strong> — {eur(value)}</li>"
             for name, value in place_pairs
         )
-        or "<li class='reveal'>Sem repartição por concelho.</li>"
+        or "<li class='reveal'>Sem valores por concelho.</li>"
     )
     algema_html = _algema_cards_html(records)
     algema_lead = _algema_lead(area.where, records)
@@ -1396,8 +1396,8 @@ def render_leiria_html(
     if area.unit == "distrito":
         map_lead = (
             "Se os Estados Unidos desligarem estes serviços, os "
-            "concelhos mais escuros são os que mais contrataram em 2025. Os claros "
-            "dependem menos."
+            "concelhos mais escuros são os que mais contrataram em 2025. Os mais "
+            "claros dependem menos."
         )
         map_title = "Contratos assinados em 2025, por concelho"
         map_aria = f"Contratos assinados em 2025, por concelho do distrito de {area.button}"
@@ -1417,7 +1417,7 @@ def render_leiria_html(
         f"<ul>{place_list}</ul></div></div>"
         "<div class='map-legend' id='mapLeiriaLegend'></div>"
     )
-    fora = "e isso não entra no mapa."
+    fora = "Essa parte não entra no mapa."
     brand_head = _brand_head(assets)
     brand_tokens = _brand_tokens_css()
     brand_footer_css = _brand_footer_css()
@@ -1672,9 +1672,9 @@ def render_leiria_html(
       <p class="meta reveal"><a href="../">← apresentação nacional</a></p>
       <h1 class="reveal">{_esc(area.name)}</h1>
       <p class="lead reveal">Entre 2022 e 2026, câmaras, escolas e hospitais {local_phrase}
-      assinaram contratos com grandes tecnológicas americanas. Os Estados Unidos
-      podem obrigar essas empresas a cortar o serviço. O Cloud Act é outra lei:
-      obriga-as a entregar dados sob o seu controlo, estejam onde estiverem.
+      assinaram contratos com grandes empresas tecnológicas americanas. Os Estados
+      Unidos podem obrigar essas empresas a cortar o serviço. O Cloud Act é outra
+      lei: obriga-as a entregar dados que tenham sob controlo, em qualquer país.
       O aviso ao cliente pode ser adiado. Os números são só dinheiro público.</p>
       <p class="chart-title reveal">Contratos assinados, por ano</p>
       <div class="year-grid">{year_cards}</div>
@@ -1682,16 +1682,16 @@ def render_leiria_html(
   <section class="slide" id="s1" data-title="Série">
     <h2 class="reveal">O que foi assinado e o que foi pedido</h2>
     <p class="lead reveal">A barra rosa é dinheiro de contratos já assinados.
-    A verde é o valor pedido ao mercado, que pode ainda não ter sido assinado.
-    Não some as duas.</p>
+    A verde é o valor pedido ao mercado. Esse pedido pode ainda não estar
+    assinado. As duas não se somam.</p>
     <p class="chart-title reveal">Contratos assinados e pedidos ao mercado, por ano</p>
     <div class="chart-box reveal"><canvas id="chartLeiriaYears" aria-label="Contratos assinados e pedidos ao mercado, por ano"></canvas></div>
   </section>
   <section class="slide slide--map" id="s2" data-title="Dia 0">
-    <h2 class="reveal">Onde um corte doeria mais</h2>
+    <h2 class="reveal">Onde o corte seria mais grave</h2>
     <p class="lead reveal">{_esc(map_lead)}</p>
     <p class="lead reveal">Esta conta é só dinheiro público. As empresas privadas
-    também dependem muito destas tecnologias, {fora}</p>
+    também dependem muito destas tecnologias. {fora}</p>
     <p class="chart-title reveal">{_esc(map_title)}</p>
     {map_html}
   </section>
@@ -1736,7 +1736,7 @@ def render_leiria_html(
   <section class="slide slide--end" id="s6" data-title="Fontes">
     <h2 class="reveal">Fontes</h2>
     <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
-    de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
+    de 2026 acaba na data desses ficheiros. Contrato assinado e pedido ao
     mercado não se somam.</p>
     <ul class="list">{sources_html}</ul>
     <p class="meta reveal">Contagem das algemas</p>

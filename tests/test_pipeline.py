@@ -123,5 +123,5 @@ def test_fixture_pipeline(tmp_path: Path):
     assert "uscode.house.gov/us/usc/t50/s1702" in leiria_html
     assert "anos com contratos assinados no setor público, 2022–2026" in leiria_html
     assert "O que foi assinado e o que foi pedido" in leiria_html
-    assert "Onde um corte doeria mais" in leiria_html
+    assert "Onde o corte seria mais grave" in leiria_html
     assert set(totals) >= {"2022", "2023", "2024", "2025", "2026"}
