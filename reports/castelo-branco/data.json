@@ -1,0 +1,1165 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.284691+00:00",
+  "totals": {
+    "2022": {
+      "committed": 104665.19,
+      "requested": 85719.96,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 27953.88,
+      "requested": 6312344.86,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 327295.5,
+      "requested": 209640.0,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 518040.07,
+      "requested": 52357.0,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 462747.09,
+      "requested": 663394.0,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "Centro": 63697.19,
+        "sem local": 40968.0
+      },
+      "2023": {
+        "sem local": 27953.88
+      },
+      "2024": {
+        "sem local": 225535.5,
+        "Centro": 101760.0
+      },
+      "2025": {
+        "Centro": 286077.99,
+        "sem local": 231962.08000000002
+      },
+      "2026": {
+        "sem local": 364279.32,
+        "Centro": 98467.77
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "administração local": 104665.19
+      },
+      "2023": {
+        "saúde": 27854.88,
+        "outra entidade pública": 99.0
+      },
+      "2024": {
+        "administração local": 192772.06,
+        "saúde": 116188.8,
+        "outra entidade pública": 18334.64
+      },
+      "2025": {
+        "saúde": 392177.11,
+        "administração local": 47438.6,
+        "ensino superior": 42720.72,
+        "administração central": 35247.14,
+        "outra entidade pública": 456.5
+      },
+      "2026": {
+        "administração local": 324463.32,
+        "ensino superior": 110167.77,
+        "saúde": 28116.0
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 104665.19
+      },
+      "2023": {
+        "Microsoft": 27953.88
+      },
+      "2024": {
+        "Microsoft": 307395.5,
+        "Meta": 19900.0
+      },
+      "2025": {
+        "Microsoft": 496540.06999999995,
+        "Meta": 21500.0
+      },
+      "2026": {
+        "Microsoft": 443835.7,
+        "Google": 11700.0,
+        "Apple": 7211.39
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Castelo Branco": 63697.19,
+        "Fundão": 40968.0
+      },
+      "2023": {
+        "Castelo Branco": 27854.88,
+        "Covilhã": 99.0
+      },
+      "2024": {
+        "Fundão": 172872.06,
+        "Castelo Branco": 101760.0,
+        "Covilhã": 32763.44,
+        "Proença-a-Nova": 19900.0
+      },
+      "2025": {
+        "Castelo Branco": 321516.58999999997,
+        "Covilhã": 149276.34,
+        "Fundão": 35247.14,
+        "Oleiros": 12000.0
+      },
+      "2026": {
+        "Fundão": 211689.84,
+        "Castelo Branco": 134814.57,
+        "Covilhã": 39816.0,
+        "Proença-a-Nova": 38426.83,
+        "Penamacor": 17493.25,
+        "Vila Velha de Ródão": 13953.96,
+        "Vila de Rei": 6552.64
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "9163414",
+      "channel": "committed",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "de software (Altaro ,VMWare, Microsoft Windows 2019 Server Std) Aquisição de software",
+      "amount_eur": 22216.0,
+      "region": "Centro",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "9259492",
+      "channel": "committed",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "Aquisição de contas Microsoft Office365 e respetiva migração e config",
+      "amount_eur": 31450.0,
+      "region": "Centro",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "9260722",
+      "channel": "committed",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "de Software (Altaro, Unimus, Microsoft Windows 2019 Server Std, CheckMK) Aquisição de",
+      "amount_eur": 10031.19,
+      "region": "Centro",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "9413129",
+      "channel": "committed",
+      "buyer": "Município do Fundão",
+      "excerpt": "ento das Soluções/Aplicações “Microsoft Office 365” Renovação de Licenciamento das Soluçõe",
+      "amount_eur": 40968.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Fundão",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "9816955",
+      "channel": "committed",
+      "buyer": "Escola Profissional Agrícola Quinta da Lageosa, Aldeia do Souto - Covilhã",
+      "excerpt": "Subscrição Online do Software Microsoft Office 365  Office365/2023 nifEntContrato=60003169",
+      "amount_eur": 99.0,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "10070261",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde de Castelo Branco, EPE",
+      "excerpt": "e Serviços de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 27854.88,
+      "region": "sem local",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "10575216",
+      "channel": "committed",
+      "buyer": "Escola Profissional Agrícola Quinta da Lageosa, Aldeia do Souto - Covilhã",
+      "excerpt": "bscrição Online dos Softwares Microsoft Office 365, Controlo de Assiduidade e Programa de",
+      "amount_eur": 415.0,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "10731601",
+      "channel": "committed",
+      "buyer": "Município de Proença-a-Nova",
+      "excerpt": "redes sociais do Município (Facebook e Instagram) com captação de fotografias e imagens",
+      "amount_eur": 19900.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Instagram",
+      "url": "",
+      "place": "Proença-a-Nova",
+      "district": ""
+    },
+    {
+      "source_id": "10819731",
+      "channel": "committed",
+      "buyer": "Município do Fundão",
+      "excerpt": "de Serviços Cloud Servidores Virtuais, Microsoft M365, Alojamento  Website e Domínios e",
+      "amount_eur": 172872.06,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Fundão",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "10847129",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde de Castelo Branco, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 101760.0,
+      "region": "Centro",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "10849191",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde da Cova da Beira, E. P. E.",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 14428.8,
+      "region": "sem local",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11131270",
+      "channel": "committed",
+      "buyer": "ICOVI - Infraestruturas e Concessões da Covilhã, EM",
+      "excerpt": "ll/Cibersegurança, 8 Licenças Microsoft Office 365 e Antivírus\" AD_03_2024_Ajuste Direto_\"",
+      "amount_eur": 17919.64,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11274567",
+      "channel": "committed",
+      "buyer": "Escola Profissional Agrícola Quinta da Lageosa, Aldeia do Souto - Covilhã",
+      "excerpt": "bscrição Online dos Softwares Microsoft Office 365, Controlo de Assiduidade e Programa de",
+      "amount_eur": 456.5,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11280544",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Castelo Branco",
+      "excerpt": "Licenciamento Microsoft Licenciamento Microsoft nifEntContrato=",
+      "amount_eur": 42720.72,
+      "region": "Centro",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11342614",
+      "channel": "committed",
+      "buyer": "ADXTUR - Agência para o Desenvolvimento Turístico das Aldeias do Xisto",
+      "excerpt": "s nas plataformas oficiais do Facebook, Instagram, YouTube e TikTok, designadamente:\na.\tT",
+      "amount_eur": 9500.0,
+      "region": "sem local",
+      "category": "administração central",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Instagram",
+      "url": "",
+      "place": "Fundão",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11483021",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde da Cova da Beira, E. P. E.",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 19296.0,
+      "region": "sem local",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11514480",
+      "channel": "committed",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "icenciamento Microsoft, tenant da conta Office 365 do Município. Renovação de licenciament",
+      "amount_eur": 35438.6,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "11531888",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde de Castelo Branco, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 42013.59,
+      "region": "Centro",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11531880",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde de Castelo Branco, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 201343.68,
+      "region": "Centro",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11534273",
+      "channel": "committed",
+      "buyer": "Município de Oleiros",
+      "excerpt": "s e publicidade colocada nas páginas de facebook Aquisição de serviços de reportagem e t",
+      "amount_eur": 12000.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Facebook",
+      "url": "",
+      "place": "Oleiros",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "11726088",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde da Cova da Beira, E. P. E.",
+      "excerpt": "Licenciamento Microsoft – Infraestrutura de Servidores Aquisiçã",
+      "amount_eur": 129523.84,
+      "region": "sem local",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "12078698",
+      "channel": "committed",
+      "buyer": "Agência Nacional para a Gestão do Programa Erasmus+ Educação e Formação",
+      "excerpt": "ng e alojamento no âmbito do evento VET Teams 4.0 de 2025 Aquisição de Serviços de ca",
+      "amount_eur": 19987.14,
+      "region": "sem local",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Fundão",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "12104732",
+      "channel": "committed",
+      "buyer": "Agência Nacional para a Gestão do Programa Erasmus+ Educação e Formação",
+      "excerpt": "ços de catering no âmbito do evento VET Teams 4.0 de 2025 Aquisição de Serviços de ca",
+      "amount_eur": 5760.0,
+      "region": "sem local",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Fundão",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "13789465",
+      "channel": "committed",
+      "buyer": "Município de Vila de Rei",
+      "excerpt": "hange e Aquisição de Licenças Microsoft Office 365 Standard para 1 ano Renovação de Licenç",
+      "amount_eur": 6552.64,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Vila de Rei",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "14295864",
+      "channel": "committed",
+      "buyer": "Município de Proença-a-Nova",
+      "excerpt": "ticos para substituição de sistemas com Windows 10 Aquisição de equipamentos informátic",
+      "amount_eur": 38426.83,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Proença-a-Nova",
+      "district": ""
+    },
+    {
+      "source_id": "14543858",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Castelo Branco",
+      "excerpt": "IPCB-2026CP002 Licenciamento Microsoft IPCB-2026CP002 Licenciamento Microsoft",
+      "amount_eur": 91256.38,
+      "region": "Centro",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "15011720",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde da Cova da Beira, E. P. E.",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 28116.0,
+      "region": "sem local",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "15283791",
+      "channel": "committed",
+      "buyer": "Universidade da Beira Interior",
+      "excerpt": "bases de dados para o DataNECE – LSEG -Workspace NE 1142/2026 - Aquisição de bases de da",
+      "amount_eur": 11700.0,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Workspace",
+      "url": "",
+      "place": "Covilhã",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "15453856",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Vila Velha de Ródão",
+      "excerpt": "Aquisição de licenças de software tipo Microsoft 365 e Exchange Online Aquisição de licenças",
+      "amount_eur": 13953.96,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Vila Velha de Ródão",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "15521856",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Castelo Branco",
+      "excerpt": "1 x Macbook Pro + 1x iMac 1 x Macbook Pro + 1x iMac",
+      "amount_eur": 7211.39,
+      "region": "Centro",
+      "category": "ensino superior",
+      "vendor": "Apple",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "MacBook",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "15567966",
+      "channel": "committed",
+      "buyer": "Município do Fundão",
+      "excerpt": "ud com servidores virtuais; (b) serviço Microsoft M365; (c) serviço de alojamento de webs",
+      "amount_eur": 211689.84,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Fundão",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "15573535",
+      "channel": "committed",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "Aquisição de contas Microsoft Office 365, Município de Castelo Branco Aquisição",
+      "amount_eur": 36346.8,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "15658590",
+      "channel": "committed",
+      "buyer": "Município de Penamacor",
+      "excerpt": "Aquisição de licenças de Microsoft Office 365 e Exchange P1 e P2 Aquisição de licença",
+      "amount_eur": 17493.25,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Penamacor",
+      "district": "Castelo Branco"
+    },
+    {
+      "source_id": "272/2022",
+      "channel": "requested",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "de software (Altaro ,VMWare, Microsoft Windows 2019 Server Std) Município de Castelo B",
+      "amount_eur": 42859.98,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Windows",
+      "url": "https://dre.pt/application/file/179125618",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "1325/2022",
+      "channel": "requested",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "de software (Altaro ,VMWare, Microsoft Windows 2019 Server Std) Município de Castelo B",
+      "amount_eur": 42859.98,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Windows",
+      "url": "https://dre.pt/application/file/178645164",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "5309/2023",
+      "channel": "requested",
+      "buyer": "Unidade Local de Saúde de Castelo Branco, EPE",
+      "excerpt": "e Serviços de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 6312344.86,
+      "region": "sem local",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://dre.pt/application/file/211344021",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "9911/2024",
+      "channel": "requested",
+      "buyer": "Município do Fundão",
+      "excerpt": "de Serviços Cloud Servidores Virtuais, Microsoft M365, Alojamento  Website e Domínios e",
+      "amount_eur": 209640.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2024/05/096/417707024.pdf",
+      "place": "Fundão",
+      "district": ""
+    },
+    {
+      "source_id": "1753/2025",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Castelo Branco",
+      "excerpt": "Licenciamento Microsoft Universidade Politécnica de Castelo Bra",
+      "amount_eur": 52357.0,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/01/017/418610003.pdf",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "5002/2026",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Castelo Branco",
+      "excerpt": "IPCB-2026CP002 Licenciamento Microsoft Universidade Politécnica de Castelo Bra",
+      "amount_eur": 110714.0,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/03/042/419952767.pdf",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "11276/2026",
+      "channel": "requested",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "Aquisição de contas Microsoft Office 365 onde estão contempladas as respetivas c",
+      "amount_eur": 33442.35,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/05/085/419959774.pdf",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "10707/2026",
+      "channel": "requested",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "Aquisição de contas Microsoft Office 365 onde estão contempladas as respetivas c",
+      "amount_eur": 33442.35,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/04/081/419958917.pdf",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "13377/2026",
+      "channel": "requested",
+      "buyer": "Município da Covilhã",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT E MIGRAÇÃO DE EMAIL Município da Covilh",
+      "amount_eur": 112000.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/05/100/419962150.pdf",
+      "place": "Covilhã",
+      "district": ""
+    },
+    {
+      "source_id": "16588/2026",
+      "channel": "requested",
+      "buyer": "Município de Castelo Branco",
+      "excerpt": "Aquisição de contas Microsoft Office 365, Município de Castelo Branco Município",
+      "amount_eur": 45945.3,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/06/123/419965491.pdf",
+      "place": "Castelo Branco",
+      "district": ""
+    },
+    {
+      "source_id": "18837/2026",
+      "channel": "requested",
+      "buyer": "Município do Fundão",
+      "excerpt": "ento de Serviços de Data Center, Cloud, Microsoft M365, Alojamento Web e Telecomunicações",
+      "amount_eur": 215850.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/07/141/419968097.pdf",
+      "place": "Fundão",
+      "district": ""
+    },
+    {
+      "source_id": "24942/2026",
+      "channel": "requested",
+      "buyer": "Município da Covilhã",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT E MIGRAÇÃO DE EMAIL Município da Covilh",
+      "amount_eur": 112000.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/10/195/419975067.pdf",
+      "place": "Covilhã",
+      "district": ""
+    }
+  ]
+}

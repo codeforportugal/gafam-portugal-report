@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GAFAM · Distrito de Bragança (2022–2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../assets/favicon.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --ink: #010101;
+      --paper: #f4f4f0;
+      --coral: #fd5288;
+      --teal: #72e123;
+      --lime: #72e123;
+      --gold: #f4ea15;
+      --sky: #eb5423;
+      --violet: #eb5423;
+      --muted: #6a6a6a;
+      --font: "Inter", system-ui, sans-serif;
+      --mono: "Courier Prime", "Courier New", monospace;
+      --cfp-bar: 3.5rem;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font); font-weight: 500; color: var(--ink);
+      background: var(--paper); overflow-x: hidden;
+    }
+    body { padding-bottom: var(--cfp-bar); }
+    .cfp-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+      display: flex; justify-content: center; align-items: center;
+      flex-wrap: wrap; gap: 0.75rem 1.25rem;
+      min-height: var(--cfp-bar);
+      background: var(--ink);
+      border-top: 2px solid var(--lime);
+      padding: 0.4rem 1rem;
+    }
+    .cfp-bar .cfp-brand {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; color: var(--paper);
+      font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .cfp-bar .cfp-brand:hover { color: var(--gold); }
+    .cfp-bar .mark {
+      width: 28px; height: 28px; border-radius: 4px;
+      object-fit: cover; flex: 0 0 auto;
+      box-shadow: 0 0 0 1px rgba(244,234,21,.35);
+    }
+    .cfp-bar .name { color: inherit; }
+    .cfp-bar .soon { color: var(--lime); opacity: 0.95; font-weight: 400; }
+    .cfp-lic {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+    }
+    .cfp-lic a { display: inline-flex; line-height: 0; opacity: 0.95; }
+    .cfp-lic a:hover { opacity: 1; }
+    .cfp-lic img { height: 22px; width: auto; display: block; }
+    @media (max-width: 520px) {
+      .cfp-bar .soon { display: none; }
+    }
+    .progress {
+      position: fixed; top: 0; left: 0; height: 4px; width: 0; z-index: 40;
+      background: linear-gradient(90deg, var(--coral), var(--lime), var(--gold), var(--sky));
+      transition: width .15s linear;
+    }
+    .dots {
+      position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: .45rem; z-index: 30;
+    }
+    .dots a {
+      width: 10px; height: 10px; border-radius: 999px;
+      background: rgba(1,1,1,.25); border: 1px solid rgba(1,1,1,.2);
+    }
+    .dots a.is-active { background: var(--coral); transform: scale(1.25); }
+    .slide {
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      padding-bottom: calc(clamp(1.5rem, 4vw, 3rem) + var(--cfp-bar));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide--hero {
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 82% 18%, rgba(253,82,136,.45), transparent 40%),
+        radial-gradient(circle at 10% 80%, rgba(114,225,35,.3), transparent 35%),
+        linear-gradient(135deg, #010101, #2a0a14 70%, #1a1a1a);
+    }
+    .slide--map {
+      color: #f4f4f0; background: #010101;
+    }
+    .slide--map .lead { opacity: 0.85; }
+    .slide h1, .slide h2 {
+      margin: 0 0 0.4em;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 18ch;
+    }
+    .slide h1 { font-size: clamp(2.4rem, 7vw, 5rem); }
+    .slide h2 { font-size: clamp(1.8rem, 5vw, 3.4rem); }
+    .lead {
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      max-width: 42rem;
+      line-height: 1.45;
+      margin: 0 0 1.5rem;
+    }
+    .meta { font-family: var(--mono); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; opacity: .8; }
+    .year-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .year-card {
+      background: rgba(5, 8, 12, .45);
+      color: var(--paper);
+      padding: 1rem 1.1rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(246,241,231,.12);
+    }
+    .year-card:nth-child(2) { background: var(--coral); border-color: transparent; }
+    .year-card:nth-child(3) { background: var(--teal); border-color: transparent; }
+    .year-card:nth-child(4) { background: var(--violet); border-color: transparent; }
+    .year-card:nth-child(5) { background: var(--gold); color: var(--ink); border-color: transparent; }
+    .year-card .y {
+      font-family: var(--mono); font-size: .75rem; margin: 0 0 .5rem; letter-spacing: .06em;
+    }
+    .year-card .n {
+      font-size: clamp(1.05rem, 2.6vw, 1.45rem); font-weight: 800; margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .year-card .c { margin: .4rem 0 0; font-size: .78rem; opacity: .9; }
+    .algema-stack {
+      display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem;
+    }
+    .algema-vendor {
+      margin: 0 0 .55rem;
+      font-family: var(--mono); font-size: .72rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; opacity: .7;
+    }
+    .algema-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 860px) { .algema-grid { grid-template-columns: 1fr; } }
+    .algema {
+      background: #fff;
+      border-radius: 1.25rem;
+      padding: 1.25rem 1.35rem 1.4rem;
+      border: 1px solid #e5dfd2;
+      position: relative;
+      overflow: hidden;
+    }
+    .algema:nth-child(1) { background: linear-gradient(160deg, #010101, #222); color: var(--paper); border: 0; }
+    .algema:nth-child(2) { background: linear-gradient(160deg, #fd5288, #eb5423); color: #fff; border: 0; }
+    .algema:nth-child(3) { background: linear-gradient(160deg, #72e123, #3d8f12); color: #010101; border: 0; }
+    .algema i {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: .65rem;
+      opacity: .95;
+    }
+    .algema h3 { margin: 0; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .algema .anos {
+      margin: .55rem 0 .85rem;
+      font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .algema .chain {
+      display: flex; gap: .35rem; align-items: center; margin-bottom: .35rem;
+    }
+    .algema .bead {
+      width: 14px; height: 14px; border-radius: 999px;
+      background: rgba(255,255,255,.2);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.25);
+    }
+    .algema .bead.is-on {
+      background: var(--gold);
+      box-shadow: 0 0 0 1px rgba(244,234,21,.55), 0 0 10px rgba(244,234,21,.45);
+    }
+    .handcuff-mark {
+      position: absolute; right: -0.4rem; bottom: -0.6rem;
+      font-size: 6rem; opacity: .12; transform: rotate(-18deg); pointer-events: none;
+    }
+    .chart-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin: 0.25rem 0 0.75rem;
+    }
+    .chart-box {
+      flex: 1;
+      min-height: 280px;
+      max-height: 62vh;
+      position: relative;
+      margin-top: 0.25rem;
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+    .chart-box canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .slide--map .chart-box, .map-panel {
+      background: transparent; padding: 0; height: auto;
+    }
+    .map-panel {
+      background: #0a0a0e;
+      color: #f4f4f0;
+      border-radius: 1.25rem;
+      padding: 1rem;
+    }
+    #mapLeiria {
+      height: min(48vh, 420px);
+      border-radius: 1rem;
+      background: radial-gradient(ellipse 55% 45% at 48% 42%, #1a1520 0%, #010101 100%);
+    }
+    #mapLeiria .night-lit {
+      filter: drop-shadow(0 0 6px rgba(244,234,21,.55)) drop-shadow(0 0 14px rgba(253,82,136,.35));
+    }
+    .map-legend {
+      margin-top: .75rem;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #c8c4b8;
+    }
+    .map-legend span {
+      display: inline-block; width: 14px; height: 10px; margin-right: 4px;
+      vertical-align: middle; border: 1px solid rgba(244,244,240,.25);
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .split { grid-template-columns: 1fr; }
+      .dots { display: none; }
+    }
+    table {
+      width: 100%; border-collapse: collapse; font-size: .92rem;
+      background: #fff; border-radius: 1rem; overflow: hidden;
+    }
+    th, td {
+      text-align: left; padding: .65rem .7rem;
+      border-bottom: 1px solid #e5dfd2; vertical-align: top;
+    }
+    th {
+      font-family: var(--mono); font-size: .7rem; letter-spacing: .05em;
+      text-transform: uppercase; background: #010101; color: #f4f4f0;
+    }
+    td.num { font-family: var(--mono); white-space: nowrap; }
+    ul { padding-left: 1.1rem; margin: 0; }
+    a { color: var(--coral); font-weight: 700; }
+    .slide--hero a { color: var(--lime); }
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.is-in { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <nav class="dots" id="dots" aria-label="Slides"></nav>
+  <main class="deck">
+  <section class="slide slide--hero" id="s0" data-title="Início">
+      <p class="meta reveal"><a href="../">← apresentação nacional</a></p>
+      <h1 class="reveal">Distrito de Bragança</h1>
+      <p class="lead reveal">Entre 2022 e 2026, câmaras, escolas e hospitais do distrito
+      assinaram contratos com grandes tecnológicas americanas. Os Estados Unidos
+      podem obrigar essas empresas a cortar o serviço. O Cloud Act é outra lei:
+      obriga-as a entregar dados sob o seu controlo, estejam onde estiverem.
+      O aviso ao cliente pode ser adiado. Os números são só dinheiro público.</p>
+      <p class="chart-title reveal">Contratos assinados, por ano</p>
+      <div class="year-grid"><article class='year-card reveal'><p class='y'>2022</p><p class='n'>138 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2023</p><p class='n'>75 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2024</p><p class='n'>249 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2025</p><p class='n'>230 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2026</p><p class='n'>564 mil €</p><p class='c'>contrato assinado</p></article></div>
+  </section>
+  <section class="slide" id="s1" data-title="Série">
+    <h2 class="reveal">O que foi assinado e o que foi pedido</h2>
+    <p class="lead reveal">A barra rosa é dinheiro de contratos já assinados.
+    A verde é o valor pedido ao mercado, que pode ainda não ter sido assinado.
+    Não some as duas.</p>
+    <p class="chart-title reveal">Contratos assinados e pedidos ao mercado, por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaYears" aria-label="Contratos assinados e pedidos ao mercado, por ano"></canvas></div>
+  </section>
+  <section class="slide slide--map" id="s2" data-title="Dia 0">
+    <h2 class="reveal">Onde um corte doeria mais</h2>
+    <p class="lead reveal">Se os Estados Unidos desligarem estes serviços, os concelhos mais escuros são os que mais contrataram em 2025. Os claros dependem menos.</p>
+    <p class="lead reveal">Esta conta é só dinheiro público. As empresas privadas
+    também dependem muito destas tecnologias, e isso não entra no mapa.</p>
+    <p class="chart-title reveal">Contratos assinados em 2025, por concelho</p>
+    <div class='split'><div class='map-panel reveal'><div id='mapLeiria' role='img' aria-label='Contratos assinados em 2025, por concelho do distrito de Bragança'></div></div><div><p class='meta reveal'>Os dez concelhos com mais contratos assinados</p><ul><li class='reveal'><strong>Bragança</strong> — 109 739,60 €</li><li class='reveal'><strong>Mogadouro</strong> — 57 770,94 €</li><li class='reveal'><strong>Freixo de Espada à Cinta</strong> — 18 910,00 €</li><li class='reveal'><strong>Vimioso</strong> — 15 785,61 €</li><li class='reveal'><strong>Torre de Moncorvo</strong> — 10 868,85 €</li><li class='reveal'><strong>Mirandela</strong> — 9 918,12 €</li><li class='reveal'><strong>Carrazeda de Ansiães</strong> — 6 000,00 €</li><li class='reveal'><strong>Alfândega da Fé</strong> — 2 000,00 €</li></ul></div></div><div class='map-legend' id='mapLeiriaLegend'></div>
+  </section>
+  <section class="slide" id="s3" data-title="Fornecedor">
+    <h2 class="reveal">Quem levou os contratos</h2>
+    <p class="lead reveal">Cada linha é um fornecedor. Na legenda, cada tom de
+    cinzento é um ano: o mais claro é o mais antigo e o mais escuro é 2026.</p>
+    <p class="chart-title reveal">Contratos assinados por fornecedor e por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaVendor" aria-label="Contratos assinados por fornecedor e por ano"></canvas></div>
+  </section>
+  <section class="slide" id="s4" data-title="Lock-in">
+    <h2 class="reveal">As algemas</h2>
+    <p class="lead reveal">Nos contratos assinados do distrito, Microsoft aparece em vários anos. No setor público a repetição é longa: cada cartão conta esses anos, não a duração de um único contrato.</p>
+    <p class="chart-title reveal">Anos com contratos assinados no setor público, 2022–2026</p>
+    <div class='algema-stack'><div class='algema-row'><p class='algema-vendor'>Microsoft</p><div class='algema-grid'><article class='algema reveal'><i class='ri-file-word-2-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Office 365</h3><p class='anos'>5 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span></div></article><article class='algema reveal'><i class='ri-windows-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Microsoft</h3><p class='anos'>5 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span></div></article><article class='algema reveal'><i class='ri-team-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Teams</h3><p class='anos'>1 ano de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span></div></article></div></div></div>
+    <p class="meta reveal" style="margin-top:1rem">Fonte: Portal Base, contratos
+    públicos celebrados (IMPIC), 2022–2026.
+    <a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/">dados.gov.pt</a></p>
+  </section>
+  <section class="slide" id="s5" data-title="Contratos">
+    <h2 class="reveal">Os 100 maiores contratos</h2>
+    <p class="lead reveal">Os maiores contratos assinados do distrito, do mais
+    caro para o mais barato. O excerto é a frase do documento oficial onde o
+    produto aparece.</p>
+    <div style="overflow:auto; max-height:62vh">
+      <table>
+        <thead>
+          <tr>
+            <th>Ano</th><th>Concelho</th><th>Entidade</th>
+            <th>Produto</th><th>Montante</th><th>Excerto</th>
+          </tr>
+        </thead>
+        <tbody><tr class='reveal'><td>2026</td><td>Bragança</td><td>Unidade Local de Saúde do Nordeste, EPE</td><td>Microsoft</td><td class='num'>445 637,00 €</td><td>aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do</td></tr><tr class='reveal'><td>2024</td><td>Bragança</td><td>Unidade Local de Saúde do Nordeste, EPE</td><td>Microsoft</td><td class='num'>130 463,13 €</td><td>aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do</td></tr><tr class='reveal'><td>2022</td><td>Mogadouro</td><td>Município de Mogadouro</td><td>Microsoft</td><td class='num'>69 699,75 €</td><td>mento em volume enterprise agreement da microsoft Serviços de manutenção e atualização do</td></tr><tr class='reveal'><td>2024</td><td>Bragança</td><td>Universidade Politécnica de Bragança</td><td>Microsoft</td><td class='num'>67 439,32 €</td><td>Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S</td></tr><tr class='reveal'><td>2025</td><td>Bragança</td><td>Universidade Politécnica de Bragança</td><td>Microsoft</td><td class='num'>67 065,82 €</td><td>Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S</td></tr><tr class='reveal'><td>2023</td><td>Bragança</td><td>Universidade Politécnica de Bragança</td><td>Microsoft</td><td class='num'>67 000,00 €</td><td>Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S</td></tr><tr class='reveal'><td>2022</td><td>Bragança</td><td>Universidade Politécnica de Bragança</td><td>Microsoft 365</td><td class='num'>61 188,93 €</td><td>Renovação do Licenciamento do Software Microsoft 365 A3 para o Campus do Instituto Politécni</td></tr><tr class='reveal'><td>2025</td><td>Mogadouro</td><td>Município de Mogadouro</td><td>Microsoft</td><td class='num'>57 770,94 €</td><td>O LICENCIAMENTO EM VOLUME OPEN VALUE DA MICROSOFT CONTRATO DE MANUTENÇÃO E ATUALIZAÇÃO DO</td></tr><tr class='reveal'><td>2026</td><td>Bragança</td><td>Universidade Politécnica de Bragança</td><td>Microsoft 365</td><td class='num'>52 717,08 €</td><td>Renovação do Licenciamento do Software Microsoft 365 A3 para o Campus do Instituto Politécni</td></tr><tr class='reveal'><td>2024</td><td>Bragança</td><td>Município de Bragança</td><td>Microsoft 365</td><td class='num'>41 260,38 €</td><td>oftware e serviços conexos - subscrição Microsoft 365 Aquisição de licenciamento de software</td></tr><tr class='reveal'><td>2025</td><td>Bragança</td><td>Município de Bragança</td><td>Microsoft 365</td><td class='num'>31 617,28 €</td><td>Renovação de subscrição Microsoft 365 Renovação de subscrição Microsoft 365 n</td></tr><tr class='reveal'><td>2025</td><td>Freixo de Espada à Cinta</td><td>Município de Freixo de Espada à Cinta</td><td>Exchange</td><td class='num'>18 910,00 €</td><td>Licenciamento Exchange Licenciamento Exchange nifEntContrato=5</td></tr><tr class='reveal'><td>2026</td><td>Mogadouro</td><td>Município de Mogadouro</td><td>Microsoft 365</td><td class='num'>18 301,65 €</td><td>“AQUISIÇÃO DE LICENCIAMENTO MICROSOFT 365 (CSP) E PRESTAÇÃO DE SERVIÇOS ASSOCIADO</td></tr><tr class='reveal'><td>2026</td><td>Vila Flor</td><td>Município de Vila Flor</td><td>Microsoft 365</td><td class='num'>17 148,26 €</td><td>6 – AQUISIÇÃO DE SERVIÇOS INFORMÁTICOS (MICROSOFT 365) AJUSTE DIRETO – AD-07/2026 – AQUISIÇÃO</td></tr><tr class='reveal'><td>2026</td><td>Miranda do Douro</td><td>Associação para o Estudo e Protecção do Gado Asinino-AEPGA</td><td>SharePoint</td><td class='num'>16 400,00 €</td><td>de serviços para criação de plataforma SharePoint para gestão de dados sobre habitats no</td></tr><tr class='reveal'><td>2025</td><td>Vimioso</td><td>Município de Vimioso</td><td>Microsoft</td><td class='num'>15 785,61 €</td><td>ÇÃO DE ENDPOINTS E EMAIL E AQUISIÇÃO DE MICROSOFT OFFICE HOME AND BUSINESS 2024 CONTRATO</td></tr><tr class='reveal'><td>2026</td><td>Bragança</td><td>Agrupamento de Escolas Abade de Baçal, Bragança</td><td>Office 365</td><td class='num'>12 197,00 €</td><td>”, “ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)”, “ALUGUER DE LI</td></tr><tr class='reveal'><td>2025</td><td>Bragança</td><td>Agrupamento de Escolas Abade de Baçal, Bragança</td><td>Office 365</td><td class='num'>11 056,50 €</td><td>”; “ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)”; “ALUGUER DE LI</td></tr><tr class='reveal'><td>2025</td><td>Torre de Moncorvo</td><td>Município de Torre de Moncorvo</td><td>Teams</td><td class='num'>10 868,85 €</td><td>Renovação Acrobat Pro for Teams e Aquisição Creative Cloud Pro for Team</td></tr><tr class='reveal'><td>2025</td><td>Mirandela</td><td>Município de Mirandela</td><td>Microsoft</td><td class='num'>9 918,12 €</td><td>Aquisição de Microsoft SQL Server 2022 Standard – 6 Core (Lice</td></tr><tr class='reveal'><td>2024</td><td>Miranda do Douro</td><td>Câmara Municipal de Miranda do Douro</td><td>Microsoft</td><td class='num'>7 475,90 €</td><td>Aquisição de Licenciamento para Microsoft SQL Server 2022 Standard Aquisição de L</td></tr><tr class='reveal'><td>2022</td><td>Bragança</td><td>Agrupamento de Escolas Abade de Baçal, Bragança</td><td>Office 365</td><td class='num'>6 154,36 €</td><td>/2022 - ALUGUER DE LICENÇA DE MICROSOFT OFFICE 365 PLAN A3 EDUCAÇÃO AEAB_CP N.º 141/2022 -</td></tr><tr class='reveal'><td>2025</td><td>Carrazeda de Ansiães</td><td>Agência de Desenvolvimento Regional do Vale do Tua - Associação ADRVT</td><td>Instagram</td><td class='num'>6 000,00 €</td><td>o conjunta de Redes Sociais (Facebook e Instagram);
+7.	Adaptação e divulgação de conteúdo</td></tr><tr class='reveal'><td>2023</td><td>Macedo de Cavaleiros</td><td>Município de Macedo de Cavaleiros</td><td>Workspace</td><td class='num'>5 874,88 €</td><td>Renovação do Google Workspace - Contas de E-mail Renovação do Google</td></tr><tr class='reveal'><td>2024</td><td>Bragança</td><td>Agrupamento de Escolas Abade de Baçal, Bragança</td><td>Office 365</td><td class='num'>2 424,00 €</td><td>DE ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)” PARA UTILIZAÇÃO</td></tr><tr class='reveal'><td>2023</td><td>Bragança</td><td>Agrupamento de Escolas Abade de Baçal, Bragança</td><td>Office 365</td><td class='num'>2 415,00 €</td><td>de aluguer de 20 licenças de Microsoft OFFICE 365 Plan A5 Educação (EDU) AEAB CP 187/2023</td></tr><tr class='reveal'><td>2026</td><td>Freixo de Espada à Cinta</td><td>Município de Freixo de Espada à Cinta</td><td>Microsoft</td><td class='num'>2 351,37 €</td><td>Aquisição de Licenciamento Microsoft Server 2025 Aquisição de Licenciamento</td></tr><tr class='reveal'><td>2025</td><td>Alfândega da Fé</td><td>Liga dos Amigos do Centro de Saúde da Alfândega de Fé</td><td>Office 365</td><td class='num'>2 000,00 €</td><td>vo 
+a) Sistema operativo tipo Microsoft office 365 Familiar– 1 unidade;
+3. Material técnic</td></tr><tr class='reveal'><td>2022</td><td>Bragança</td><td>Agrupamento Europeu de Cooperação Territorial - ZASNET AECT</td><td>Windows</td><td class='num'>1 500,00 €</td><td>stência Técnica informática em ambiente Windows e suas aplicações Assistência Técnica e</td></tr></tbody>
+      </table>
+    </div>
+    <p class="meta" style="margin-top:1rem">
+      <a href="contratos.csv">contratos.csv</a> ·
+      <a href="anuncios.csv">anuncios.csv</a> ·
+      <a href="data.json">data.json</a>
+    </p>
+  </section>
+  <section class="slide" id="s6" data-title="Fontes">
+    <h2 class="reveal">Fontes</h2>
+    <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
+    de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
+    mercado não se somam.</p>
+    <ul class="list"><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Contratos</a><span> · Contratos celebrados 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Anúncios</a><span> · Anúncios publicados 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Modificações</a><span> · Alterações de preço 2022–2026</span></li><li class='reveal'><a href="https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx" rel="noopener noreferrer">Lista de Operações Aprovadas Portugal 2030</a><span> · Operações com início em 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/" rel="noopener noreferrer">Contratos Públicos do PRR</a><span> · Marca contratos BASE financiados pelo PRR</span></li><li class='reveal'><a href="https://sciproj.ptcris.pt/" rel="noopener noreferrer">Portal SciPROJ</a><span> · Financiamento científico 2025–2026 (melhor esforço)</span></li></ul>
+    <p class="meta reveal">Contagem das algemas</p>
+    <ul class="list"><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/" rel="noopener noreferrer">Portal Base, contratos públicos celebrados (IMPIC)</a><span> · anos com contratos assinados no setor público, 2022–2026</span></li></ul>
+    <p class="meta reveal">Leis citadas no início</p>
+    <ul class="list"><li class='reveal'><a href="https://uscode.house.gov/us/usc/t18/s2713/" rel="noopener noreferrer">18 U.S.C. § 2713 (CLOUD Act)</a><span> · entrega de dados sob controlo da empresa, em qualquer país</span></li><li class='reveal'><a href="https://uscode.house.gov/us/usc/t18/s2705/" rel="noopener noreferrer">18 U.S.C. § 2705</a><span> · o aviso ao cliente pode ser adiado</span></li><li class='reveal'><a href="https://uscode.house.gov/us/usc/t50/s1702/" rel="noopener noreferrer">50 U.S.C. § 1702 (IEEPA)</a><span> · o Presidente pode proibir serviços de empresas americanas</span></li></ul>
+  </section>
+  </main>
+  <script id="report-data" type="application/json">{"sources": [{"id": "base-contratos", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Contratos", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/", "file_name": "contratos2022…2026.xlsx", "licence": "Domínio Público", "coverage": "Contratos celebrados 2022–2026", "updated": "2026-11-04"}, {"id": "base-anuncios", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Anúncios", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/", "file_name": "anuncios2022…2026", "licence": "Domínio Público", "coverage": "Anúncios publicados 2022–2026", "updated": "2026-10-25"}, {"id": "base-mods", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Modificações", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/", "file_name": "modcontrats2022…2026", "licence": "Domínio Público", "coverage": "Alterações de preço 2022–2026", "updated": "2026-10-18"}, {"id": "pt2030", "publisher": "Agência para o Desenvolvimento e Coesão", "title": "Lista de Operações Aprovadas Portugal 2030", "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx", "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx", "licence": "Não especificada", "coverage": "Operações com início em 2022–2026", "updated": "2026-09-30"}, {"id": "prr-contratos", "publisher": "Estrutura de Missão Recuperar Portugal", "title": "Contratos Públicos do PRR", "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/", "file_name": "listagem-de-contratos-do-prr.xlsx", "licence": "Aberta", "coverage": "Marca contratos BASE financiados pelo PRR", "updated": "2026-10-23"}, {"id": "sciproj", "publisher": "FCT / PTCRIS", "title": "Portal SciPROJ", "url": "https://sciproj.ptcris.pt/", "file_name": "pesquisa HTML", "licence": "Acesso público", "coverage": "Financiamento científico 2025–2026 (melhor esforço)", "updated": "2026-11-06"}], "keywords": [{"pattern": "Excel", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Office 365", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Microsoft 365", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Windows", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Teams", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Azure", "vendor": "Microsoft", "kind": "match"}, {"pattern": "SharePoint", "vendor": "Microsoft", "kind": "match"}, {"pattern": "OneDrive", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Outlook", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Exchange", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Power BI", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Word", "vendor": "Microsoft", "kind": "match"}, {"pattern": "PowerPoint", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Microsoft", "vendor": "Microsoft", "kind": "match"}, {"pattern": "iPhone", "vendor": "Apple", "kind": "match"}, {"pattern": "iPad", "vendor": "Apple", "kind": "match"}, {"pattern": "MacBook", "vendor": "Apple", "kind": "match"}, {"pattern": "macOS", "vendor": "Apple", "kind": "match"}, {"pattern": "Apple", "vendor": "Apple", "kind": "match"}, {"pattern": "Workspace", "vendor": "Google", "kind": "match"}, {"pattern": "Gmail", "vendor": "Google", "kind": "match"}, {"pattern": "Android", "vendor": "Google", "kind": "match"}, {"pattern": "Chromebook", "vendor": "Google", "kind": "match"}, {"pattern": "Google Cloud", "vendor": "Google", "kind": "match"}, {"pattern": "Classroom", "vendor": "Google", "kind": "match"}, {"pattern": "Google Classroom", "vendor": "Google", "kind": "match"}, {"pattern": "Google", "vendor": "Google", "kind": "match"}, {"pattern": "AWS", "vendor": "Amazon", "kind": "match"}, {"pattern": "Amazon Web Services", "vendor": "Amazon", "kind": "match"}, {"pattern": "Amazon", "vendor": "Amazon", "kind": "match"}, {"pattern": "Facebook", "vendor": "Meta", "kind": "match"}, {"pattern": "Instagram", "vendor": "Meta", "kind": "match"}, {"pattern": "WhatsApp", "vendor": "Meta", "kind": "match"}, {"pattern": "Meta Platforms", "vendor": "Meta", "kind": "match"}, {"pattern": "excelência", "vendor": "", "kind": "reject"}, {"pattern": "excelente", "vendor": "", "kind": "reject"}, {"pattern": "meta", "vendor": "", "kind": "reject"}, {"pattern": "office", "vendor": "", "kind": "reject"}], "generated_at": "2026-11-07T22:59:35.250587+00:00", "totals": {"2022": {"committed": 138543.04, "requested": 0, "grants": 0}, "2023": {"committed": 75289.88, "requested": 0, "grants": 0}, "2024": {"committed": 249062.73, "requested": 0, "grants": 0}, "2025": {"committed": 230993.12, "requested": 70000.0, "grants": 0}, "2026": {"committed": 564752.36, "requested": 60000.0, "grants": 0}}, "breakdowns": {"committed_by_region": {"2022": {"sem local": 69699.75, "Norte": 68843.29}, "2023": {"Norte": 69415.0, "sem local": 5874.88}, "2024": {"Norte": 174147.51, "sem local": 74915.22}, "2025": {"sem local": 188319.34000000003, "Norte": 42673.78}, "2026": {"Norte": 457834.0, "sem local": 106918.36}}, "committed_by_category": {"2022": {"administração local": 69699.75, "ensino superior": 61188.93, "educação não superior": 6154.36, "outra entidade pública": 1500.0}, "2023": {"ensino superior": 67000.0, "administração local": 5874.88, "educação não superior": 2415.0}, "2024": {"saúde": 130463.13, "ensino superior": 67439.32, "administração local": 48736.28, "educação não superior": 2424.0}, "2025": {"administração local": 144870.8, "ensino superior": 67065.82, "educação não superior": 11056.5, "administração central": 6000.0, "outra entidade pública": 2000.0}, "2026": {"saúde": 445637.0, "ensino superior": 52717.08, "administração local": 37801.28, "outra entidade pública": 16400.0, "educação não superior": 12197.0}}, "committed_by_vendor": {"2022": {"Microsoft": 138543.04}, "2023": {"Microsoft": 69415.0, "Google": 5874.88}, "2024": {"Microsoft": 249062.73}, "2025": {"Microsoft": 224993.12000000002, "Meta": 6000.0}, "2026": {"Microsoft": 564752.36}}, "committed_by_place": {"2022": {"Mogadouro": 69699.75, "Bragança": 68843.29}, "2023": {"Bragança": 69415.0, "Macedo de Cavaleiros": 5874.88}, "2024": {"Bragança": 241586.83000000002, "Miranda do Douro": 7475.9}, "2025": {"Bragança": 109739.6, "Mogadouro": 57770.94, "Freixo de Espada à Cinta": 18910.0, "Vimioso": 15785.61, "Torre de Moncorvo": 10868.85, "Mirandela": 9918.12, "Carrazeda de Ansiães": 6000.0, "Alfândega da Fé": 2000.0}, "2026": {"Bragança": 510551.08, "Mogadouro": 18301.65, "Vila Flor": 17148.26, "Miranda do Douro": 16400.0, "Freixo de Espada à Cinta": 2351.37}}}, "prr": {}, "sciproj": {"total": 0, "count": 0}, "private_grants_count": 0, "skipped": {"sem montante": 0, "correspondência incerta": 0}, "press": [], "press_errors": {}, "press_note": "", "records": [{"source_id": "8917834", "channel": "committed", "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança", "excerpt": "/2022 - ALUGUER DE LICENÇA DE MICROSOFT OFFICE 365 PLAN A3 EDUCAÇÃO AEAB_CP N.º 141/2022 -", "amount_eur": 6154.36, "region": "Norte", "category": "educação não superior", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Office 365", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "9058563", "channel": "committed", "buyer": "Agrupamento Europeu de Cooperação Territorial - ZASNET AECT", "excerpt": "stência Técnica informática em ambiente Windows e suas aplicações Assistência Técnica e", "amount_eur": 1500.0, "region": "Norte", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Windows", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "9340237", "channel": "committed", "buyer": "Município de Mogadouro", "excerpt": "mento em volume enterprise agreement da microsoft Serviços de manutenção e atualização do", "amount_eur": 69699.75, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Mogadouro", "district": "Braganca"}, {"source_id": "9427183", "channel": "committed", "buyer": "Universidade Politécnica de Bragança", "excerpt": "Renovação do Licenciamento do Software Microsoft 365 A3 para o Campus do Instituto Politécni", "amount_eur": 61188.93, "region": "Norte", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft 365", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "9963298", "channel": "committed", "buyer": "Município de Macedo de Cavaleiros", "excerpt": "Renovação do Google Workspace - Contas de E-mail Renovação do Google", "amount_eur": 5874.88, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2023, "headline": true, "product": "Workspace", "url": "", "place": "Macedo de Cavaleiros", "district": "Braganca"}, {"source_id": "10059154", "channel": "committed", "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança", "excerpt": "de aluguer de 20 licenças de Microsoft OFFICE 365 Plan A5 Educação (EDU) AEAB CP 187/2023", "amount_eur": 2415.0, "region": "Norte", "category": "educação não superior", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Office 365", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "10214199", "channel": "committed", "buyer": "Universidade Politécnica de Bragança", "excerpt": "Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S", "amount_eur": 67000.0, "region": "Norte", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "10671986", "channel": "committed", "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança", "excerpt": "DE ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)” PARA UTILIZAÇÃO", "amount_eur": 2424.0, "region": "Norte", "category": "educação não superior", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Office 365", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "10853054", "channel": "committed", "buyer": "Unidade Local de Saúde do Nordeste, EPE", "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do", "amount_eur": 130463.13, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Bragança", "district": ""}, {"source_id": "10892351", "channel": "committed", "buyer": "Universidade Politécnica de Bragança", "excerpt": "Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S", "amount_eur": 67439.32, "region": "sem local", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Bragança", "district": ""}, {"source_id": "11035564", "channel": "committed", "buyer": "Município de Bragança", "excerpt": "oftware e serviços conexos - subscrição Microsoft 365 Aquisição de licenciamento de software", "amount_eur": 41260.38, "region": "Norte", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft 365", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "11087463", "channel": "committed", "buyer": "Câmara Municipal de Miranda do Douro", "excerpt": "Aquisição de Licenciamento para Microsoft SQL Server 2022 Standard Aquisição de L", "amount_eur": 7475.9, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Miranda do Douro", "district": ""}, {"source_id": "11266672", "channel": "committed", "buyer": "Agência de Desenvolvimento Regional do Vale do Tua - Associação ADRVT", "excerpt": "o conjunta de Redes Sociais (Facebook e Instagram);\n7.\tAdaptação e divulgação de conteúdo", "amount_eur": 6000.0, "region": "sem local", "category": "administração central", "vendor": "Meta", "fundos": "", "year": 2025, "headline": true, "product": "Instagram", "url": "", "place": "Carrazeda de Ansiães", "district": "Braganca"}, {"source_id": "11344978", "channel": "committed", "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança", "excerpt": "”; “ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)”; “ALUGUER DE LI", "amount_eur": 11056.5, "region": "Norte", "category": "educação não superior", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Office 365", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "11448369", "channel": "committed", "buyer": "Liga dos Amigos do Centro de Saúde da Alfândega de Fé", "excerpt": "vo \na) Sistema operativo tipo Microsoft office 365 Familiar– 1 unidade;\n3. Material técnic", "amount_eur": 2000.0, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Office 365", "url": "", "place": "Alfândega da Fé", "district": "Braganca"}, {"source_id": "11600536", "channel": "committed", "buyer": "Município de Mirandela", "excerpt": "Aquisição de Microsoft SQL Server 2022 Standard – 6 Core (Lice", "amount_eur": 9918.12, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Mirandela", "district": "Braganca"}, {"source_id": "11675230", "channel": "committed", "buyer": "Universidade Politécnica de Bragança", "excerpt": "Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S", "amount_eur": 67065.82, "region": "sem local", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Bragança", "district": ""}, {"source_id": "11763885", "channel": "committed", "buyer": "Município de Freixo de Espada à Cinta", "excerpt": "Licenciamento Exchange Licenciamento Exchange nifEntContrato=5", "amount_eur": 18910.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Exchange", "url": "", "place": "Freixo de Espada à Cinta", "district": "Braganca"}, {"source_id": "11764845", "channel": "committed", "buyer": "Município de Mogadouro", "excerpt": "O LICENCIAMENTO EM VOLUME OPEN VALUE DA MICROSOFT CONTRATO DE MANUTENÇÃO E ATUALIZAÇÃO DO", "amount_eur": 57770.94, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Mogadouro", "district": "Braganca"}, {"source_id": "12066515", "channel": "committed", "buyer": "Município de Torre de Moncorvo", "excerpt": "Renovação Acrobat Pro for Teams e Aquisição Creative Cloud Pro for Team", "amount_eur": 10868.85, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Teams", "url": "", "place": "Torre de Moncorvo", "district": "Braganca"}, {"source_id": "12221363", "channel": "committed", "buyer": "Município de Vimioso", "excerpt": "ÇÃO DE ENDPOINTS E EMAIL E AQUISIÇÃO DE MICROSOFT OFFICE HOME AND BUSINESS 2024 CONTRATO", "amount_eur": 15785.61, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Vimioso", "district": "Braganca"}, {"source_id": "13193889", "channel": "committed", "buyer": "Município de Bragança", "excerpt": "Renovação de subscrição Microsoft 365 Renovação de subscrição Microsoft 365 n", "amount_eur": 31617.28, "region": "Norte", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft 365", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "13787558", "channel": "committed", "buyer": "Município de Vila Flor", "excerpt": "6 – AQUISIÇÃO DE SERVIÇOS INFORMÁTICOS (MICROSOFT 365) AJUSTE DIRETO – AD-07/2026 – AQUISIÇÃO", "amount_eur": 17148.26, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Vila Flor", "district": "Braganca"}, {"source_id": "14107476", "channel": "committed", "buyer": "Município de Freixo de Espada à Cinta", "excerpt": "Aquisição de Licenciamento Microsoft Server 2025 Aquisição de Licenciamento", "amount_eur": 2351.37, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Freixo de Espada à Cinta", "district": "Braganca"}, {"source_id": "14407146", "channel": "committed", "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança", "excerpt": "”, “ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)”, “ALUGUER DE LI", "amount_eur": 12197.0, "region": "Norte", "category": "educação não superior", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Office 365", "url": "", "place": "Bragança", "district": "Braganca"}, {"source_id": "14990809", "channel": "committed", "buyer": "Unidade Local de Saúde do Nordeste, EPE", "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do", "amount_eur": 445637.0, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Bragança", "district": ""}, {"source_id": "15300630", "channel": "committed", "buyer": "Associação para o Estudo e Protecção do Gado Asinino-AEPGA", "excerpt": "de serviços para criação de plataforma SharePoint para gestão de dados sobre habitats no", "amount_eur": 16400.0, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "SharePoint", "url": "", "place": "Miranda do Douro", "district": "Braganca"}, {"source_id": "15545078", "channel": "committed", "buyer": "Município de Mogadouro", "excerpt": "“AQUISIÇÃO DE LICENCIAMENTO MICROSOFT 365 (CSP) E PRESTAÇÃO DE SERVIÇOS ASSOCIADO", "amount_eur": 18301.65, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Mogadouro", "district": "Braganca"}, {"source_id": "15573603", "channel": "committed", "buyer": "Universidade Politécnica de Bragança", "excerpt": "Renovação do Licenciamento do Software Microsoft 365 A3 para o Campus do Instituto Politécni", "amount_eur": 52717.08, "region": "sem local", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Bragança", "district": ""}, {"source_id": "21130/2025", "channel": "requested", "buyer": "Universidade Politécnica de Bragança", "excerpt": "Licenciamento do Software Microsoft para o Campus do IPB Universidade Polit", "amount_eur": 70000.0, "region": "sem local", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "https://files.diariodarepublica.pt/cp_hora/2025/08/150/419405068.pdf", "place": "Bragança", "district": ""}, {"source_id": "18841/2026", "channel": "requested", "buyer": "Universidade Politécnica de Bragança", "excerpt": "Renovação do Licenciamento do Software Microsoft 365 A3 para o Campus do Instituto Politécni", "amount_eur": 60000.0, "region": "sem local", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "https://files.diariodarepublica.pt/cp_hora/2026/07/141/419968171.pdf", "place": "Bragança", "district": ""}]}</script>
+  <script>
+    const payload = JSON.parse(document.getElementById('report-data').textContent);
+    const yearLabels = ["2022", "2023", "2024", "2025", "2026"];
+    const placeData = {"Bragança": 109739.6, "Mogadouro": 57770.94, "Freixo de Espada à Cinta": 18910.0, "Vimioso": 15785.61, "Torre de Moncorvo": 10868.85, "Mirandela": 9918.12, "Carrazeda de Ansiães": 6000.0, "Alfândega da Fé": 2000.0};
+    const eurTooltip = {
+      callbacks: {
+        label: function (ctx) {
+          const label = ctx.dataset.label ? ctx.dataset.label + ': ' : '';
+          const v = ctx.chart.options.indexAxis === 'y' ? ctx.parsed.x : ctx.parsed.y;
+          return label + eurTick(v != null ? v : ctx.raw);
+        }
+      }
+    };
+    function eurTick(v) {
+      return Number(v).toLocaleString('pt-PT', { maximumFractionDigits: 0 }) + ' €';
+    }
+    const slides = [...document.querySelectorAll('.slide')];
+    const dots = document.getElementById('dots');
+    const progress = document.getElementById('progress');
+    slides.forEach((slide) => {
+      const a = document.createElement('a');
+      a.href = '#' + slide.id;
+      a.title = slide.dataset.title || slide.id;
+      dots.appendChild(a);
+    });
+    const dotLinks = [...dots.querySelectorAll('a')];
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll('.reveal').forEach((el, idx) => {
+          el.style.transitionDelay = (idx * 50) + 'ms';
+          el.classList.add('is-in');
+        });
+        const i = slides.indexOf(entry.target);
+        if (i >= 0) {
+          dotLinks.forEach((d, j) => d.classList.toggle('is-active', j === i));
+          progress.style.width = (((i + 1) / slides.length) * 100) + '%';
+          if (entry.target.id === 's2' && window.__fitLeiriaMap) window.__fitLeiriaMap();
+        }
+      });
+    }, { threshold: 0.45 });
+    slides.forEach((slide) => io.observe(slide));
+    new Chart(document.getElementById('chartLeiriaYears'), {
+      type: 'bar',
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: eurTooltip
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { callback: (v) => eurTick(v) } }
+        }
+      },
+      data: {
+        labels: yearLabels,
+        datasets: [
+          {
+            label: 'contrato assinado',
+            data: yearLabels.map((y) => payload.totals[y].committed),
+            backgroundColor: '#fd5288', borderRadius: 6
+          },
+          {
+            label: 'pedido ao mercado',
+            data: yearLabels.map((y) => payload.totals[y].requested),
+            backgroundColor: '#72e123', borderRadius: 6
+          }
+        ]
+      }
+    });
+    const vendorByYear = Object.fromEntries(
+      yearLabels.map((y) => [y, (payload.breakdowns.committed_by_vendor || {})[y] || {}])
+    );
+    const vendorColors = yearLabels.map((_, i) => {
+      const t = yearLabels.length <= 1 ? 1 : i / (yearLabels.length - 1);
+      const shade = Math.round(210 - t * 185);
+      return 'rgb(' + shade + ',' + shade + ',' + shade + ')';
+    });
+    const vendorLabels = [...new Set(
+      yearLabels.flatMap((y) => Object.keys(vendorByYear[y]))
+    )].sort((a, b) => {
+      const sum = (name) => yearLabels.reduce(
+        (acc, y) => acc + (vendorByYear[y][name] || 0), 0
+      );
+      return sum(b) - sum(a);
+    });
+    new Chart(document.getElementById('chartLeiriaVendor'), {
+      type: 'bar',
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: eurTooltip
+        },
+        scales: {
+          x: { beginAtZero: true, ticks: { callback: (v) => eurTick(v) } },
+          y: { ticks: { autoSkip: false } }
+        }
+      },
+      data: {
+        labels: vendorLabels,
+        datasets: yearLabels.map((y, i) => ({
+          label: y,
+          data: vendorLabels.map((k) => vendorByYear[y][k] || 0),
+          backgroundColor: vendorColors[i],
+          borderRadius: 6
+        }))
+      }
+    });
+    (function drawLeiriaMap() {
+      if (!document.getElementById('mapLeiria')) return;
+      const bands = ['#f4ea15', '#eb5423', '#010101'];
+      const zeroFill = '#f4f4f0';
+      function fold(s) {
+        return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+      }
+      function eurLabel(v) {
+        return Number(v).toLocaleString('pt-PT', { maximumFractionDigits: 0 }) + ' €';
+      }
+      function amountFor(name) {
+        const g = fold(name);
+        for (const [k, v] of Object.entries(placeData)) {
+          if (fold(k) === g) return v;
+        }
+        if (g === fold("Distrito de Bragan\u00e7a")) {
+          return Object.values(placeData).reduce((sum, v) => sum + Number(v), 0);
+        }
+        return 0;
+      }
+      function paint(munGeo) {
+        const values = Object.values(placeData).filter((v) => v > 0).sort((a, b) => a - b);
+        const cuts = [];
+        if (values.length) {
+          for (let i = 1; i <= 3; i++) {
+            const idx = Math.min(values.length - 1, Math.ceil((i / 3) * values.length) - 1);
+            cuts.push(values[idx]);
+          }
+        }
+        function bin(v) {
+          if (!cuts.length || v <= 0) return 0;
+          for (let i = 0; i < cuts.length; i++) {
+            if (v <= cuts[i]) return i + 1;
+          }
+          return cuts.length;
+        }
+        function binLabel(i) {
+          if (!cuts.length) return '—';
+          if (i === 1) return '< ' + eurLabel(cuts[0]);
+          if (i === cuts.length) return '≥ ' + eurLabel(cuts[Math.max(0, cuts.length - 2)]);
+          return '≤ ' + eurLabel(cuts[i - 1]);
+        }
+        const map = L.map('mapLeiria', {
+          zoomControl: false, attributionControl: false,
+          dragging: false, scrollWheelZoom: false,
+          doubleClickZoom: false, boxZoom: false, keyboard: false
+        });
+        const layer = L.geoJSON(munGeo, {
+          style: function (feat) {
+            const v = amountFor(feat.properties.name);
+            const b = bin(v);
+            if (b === 0) {
+              return {
+                color: '#9a9588', weight: 1,
+                fillColor: zeroFill, fillOpacity: 1
+              };
+            }
+            return {
+              color: b === 1 ? '#ffe9a0' : '#1c1c22',
+              weight: 1.2,
+              fillColor: bands[b - 1],
+              fillOpacity: 0.98,
+              className: b === 1 ? 'night-lit' : ''
+            };
+          },
+          onEachFeature: function (feat, lyr) {
+            const v = amountFor(feat.properties.name);
+            lyr.bindTooltip(feat.properties.name + ' — ' + eurLabel(v));
+          }
+        }).addTo(map);
+        function fit() {
+          map.invalidateSize();
+          const bounds = layer.getBounds();
+          if (bounds.isValid()) map.fitBounds(bounds, { padding: [12, 12] });
+        }
+        window.__fitLeiriaMap = fit;
+        fit();
+        requestAnimationFrame(fit);
+        setTimeout(fit, 200);
+        document.getElementById('mapLeiriaLegend').innerHTML =
+          'CAOP2025 DGT · <span style="background:' + zeroFill + '"></span>0 € · ' +
+          bands.map((c, i) => '<span style="background:' + c + '"></span>' + binLabel(i + 1)).join(' · ');
+      }
+      fetch('braganca.geojson')
+        .then((r) => r.json())
+        .then(paint)
+        .catch(function () {
+          document.getElementById('mapLeiriaLegend').textContent =
+            'Mapa indisponível (falha a carregar CAOP).';
+        });
+    })();
+  </script>
+<footer class="cfp-bar"><a class="cfp-brand" href="https://codefor.pt" rel="noopener noreferrer" title="Realização: code for portugal — codefor.pt (em breve)"><img class="mark" src="../assets/favicon.png" width="28" height="28" alt="code for portugal" /><span class="name">Realização: code for portugal</span><span class="soon">codefor.pt · em breve</span></a><span class="cfp-lic"><a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener noreferrer license" title="Conteúdo · CC BY-SA 4.0"><img src="../assets/cc-by-sa.png" width="88" height="31" alt="CC BY-SA 4.0" /></a><a href="https://github.com/codeforportugal/gafam-portugal-report" rel="noopener noreferrer" title="Código · AGPL-3.0"><img src="../assets/agplv3.png" width="88" height="31" alt="AGPL-3.0" /></a></span></footer>
+</body>
+</html>

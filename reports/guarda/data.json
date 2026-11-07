@@ -1,0 +1,976 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.424189+00:00",
+  "totals": {
+    "2022": {
+      "committed": 17890.260000000002,
+      "requested": 0,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 300004.29,
+      "requested": 6485159.050000001,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 173305.8,
+      "requested": 0,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 769026.3799999999,
+      "requested": 1090000.0,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 575737.8099999999,
+      "requested": 281693.49,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "sem local": 17890.260000000002
+      },
+      "2023": {
+        "sem local": 235833.41,
+        "Centro": 64170.880000000005
+      },
+      "2024": {
+        "sem local": 89546.04000000001,
+        "Centro": 83759.76
+      },
+      "2025": {
+        "Centro": 667942.4299999999,
+        "sem local": 101083.95
+      },
+      "2026": {
+        "sem local": 366654.45999999996,
+        "Centro": 209083.35
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "administração local": 17890.260000000002
+      },
+      "2023": {
+        "administração local": 217881.0,
+        "ensino superior": 48560.94,
+        "saúde": 33562.35
+      },
+      "2024": {
+        "administração local": 89546.04000000001,
+        "saúde": 83759.76
+      },
+      "2025": {
+        "administração local": 656422.52,
+        "saúde": 100434.42,
+        "outra entidade pública": 12169.44
+      },
+      "2026": {
+        "administração local": 400854.61999999994,
+        "saúde": 99758.68,
+        "ensino superior": 50376.63,
+        "outra entidade pública": 14523.88,
+        "educação não superior": 10224.0
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 17890.260000000002
+      },
+      "2023": {
+        "Microsoft": 300004.29
+      },
+      "2024": {
+        "Microsoft": 173305.8
+      },
+      "2025": {
+        "Microsoft": 769026.38
+      },
+      "2026": {
+        "Microsoft": 575737.8099999999
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Manteigas": 11590.26,
+        "Almeida": 6300.0
+      },
+      "2023": {
+        "Sabugal": 164122.11,
+        "Guarda": 82123.29000000001,
+        "Meda": 36913.17,
+        "Manteigas": 16845.72
+      },
+      "2024": {
+        "Guarda": 83759.76,
+        "Manteigas": 64564.8,
+        "Almeida": 15722.0,
+        "Fornos de Algodres": 9259.24
+      },
+      "2025": {
+        "Guarda": 667942.4299999999,
+        "Vila Nova de Foz Côa": 61690.92,
+        "Trancoso": 13815.0,
+        "Figueira de Castelo Rodrigo": 9875.13,
+        "Pinhel": 9838.0,
+        "Aguiar da Beira": 5864.9
+      },
+      "2026": {
+        "Sabugal": 278910.66,
+        "Guarda": 209083.35,
+        "Meda": 62995.92,
+        "Manteigas": 14523.88,
+        "Gouveia": 10224.0
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "9276028",
+      "channel": "committed",
+      "buyer": "MUNICÍPIO DE MANTEIGAS",
+      "excerpt": "utilização de emails e contas Microsoft Office 365 Aquisição de serviços com vista à utili",
+      "amount_eur": 11590.26,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Manteigas",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "9372967",
+      "channel": "committed",
+      "buyer": "Município de Almeida",
+      "excerpt": "Aquisição de Licenças Microsoft 365 Business Standard Aquisição de Licenças",
+      "amount_eur": 6300.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Almeida",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "9806549",
+      "channel": "committed",
+      "buyer": "MUNICÍPIO DE MANTEIGAS",
+      "excerpt": "utilização de emails e contas Microsoft Office 365 Aquisição de serviços com vista à utili",
+      "amount_eur": 16845.72,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Manteigas",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "9833155",
+      "channel": "committed",
+      "buyer": "Município do Sabugal",
+      "excerpt": "Manutenção do Licenciamento do Software Microsoft Enterprise Agreement Aquisição de Servi",
+      "amount_eur": 164122.11,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Sabugal",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "9895877",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica da Guarda",
+      "excerpt": "CP.IPG.2023.535_Licenciamento Microsoft OVS-ES CP.IPG.2023.535_Licenciamento Mi",
+      "amount_eur": 48560.94,
+      "region": "Centro",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "9961269",
+      "channel": "committed",
+      "buyer": "Município de Mêda",
+      "excerpt": "Licenciamento do Software Microsoft Enterprise Agreement Aquisição de servi",
+      "amount_eur": 36913.17,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Meda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "10082825",
+      "channel": "committed",
+      "buyer": "UNIDADE LOCAL DE SAÚDE DA GUARDA, E.P.E",
+      "excerpt": "e Serviços de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 15609.94,
+      "region": "Centro",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": ""
+    },
+    {
+      "source_id": "10353789",
+      "channel": "committed",
+      "buyer": "UNIDADE LOCAL DE SAÚDE DA GUARDA, E.P.E",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO DE SOFTWARE MICROSOFT - 2ª FASE E SERVIÇOS CONEXOS PARA VÁRIA",
+      "amount_eur": 17952.41,
+      "region": "sem local",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": ""
+    },
+    {
+      "source_id": "10704202",
+      "channel": "committed",
+      "buyer": "MUNICÍPIO DE MANTEIGAS",
+      "excerpt": "tilização de e-mails e contas Microsoft Office 365 Utilização de e-mails e contas Microsof",
+      "amount_eur": 64564.8,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Manteigas",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "10730853",
+      "channel": "committed",
+      "buyer": "Município de Almeida",
+      "excerpt": "ão de serviços de renovação de licenças MICROSOFT 365 BUSINESS STANDART E EXCHANGE ONLINE (PL",
+      "amount_eur": 15722.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Almeida",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "10846490",
+      "channel": "committed",
+      "buyer": "UNIDADE LOCAL DE SAÚDE DA GUARDA, E.P.E",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 83759.76,
+      "region": "Centro",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "11094753",
+      "channel": "committed",
+      "buyer": "Município de Fornos de Algodres",
+      "excerpt": "Aquisição de Licenças de Microsoft 365 Business e outras, por um período de 36",
+      "amount_eur": 9259.24,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Fornos de Algodres",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "11215000",
+      "channel": "committed",
+      "buyer": "Município de Trancoso",
+      "excerpt": "Aquisição de Software Windows Server Aquisição de Software Windows Se",
+      "amount_eur": 13815.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Trancoso",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "11502639",
+      "channel": "committed",
+      "buyer": "UNIDADE LOCAL DE SAÚDE DA GUARDA, E.P.E",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 100434.42,
+      "region": "Centro",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": ""
+    },
+    {
+      "source_id": "11545925",
+      "channel": "committed",
+      "buyer": "Município da Guarda",
+      "excerpt": "Licenciamento de Software Microsoft para o Município Licenciamento de Softw",
+      "amount_eur": 537734.82,
+      "region": "Centro",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "11608237",
+      "channel": "committed",
+      "buyer": "Município de Vila Nova de Foz Côa",
+      "excerpt": "ICENÇAS E RENOVAÇÃO DO LICENCIAMENTO DA MICROSOFT AQUISIÇÃO DE NOVAS LICENÇAS E RENOVAÇÃO",
+      "amount_eur": 61690.92,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Vila Nova de Foz Côa",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "11783903",
+      "channel": "committed",
+      "buyer": "Águas Públicas em Altitude - Serviços Intermunicipalizados, APAL-SIM",
+      "excerpt": "Renovação de licenças Microsoft/Contas E-mail profissionais APAL-SIM Re",
+      "amount_eur": 12169.44,
+      "region": "Centro",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "11795901",
+      "channel": "committed",
+      "buyer": "Município de Aguiar da Beira",
+      "excerpt": "Renovação Office 365 Renovação Office 365 nifEntContrato=506",
+      "amount_eur": 5864.9,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Aguiar da Beira",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "11957750",
+      "channel": "committed",
+      "buyer": "Município de Pinhel",
+      "excerpt": "Licenciamento Microsoft 365 - S/teams Licenciamento Microsoft 365 -",
+      "amount_eur": 9838.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Pinhel",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "12268754",
+      "channel": "committed",
+      "buyer": "Município de Fornos de Algodres",
+      "excerpt": "AS_43.2025 - Aquisição de Licenças de Microsoft 365 Business e outras, por um período de 36",
+      "amount_eur": 17603.75,
+      "region": "Centro",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "12230653",
+      "channel": "committed",
+      "buyer": "Municipio de Figueira de Castelo Rodrigo",
+      "excerpt": "Aquisição de licenciamento Microsoft Exchange Aquisição de licenciamento Microsoft Ex",
+      "amount_eur": 9875.13,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Figueira de Castelo Rodrigo",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "13674555",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica da Guarda",
+      "excerpt": "enovação da subscrição do Licenciamento Microsoft OVS-Open Value Subscription Agreement f",
+      "amount_eur": 50376.63,
+      "region": "Centro",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "13824428",
+      "channel": "committed",
+      "buyer": "Município do Sabugal",
+      "excerpt": "Manutenção do Licenciamento do Software Microsoft Enterprise Agreement Aquisição de Servi",
+      "amount_eur": 278910.66,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Sabugal",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "14541356",
+      "channel": "committed",
+      "buyer": "Município de Mêda",
+      "excerpt": "e serviços de Licenciamento do Software Microsoft Enterprise Agreement Aquisição de servi",
+      "amount_eur": 62995.92,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Meda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "15023255",
+      "channel": "committed",
+      "buyer": "UNIDADE LOCAL DE SAÚDE DA GUARDA, E.P.E",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 99758.68,
+      "region": "Centro",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "15400920",
+      "channel": "committed",
+      "buyer": "Águas Públicas em Altitude - Serviços Intermunicipalizados, APAL-SIM",
+      "excerpt": "Contratação de licenciamento Microsoft 365 Contratação de licenciamento Microsoft",
+      "amount_eur": 14523.88,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Manteigas",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "15454574",
+      "channel": "committed",
+      "buyer": "Município da Guarda",
+      "excerpt": "e Licenças Adobe Creative Cloud Pro For Teams Renovação de Licenças Adobe Creative Cl",
+      "amount_eur": 24795.04,
+      "region": "Centro",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "15585021",
+      "channel": "committed",
+      "buyer": "Município da Guarda",
+      "excerpt": "Aquisição de licenciamento Microsoft para o Município da Guarda Aquisição de",
+      "amount_eur": 34153.0,
+      "region": "Centro",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Guarda",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "15662019",
+      "channel": "committed",
+      "buyer": "Agrupamento de Escolas de Gouveia",
+      "excerpt": "o de software em modelo de subscrição – Microsoft 365 – Educação Ajuste Direto 4/2026 nifEntC",
+      "amount_eur": 10224.0,
+      "region": "sem local",
+      "category": "educação não superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Gouveia",
+      "district": "Guarda"
+    },
+    {
+      "source_id": "1270/2023",
+      "channel": "requested",
+      "buyer": "Município do Sabugal",
+      "excerpt": "Manutenção do Licenciamento do Software Microsoft Enterprise Agreement Município do Sabug",
+      "amount_eur": 172814.19,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://dre.pt/application/file/206708092",
+      "place": "Sabugal",
+      "district": ""
+    },
+    {
+      "source_id": "5309/2023",
+      "channel": "requested",
+      "buyer": "UNIDADE LOCAL DE SAÚDE DA GUARDA, E.P.E",
+      "excerpt": "e Serviços de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 6312344.86,
+      "region": "sem local",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://dre.pt/application/file/211344021",
+      "place": "Guarda",
+      "district": ""
+    },
+    {
+      "source_id": "11867/2025",
+      "channel": "requested",
+      "buyer": "Município da Guarda",
+      "excerpt": "Licenciamento de Software Microsoft para o Município Município da Guarda 48",
+      "amount_eur": 545000.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/05/087/419006159.pdf",
+      "place": "Guarda",
+      "district": ""
+    },
+    {
+      "source_id": "11499/2025",
+      "channel": "requested",
+      "buyer": "Município da Guarda",
+      "excerpt": "Licenciamento de Software Microsoft para o Município Município da Guarda na",
+      "amount_eur": 545000.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/05/084/418997137.pdf",
+      "place": "Guarda",
+      "district": ""
+    },
+    {
+      "source_id": "824/2026",
+      "channel": "requested",
+      "buyer": "Município do Sabugal",
+      "excerpt": "Manutenção do Licenciamento do Software Microsoft Enterprise Agreement Município do Sabug",
+      "amount_eur": 281693.49,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/01/010/419947848.pdf",
+      "place": "Sabugal",
+      "district": ""
+    }
+  ]
+}

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GAFAM · Distrito de Vila Real (2022–2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../assets/favicon.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --ink: #010101;
+      --paper: #f4f4f0;
+      --coral: #fd5288;
+      --teal: #72e123;
+      --lime: #72e123;
+      --gold: #f4ea15;
+      --sky: #eb5423;
+      --violet: #eb5423;
+      --muted: #6a6a6a;
+      --font: "Inter", system-ui, sans-serif;
+      --mono: "Courier Prime", "Courier New", monospace;
+      --cfp-bar: 3.5rem;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font); font-weight: 500; color: var(--ink);
+      background: var(--paper); overflow-x: hidden;
+    }
+    body { padding-bottom: var(--cfp-bar); }
+    .cfp-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+      display: flex; justify-content: center; align-items: center;
+      flex-wrap: wrap; gap: 0.75rem 1.25rem;
+      min-height: var(--cfp-bar);
+      background: var(--ink);
+      border-top: 2px solid var(--lime);
+      padding: 0.4rem 1rem;
+    }
+    .cfp-bar .cfp-brand {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; color: var(--paper);
+      font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .cfp-bar .cfp-brand:hover { color: var(--gold); }
+    .cfp-bar .mark {
+      width: 28px; height: 28px; border-radius: 4px;
+      object-fit: cover; flex: 0 0 auto;
+      box-shadow: 0 0 0 1px rgba(244,234,21,.35);
+    }
+    .cfp-bar .name { color: inherit; }
+    .cfp-bar .soon { color: var(--lime); opacity: 0.95; font-weight: 400; }
+    .cfp-lic {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+    }
+    .cfp-lic a { display: inline-flex; line-height: 0; opacity: 0.95; }
+    .cfp-lic a:hover { opacity: 1; }
+    .cfp-lic img { height: 22px; width: auto; display: block; }
+    @media (max-width: 520px) {
+      .cfp-bar .soon { display: none; }
+    }
+    .progress {
+      position: fixed; top: 0; left: 0; height: 4px; width: 0; z-index: 40;
+      background: linear-gradient(90deg, var(--coral), var(--lime), var(--gold), var(--sky));
+      transition: width .15s linear;
+    }
+    .dots {
+      position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: .45rem; z-index: 30;
+    }
+    .dots a {
+      width: 10px; height: 10px; border-radius: 999px;
+      background: rgba(1,1,1,.25); border: 1px solid rgba(1,1,1,.2);
+    }
+    .dots a.is-active { background: var(--coral); transform: scale(1.25); }
+    .slide {
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      padding-bottom: calc(clamp(1.5rem, 4vw, 3rem) + var(--cfp-bar));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide--hero {
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 82% 18%, rgba(253,82,136,.45), transparent 40%),
+        radial-gradient(circle at 10% 80%, rgba(114,225,35,.3), transparent 35%),
+        linear-gradient(135deg, #010101, #2a0a14 70%, #1a1a1a);
+    }
+    .slide--map {
+      color: #f4f4f0; background: #010101;
+    }
+    .slide--map .lead { opacity: 0.85; }
+    .slide h1, .slide h2 {
+      margin: 0 0 0.4em;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 18ch;
+    }
+    .slide h1 { font-size: clamp(2.4rem, 7vw, 5rem); }
+    .slide h2 { font-size: clamp(1.8rem, 5vw, 3.4rem); }
+    .lead {
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      max-width: 42rem;
+      line-height: 1.45;
+      margin: 0 0 1.5rem;
+    }
+    .meta { font-family: var(--mono); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; opacity: .8; }
+    .year-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .year-card {
+      background: rgba(5, 8, 12, .45);
+      color: var(--paper);
+      padding: 1rem 1.1rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(246,241,231,.12);
+    }
+    .year-card:nth-child(2) { background: var(--coral); border-color: transparent; }
+    .year-card:nth-child(3) { background: var(--teal); border-color: transparent; }
+    .year-card:nth-child(4) { background: var(--violet); border-color: transparent; }
+    .year-card:nth-child(5) { background: var(--gold); color: var(--ink); border-color: transparent; }
+    .year-card .y {
+      font-family: var(--mono); font-size: .75rem; margin: 0 0 .5rem; letter-spacing: .06em;
+    }
+    .year-card .n {
+      font-size: clamp(1.05rem, 2.6vw, 1.45rem); font-weight: 800; margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .year-card .c { margin: .4rem 0 0; font-size: .78rem; opacity: .9; }
+    .algema-stack {
+      display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem;
+    }
+    .algema-vendor {
+      margin: 0 0 .55rem;
+      font-family: var(--mono); font-size: .72rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; opacity: .7;
+    }
+    .algema-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 860px) { .algema-grid { grid-template-columns: 1fr; } }
+    .algema {
+      background: #fff;
+      border-radius: 1.25rem;
+      padding: 1.25rem 1.35rem 1.4rem;
+      border: 1px solid #e5dfd2;
+      position: relative;
+      overflow: hidden;
+    }
+    .algema:nth-child(1) { background: linear-gradient(160deg, #010101, #222); color: var(--paper); border: 0; }
+    .algema:nth-child(2) { background: linear-gradient(160deg, #fd5288, #eb5423); color: #fff; border: 0; }
+    .algema:nth-child(3) { background: linear-gradient(160deg, #72e123, #3d8f12); color: #010101; border: 0; }
+    .algema i {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: .65rem;
+      opacity: .95;
+    }
+    .algema h3 { margin: 0; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .algema .anos {
+      margin: .55rem 0 .85rem;
+      font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .algema .chain {
+      display: flex; gap: .35rem; align-items: center; margin-bottom: .35rem;
+    }
+    .algema .bead {
+      width: 14px; height: 14px; border-radius: 999px;
+      background: rgba(255,255,255,.2);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.25);
+    }
+    .algema .bead.is-on {
+      background: var(--gold);
+      box-shadow: 0 0 0 1px rgba(244,234,21,.55), 0 0 10px rgba(244,234,21,.45);
+    }
+    .handcuff-mark {
+      position: absolute; right: -0.4rem; bottom: -0.6rem;
+      font-size: 6rem; opacity: .12; transform: rotate(-18deg); pointer-events: none;
+    }
+    .chart-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin: 0.25rem 0 0.75rem;
+    }
+    .chart-box {
+      flex: 1;
+      min-height: 280px;
+      max-height: 62vh;
+      position: relative;
+      margin-top: 0.25rem;
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+    .chart-box canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .slide--map .chart-box, .map-panel {
+      background: transparent; padding: 0; height: auto;
+    }
+    .map-panel {
+      background: #0a0a0e;
+      color: #f4f4f0;
+      border-radius: 1.25rem;
+      padding: 1rem;
+    }
+    #mapLeiria {
+      height: min(48vh, 420px);
+      border-radius: 1rem;
+      background: radial-gradient(ellipse 55% 45% at 48% 42%, #1a1520 0%, #010101 100%);
+    }
+    #mapLeiria .night-lit {
+      filter: drop-shadow(0 0 6px rgba(244,234,21,.55)) drop-shadow(0 0 14px rgba(253,82,136,.35));
+    }
+    .map-legend {
+      margin-top: .75rem;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #c8c4b8;
+    }
+    .map-legend span {
+      display: inline-block; width: 14px; height: 10px; margin-right: 4px;
+      vertical-align: middle; border: 1px solid rgba(244,244,240,.25);
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .split { grid-template-columns: 1fr; }
+      .dots { display: none; }
+    }
+    table {
+      width: 100%; border-collapse: collapse; font-size: .92rem;
+      background: #fff; border-radius: 1rem; overflow: hidden;
+    }
+    th, td {
+      text-align: left; padding: .65rem .7rem;
+      border-bottom: 1px solid #e5dfd2; vertical-align: top;
+    }
+    th {
+      font-family: var(--mono); font-size: .7rem; letter-spacing: .05em;
+      text-transform: uppercase; background: #010101; color: #f4f4f0;
+    }
+    td.num { font-family: var(--mono); white-space: nowrap; }
+    ul { padding-left: 1.1rem; margin: 0; }
+    a { color: var(--coral); font-weight: 700; }
+    .slide--hero a { color: var(--lime); }
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.is-in { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <nav class="dots" id="dots" aria-label="Slides"></nav>
+  <main class="deck">
+  <section class="slide slide--hero" id="s0" data-title="Início">
+      <p class="meta reveal"><a href="../">← apresentação nacional</a></p>
+      <h1 class="reveal">Distrito de Vila Real</h1>
+      <p class="lead reveal">Entre 2022 e 2026, câmaras, escolas e hospitais do distrito
+      assinaram contratos com grandes tecnológicas americanas. Os Estados Unidos
+      podem obrigar essas empresas a cortar o serviço. O Cloud Act é outra lei:
+      obriga-as a entregar dados sob o seu controlo, estejam onde estiverem.
+      O aviso ao cliente pode ser adiado. Os números são só dinheiro público.</p>
+      <p class="chart-title reveal">Contratos assinados, por ano</p>
+      <div class="year-grid"><article class='year-card reveal'><p class='y'>2022</p><p class='n'>322 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2023</p><p class='n'>1 milhão €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2024</p><p class='n'>942 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2025</p><p class='n'>3 milhões €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2026</p><p class='n'>3 milhões €</p><p class='c'>contrato assinado</p></article></div>
+  </section>
+  <section class="slide" id="s1" data-title="Série">
+    <h2 class="reveal">O que foi assinado e o que foi pedido</h2>
+    <p class="lead reveal">A barra rosa é dinheiro de contratos já assinados.
+    A verde é o valor pedido ao mercado, que pode ainda não ter sido assinado.
+    Não some as duas.</p>
+    <p class="chart-title reveal">Contratos assinados e pedidos ao mercado, por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaYears" aria-label="Contratos assinados e pedidos ao mercado, por ano"></canvas></div>
+  </section>
+  <section class="slide slide--map" id="s2" data-title="Dia 0">
+    <h2 class="reveal">Onde um corte doeria mais</h2>
+    <p class="lead reveal">Se os Estados Unidos desligarem estes serviços, os concelhos mais escuros são os que mais contrataram em 2025. Os claros dependem menos.</p>
+    <p class="lead reveal">Esta conta é só dinheiro público. As empresas privadas
+    também dependem muito destas tecnologias, e isso não entra no mapa.</p>
+    <p class="chart-title reveal">Contratos assinados em 2025, por concelho</p>
+    <div class='split'><div class='map-panel reveal'><div id='mapLeiria' role='img' aria-label='Contratos assinados em 2025, por concelho do distrito de Vila Real'></div></div><div><p class='meta reveal'>Os dez concelhos com mais contratos assinados</p><ul><li class='reveal'><strong>Vila Real</strong> — 789 612,10 €</li><li class='reveal'><strong>Ribeira de Pena</strong> — 50 823,80 €</li><li class='reveal'><strong>Chaves</strong> — 26 895,33 €</li><li class='reveal'><strong>Mesão Frio</strong> — 24 438,60 €</li><li class='reveal'><strong>Montalegre</strong> — 15 220,40 €</li><li class='reveal'><strong>Peso da Régua</strong> — 15 057,73 €</li><li class='reveal'><strong>Santa Marta de Penaguião</strong> — 14 639,88 €</li></ul></div></div><div class='map-legend' id='mapLeiriaLegend'></div>
+  </section>
+  <section class="slide" id="s3" data-title="Fornecedor">
+    <h2 class="reveal">Quem levou os contratos</h2>
+    <p class="lead reveal">Cada linha é um fornecedor. Na legenda, cada tom de
+    cinzento é um ano: o mais claro é o mais antigo e o mais escuro é 2026.</p>
+    <p class="chart-title reveal">Contratos assinados por fornecedor e por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaVendor" aria-label="Contratos assinados por fornecedor e por ano"></canvas></div>
+  </section>
+  <section class="slide" id="s4" data-title="Lock-in">
+    <h2 class="reveal">As algemas</h2>
+    <p class="lead reveal">Nos contratos assinados do distrito, Microsoft e Google aparecem em vários anos. No setor público a repetição é longa: cada cartão conta esses anos, não a duração de um único contrato.</p>
+    <p class="chart-title reveal">Anos com contratos assinados no setor público, 2022–2026</p>
+    <div class='algema-stack'><div class='algema-row'><p class='algema-vendor'>Microsoft</p><div class='algema-grid'><article class='algema reveal'><i class='ri-file-word-2-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Office 365</h3><p class='anos'>4 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead'></span></div></article><article class='algema reveal'><i class='ri-windows-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Microsoft</h3><p class='anos'>5 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span></div></article><article class='algema reveal'><i class='ri-team-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Teams</h3><p class='anos'>1 ano de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span></div></article></div></div><div class='algema-row'><p class='algema-vendor'>Google</p><div class='algema-grid'><article class='algema reveal'><i class='ri-google-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Google</h3><p class='anos'>2 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span></div></article></div></div></div>
+    <p class="meta reveal" style="margin-top:1rem">Fonte: Portal Base, contratos
+    públicos celebrados (IMPIC), 2022–2026.
+    <a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/">dados.gov.pt</a></p>
+  </section>
+  <section class="slide" id="s5" data-title="Contratos">
+    <h2 class="reveal">Os 100 maiores contratos</h2>
+    <p class="lead reveal">Os maiores contratos assinados do distrito, do mais
+    caro para o mais barato. O excerto é a frase do documento oficial onde o
+    produto aparece.</p>
+    <div style="overflow:auto; max-height:62vh">
+      <table>
+        <thead>
+          <tr>
+            <th>Ano</th><th>Concelho</th><th>Entidade</th>
+            <th>Produto</th><th>Montante</th><th>Excerto</th>
+          </tr>
+        </thead>
+        <tbody><tr class='reveal'><td>2026</td><td>Vila Real</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Microsoft</td><td class='num'>2 982 108,06 €</td><td>aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do</td></tr><tr class='reveal'><td>2025</td><td>—</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Microsoft</td><td class='num'>2 565 157,30 €</td><td>aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do</td></tr><tr class='reveal'><td>2023</td><td>Vila Real</td><td>Águas do Norte, SA</td><td>Microsoft</td><td class='num'>1 094 341,92 €</td><td>CP - Subscrição de licenças de Software Microsoft e serviços de suporte para as empresas</td></tr><tr class='reveal'><td>2026</td><td>Vila Real</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Azure</td><td class='num'>397 840,80 €</td><td>AD 1495/2026 Aquisição de serviços Azure. AD 1495/2026 Aquisição de serviços Azu</td></tr><tr class='reveal'><td>2024</td><td>Vila Real</td><td>Águas do Norte, SA</td><td>Microsoft</td><td class='num'>384 642,84 €</td><td>2CP) Subscrição de licenças de software MICROSOFT e serviços de suporte para as empresas</td></tr><tr class='reveal'><td>2025</td><td>Vila Real</td><td>Município de Vila Real</td><td>Microsoft</td><td class='num'>364 226,76 €</td><td>licenciamento e manutenção de Software Microsoft Enterprise Agreement Aquisição de licen</td></tr><tr class='reveal'><td>2023</td><td>Vila Real</td><td>Universidade de Trás-os-Montes e Alto Douro</td><td>Microsoft</td><td class='num'>332 267,87 €</td><td>e Serviços de Licenciamento de Produtos Microsoft Campus Tipo A5 Aquisição de Serviços de</td></tr><tr class='reveal'><td>2024</td><td>Vila Real</td><td>Águas do Interior - Norte, EIM, SA</td><td>Azure</td><td class='num'>274 359,00 €</td><td>tares(AEQUIS, NAVHR, ARQEBI E Microsoft Azure) Aquisição de Prestação de Serviços par</td></tr><tr class='reveal'><td>2025</td><td>Vila Real</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Microsoft</td><td class='num'>258 481,96 €</td><td>aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do</td></tr><tr class='reveal'><td>2026</td><td>Vila Real</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Microsoft 365</td><td class='num'>235 000,00 €</td><td>CI 0041-2026 GESTÃO DE SERVIÇOS  MICROSOFT 365, SEGURANÇA DO ENTRA ID/ACTIVE DIRECTORY</td></tr><tr class='reveal'><td>2022</td><td>Vila Real</td><td>Município de Vila Real</td><td>Microsoft</td><td class='num'>189 000,00 €</td><td>Licenciamento e Manutenção de Software Microsoft Enterprise Agreement Aquisição de Licen</td></tr><tr class='reveal'><td>2025</td><td>Vila Real</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Microsoft</td><td class='num'>149 963,22 €</td><td>AQUISIÇÃO LICENCIAMENTO SOFTWARE MICROSOFT E SERVIÇOS CONEXOS PARA A ULSTMAD, EPE</td></tr><tr class='reveal'><td>2023</td><td>Montalegre</td><td>Município de Montalegre</td><td>Word</td><td class='num'>75 988,00 €</td><td>serviços de aluguer de bancadas para o Word RX Montalegre Aquisição de serviços de</td></tr><tr class='reveal'><td>2024</td><td>Vila Pouca de Aguiar</td><td>Município de Vila Pouca de Aguiar</td><td>Office 365</td><td class='num'>74 974,90 €</td><td>AQUISIÇÃO E INSTALAÇÃO DE LICENCIAMENTO OFFICE 365 AQUISIÇÃO E INSTALAÇÃO DE LICENCIAMENTO</td></tr><tr class='reveal'><td>2022</td><td>Vila Real</td><td>Direção Regional de Cultura do Norte</td><td>Microsoft 365</td><td class='num'>74 816,64 €</td><td>Aquisição de 100 licenças Microsoft 365 ao abrigo de Enterprise Agreement pelo</td></tr><tr class='reveal'><td>2026</td><td>Alijó</td><td>Município de Alijó</td><td>Microsoft 365</td><td class='num'>74 335,17 €</td><td>Licenciamento Microsoft 365 Licenciamento Microsoft 365 nifEntContr</td></tr><tr class='reveal'><td>2024</td><td>Alijó</td><td>Município de Alijó</td><td>Office 365</td><td class='num'>73 018,85 €</td><td>Licenciamento de Microsoft Office 365 e Prevenção com Backups Imutáveis Licen</td></tr><tr class='reveal'><td>2023</td><td>Alijó</td><td>Município de Alijó</td><td>Microsoft</td><td class='num'>72 540,52 €</td><td>Licenciamento Microsoft Licenciamento Microsoft nifEntContrato=</td></tr><tr class='reveal'><td>2024</td><td>Chaves</td><td>Freguesia de Nogueira da Montanha</td><td>macOS</td><td class='num'>60 559,30 €</td><td>Reabilitação da Escola Primária de Maços Reabilitação da Escola Primária de Maço</td></tr><tr class='reveal'><td>2025</td><td>Ribeira de Pena</td><td>Município de Ribeira de Pena</td><td>Exchange</td><td class='num'>50 823,80 €</td><td>ftware para os Serviços de SQL e Server Exchange Aquisição de Bens - Licenças de Softwar</td></tr><tr class='reveal'><td>2023</td><td>Vila Real</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Azure</td><td class='num'>50 000,00 €</td><td>Aquisição de serviços cloud - Azure AD 1719-2023 - Aquisição de serviços cl</td></tr><tr class='reveal'><td>2023</td><td>Vila Real</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Microsoft</td><td class='num'>36 850,00 €</td><td>iços de suporte de produtos licenciados microsoft AD 1456-2023 nifEntContrato=508100496|d</td></tr><tr class='reveal'><td>2026</td><td>Chaves</td><td>Município de Chaves</td><td>Workspace</td><td class='num'>31 979,36 €</td><td>Aquisição de Serviços de Google Workspace, manutenção e suporte / DNS / Serviços</td></tr><tr class='reveal'><td>2025</td><td>Chaves</td><td>Município de Chaves</td><td>Workspace</td><td class='num'>26 895,33 €</td><td>Aquisição de serviços de Google Workspace, manutenção e suporte/DNS/Serviços Regi</td></tr><tr class='reveal'><td>2026</td><td>Valpaços</td><td>Município de Valpaços</td><td>Microsoft</td><td class='num'>26 749,76 €</td><td>Aquisição de licenciamento Microsoft SQL Server 2025 Standard Core, em regim</td></tr><tr class='reveal'><td>2026</td><td>Mesão Frio</td><td>Município de Mesão Frio</td><td>Office 365</td><td class='num'>25 686,00 €</td><td>Licenciamento do Office 365 e Microsoft Teams Licenciamento do Offi</td></tr><tr class='reveal'><td>2024</td><td>Chaves</td><td>Município de Chaves</td><td>Workspace</td><td class='num'>22 577,18 €</td><td>Aquisição de serviços de google workspace, manutenção e suporte/DNS/Serviços Regi</td></tr><tr class='reveal'><td>2023</td><td>Chaves</td><td>Município de Chaves</td><td>Workspace</td><td class='num'>20 820,96 €</td><td>ços de comunicações eletrónicas: Google Workspace, Correio Eletrónico, Google Apps, Stora</td></tr><tr class='reveal'><td>2022</td><td>Santa Marta de Penaguião</td><td>Município de Santa Marta de Penaguião</td><td>Google</td><td class='num'>19 995,90 €</td><td>ções eletrónicas - correio eletrónico e google apps Aquisição de serviços de comunicaç</td></tr><tr class='reveal'><td>2022</td><td>Chaves</td><td>Município de Chaves</td><td>Workspace</td><td class='num'>19 928,84 €</td><td>ços de comunicações eletrónicas: google workspace, correio eletrónico, google apps, stora</td></tr><tr class='reveal'><td>2025</td><td>Mesão Frio</td><td>Município de Mesão Frio</td><td>Office 365</td><td class='num'>19 087,80 €</td><td>Licenciamento do Office 365 e Microsoft Teams Licenciamento do Offi</td></tr><tr class='reveal'><td>2026</td><td>Vila Real</td><td>Universidade de Trás-os-Montes e Alto Douro</td><td>Teams</td><td class='num'>18 370,97 €</td><td>ção de 10 Licenças da Subscrição Claude Teams Plan 10 Premium Seat 1 YR Subscription</td></tr><tr class='reveal'><td>2026</td><td>Santa Marta de Penaguião</td><td>Município de Santa Marta de Penaguião</td><td>Office 365</td><td class='num'>17 290,40 €</td><td>Licenças Microsoft Office 365 com emails Licenças Microsoft Office 36</td></tr><tr class='reveal'><td>2026</td><td>Montalegre</td><td>Município de Montalegre</td><td>Microsoft</td><td class='num'>16 940,90 €</td><td>Aquisição de serviços de licenciamento Microsoft Cloud Solutions Provider Aquisição de s</td></tr><tr class='reveal'><td>2025</td><td>Vila Real</td><td>Águas do Norte, SA</td><td>Microsoft</td><td class='num'>16 940,16 €</td><td>para Subscrição de licenças de software MICROSOFT e serviços de suporte associados para a</td></tr><tr class='reveal'><td>2025</td><td>Montalegre</td><td>Município de Montalegre</td><td>Microsoft</td><td class='num'>15 220,40 €</td><td>Aquisição de licenciamento Microsoft Cloud Solutions Provider. Aquisição de</td></tr><tr class='reveal'><td>2025</td><td>Peso da Régua</td><td>Município de Peso da Régua</td><td>Microsoft</td><td class='num'>15 057,73 €</td><td>Serviços- Licenciamento Subscrição CSP Microsoft para o Município do Peso da Régua, comp</td></tr><tr class='reveal'><td>2024</td><td>Peso da Régua</td><td>Município de Peso da Régua</td><td>Microsoft</td><td class='num'>15 000,93 €</td><td>Renovação Licenciamento  Microsoft para o Município do Peso da Régua, para</td></tr><tr class='reveal'><td>2025</td><td>Santa Marta de Penaguião</td><td>Município de Santa Marta de Penaguião</td><td>Google</td><td class='num'>14 639,88 €</td><td>ações eletrónicas: Correio eletrónico e google apps Aquisição de serviços de comunicaç</td></tr><tr class='reveal'><td>2026</td><td>Peso da Régua</td><td>Município de Peso da Régua</td><td>Microsoft</td><td class='num'>14 333,49 €</td><td>viços – Subscrição de Licenciamento CSP Microsoft para o Município do Peso da Régua” “Aqu</td></tr><tr class='reveal'><td>2023</td><td>Peso da Régua</td><td>Município de Peso da Régua</td><td>Microsoft 365</td><td class='num'>13 921,61 €</td><td>Aquisição de Serviços - Renovação Microsoft 365 Business Standard e Exchange Online par</td></tr><tr class='reveal'><td>2024</td><td>Mesão Frio</td><td>Município de Mesão Frio</td><td>Office 365</td><td class='num'>13 291,80 €</td><td>Licenciamento do Office 365 e Microsoft Teams Licenciamento do Offi</td></tr><tr class='reveal'><td>2026</td><td>Peso da Régua</td><td>Município de Peso da Régua</td><td>Office 365</td><td class='num'>12 913,00 €</td><td>o de Serviços de Proteção Avançada para Office 365 (CheckPoint Harmony Email &amp; Collaborati</td></tr><tr class='reveal'><td>2026</td><td>Vila Real</td><td>Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE</td><td>Teams</td><td class='num'>12 038,04 €</td><td>Aquisição de licenciamento Microsoft Teams Pro para os Centros de Saúde da ULSTMAD</td></tr><tr class='reveal'><td>2026</td><td>Murça</td><td>Agência de Desenvolvimento Regional do Vale do Tua - Associação ADRVT</td><td>Instagram</td><td class='num'>12 000,00 €</td><td>•	Gestão das redes sociais (Facebook e Instagram) do PNRVT, enaltecendo aspetos relativo</td></tr><tr class='reveal'><td>2026</td><td>Peso da Régua</td><td>Município de Peso da Régua</td><td>Windows</td><td class='num'>10 825,68 €</td><td>“Aquisição de Licenciamento Microsoft Windows Server e Microsoft SQL”
+
+ “Aquisição de</td></tr><tr class='reveal'><td>2023</td><td>Mesão Frio</td><td>Município de Mesão Frio</td><td>Office 365</td><td class='num'>10 410,00 €</td><td>Licenciamento Microsoft Office 365. Licenciamento Microsoft Office 365. ni</td></tr><tr class='reveal'><td>2022</td><td>Alijó</td><td>Município de Alijó</td><td>Google</td><td class='num'>10 296,00 €</td><td>licenças Correio Eletrónico gerido pela Google –165contas E-mail Aquisição de licenças</td></tr><tr class='reveal'><td>2023</td><td>Montalegre</td><td>Município de Montalegre</td><td>Microsoft 365</td><td class='num'>9 742,28 €</td><td>ara renovação da subscrição de serviços Microsoft 365 Aquisição de serviços para renovação da</td></tr><tr class='reveal'><td>2024</td><td>Montalegre</td><td>Município de Montalegre</td><td>Microsoft</td><td class='num'>9 742,28 €</td><td>Aquisição de licenciamento Microsoft Cloud Solutions Provider Aquisição de l</td></tr><tr class='reveal'><td>2026</td><td>Boticas</td><td>Município de Boticas</td><td>Microsoft</td><td class='num'>9 555,00 €</td><td>AQUISIÇÃO DE LICENCIAMENTO MICROSOFT PARA O MUNICÍPIO DE BOTICAS AQUISIÇÃO D</td></tr><tr class='reveal'><td>2026</td><td>Mondim de Basto</td><td>Município de Mondim de Basto</td><td>Microsoft</td><td class='num'>9 477,04 €</td><td>Aquisição Microsoft SQL Server Aquisição Microsoft SQL Serv</td></tr><tr class='reveal'><td>2026</td><td>Montalegre</td><td>Município de Montalegre</td><td>Instagram</td><td class='num'>7 000,00 €</td><td>respetiva promoção na Rádio Comercial e Instagram Aquisição de serviços para atuação do D</td></tr><tr class='reveal'><td>2026</td><td>Boticas</td><td>Município de Boticas</td><td>Exchange</td><td class='num'>6 845,57 €</td><td>RENOVAÇÃO DO LICENCIAMENTO MICROSOFT EXCHANGE ON-LINE, PERÍODO DE 12 MESES RENOVAÇÃO</td></tr><tr class='reveal'><td>2026</td><td>Vila Real</td><td>Comunidade Intermunicipal do Douro</td><td>Microsoft 365</td><td class='num'>6 670,92 €</td><td>Aquisição de Licenças Microsoft 365 Aquisição de Licenças Microsoft 365 nif</td></tr><tr class='reveal'><td>2025</td><td>Mesão Frio</td><td>Município de Mesão Frio</td><td>Windows</td><td class='num'>5 350,80 €</td><td>ve SSL Encriptação 128/256 BIT SHA-2 TO Windows Server 2022 Standard) Prestação de Serv</td></tr><tr class='reveal'><td>2023</td><td>Boticas</td><td>Município de Boticas</td><td>Exchange</td><td class='num'>5 159,40 €</td><td>RENOVAÇÃO DO LICENCIAMENTO MICROSOFT EXCHANGE ON-LINE, PELO PERÍODO DE 12 MESES  RENO</td></tr><tr class='reveal'><td>2024</td><td>Boticas</td><td>Município de Boticas</td><td>Exchange</td><td class='num'>5 159,40 €</td><td>RENOVAÇÃO DO LICENCIAMENTO MICROSOFT EXCHANGE ON-LINE, PELO PERÍODO DE 12 MESES  RENO</td></tr><tr class='reveal'><td>2022</td><td>Peso da Régua</td><td>Instituto dos Vinhos do Douro e do Porto, IP</td><td>Azure</td><td class='num'>5 059,80 €</td><td>sição de Produto da Microsoft - Licença Azure Monetary Commitment (com 5 créditos) Aq</td></tr><tr class='reveal'><td>2024</td><td>Peso da Régua</td><td>Município de Peso da Régua</td><td>Facebook</td><td class='num'>4 950,00 €</td><td>ampeonato do Mundo de Motonáutica F2 no Facebook Aquisição de serviços - Transmissão do</td></tr><tr class='reveal'><td>2024</td><td>Mesão Frio</td><td>Município de Mesão Frio</td><td>Windows</td><td class='num'>4 030,80 €</td><td>ve SSL Encriptação 128/256 BIT SHA-2 TO Windows Server 2022 Standard Prestação de Servi</td></tr><tr class='reveal'><td>2022</td><td>Peso da Régua</td><td>Escola Profissional Desenvolvimento Rural do Rodo</td><td>Microsoft</td><td class='num'>2 979,46 €</td><td>Software Informático Microsoft EPDRR-AD09/2022(SI) nifEntContrato=6000</td></tr></tbody>
+      </table>
+    </div>
+    <p class="meta" style="margin-top:1rem">
+      <a href="contratos.csv">contratos.csv</a> ·
+      <a href="anuncios.csv">anuncios.csv</a> ·
+      <a href="data.json">data.json</a>
+    </p>
+  </section>
+  <section class="slide" id="s6" data-title="Fontes">
+    <h2 class="reveal">Fontes</h2>
+    <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
+    de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
+    mercado não se somam.</p>
+    <ul class="list"><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Contratos</a><span> · Contratos celebrados 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Anúncios</a><span> · Anúncios publicados 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Modificações</a><span> · Alterações de preço 2022–2026</span></li><li class='reveal'><a href="https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx" rel="noopener noreferrer">Lista de Operações Aprovadas Portugal 2030</a><span> · Operações com início em 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/" rel="noopener noreferrer">Contratos Públicos do PRR</a><span> · Marca contratos BASE financiados pelo PRR</span></li><li class='reveal'><a href="https://sciproj.ptcris.pt/" rel="noopener noreferrer">Portal SciPROJ</a><span> · Financiamento científico 2025–2026 (melhor esforço)</span></li></ul>
+    <p class="meta reveal">Contagem das algemas</p>
+    <ul class="list"><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/" rel="noopener noreferrer">Portal Base, contratos públicos celebrados (IMPIC)</a><span> · anos com contratos assinados no setor público, 2022–2026</span></li></ul>
+    <p class="meta reveal">Leis citadas no início</p>
+    <ul class="list"><li class='reveal'><a href="https://uscode.house.gov/us/usc/t18/s2713/" rel="noopener noreferrer">18 U.S.C. § 2713 (CLOUD Act)</a><span> · entrega de dados sob controlo da empresa, em qualquer país</span></li><li class='reveal'><a href="https://uscode.house.gov/us/usc/t18/s2705/" rel="noopener noreferrer">18 U.S.C. § 2705</a><span> · o aviso ao cliente pode ser adiado</span></li><li class='reveal'><a href="https://uscode.house.gov/us/usc/t50/s1702/" rel="noopener noreferrer">50 U.S.C. § 1702 (IEEPA)</a><span> · o Presidente pode proibir serviços de empresas americanas</span></li></ul>
+  </section>
+  </main>
+  <script id="report-data" type="application/json">{"sources": [{"id": "base-contratos", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Contratos", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/", "file_name": "contratos2022…2026.xlsx", "licence": "Domínio Público", "coverage": "Contratos celebrados 2022–2026", "updated": "2026-11-04"}, {"id": "base-anuncios", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Anúncios", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/", "file_name": "anuncios2022…2026", "licence": "Domínio Público", "coverage": "Anúncios publicados 2022–2026", "updated": "2026-10-25"}, {"id": "base-mods", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Modificações", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/", "file_name": "modcontrats2022…2026", "licence": "Domínio Público", "coverage": "Alterações de preço 2022–2026", "updated": "2026-10-18"}, {"id": "pt2030", "publisher": "Agência para o Desenvolvimento e Coesão", "title": "Lista de Operações Aprovadas Portugal 2030", "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx", "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx", "licence": "Não especificada", "coverage": "Operações com início em 2022–2026", "updated": "2026-09-30"}, {"id": "prr-contratos", "publisher": "Estrutura de Missão Recuperar Portugal", "title": "Contratos Públicos do PRR", "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/", "file_name": "listagem-de-contratos-do-prr.xlsx", "licence": "Aberta", "coverage": "Marca contratos BASE financiados pelo PRR", "updated": "2026-10-23"}, {"id": "sciproj", "publisher": "FCT / PTCRIS", "title": "Portal SciPROJ", "url": "https://sciproj.ptcris.pt/", "file_name": "pesquisa HTML", "licence": "Acesso público", "coverage": "Financiamento científico 2025–2026 (melhor esforço)", "updated": "2026-11-06"}], "keywords": [{"pattern": "Excel", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Office 365", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Microsoft 365", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Windows", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Teams", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Azure", "vendor": "Microsoft", "kind": "match"}, {"pattern": "SharePoint", "vendor": "Microsoft", "kind": "match"}, {"pattern": "OneDrive", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Outlook", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Exchange", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Power BI", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Word", "vendor": "Microsoft", "kind": "match"}, {"pattern": "PowerPoint", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Microsoft", "vendor": "Microsoft", "kind": "match"}, {"pattern": "iPhone", "vendor": "Apple", "kind": "match"}, {"pattern": "iPad", "vendor": "Apple", "kind": "match"}, {"pattern": "MacBook", "vendor": "Apple", "kind": "match"}, {"pattern": "macOS", "vendor": "Apple", "kind": "match"}, {"pattern": "Apple", "vendor": "Apple", "kind": "match"}, {"pattern": "Workspace", "vendor": "Google", "kind": "match"}, {"pattern": "Gmail", "vendor": "Google", "kind": "match"}, {"pattern": "Android", "vendor": "Google", "kind": "match"}, {"pattern": "Chromebook", "vendor": "Google", "kind": "match"}, {"pattern": "Google Cloud", "vendor": "Google", "kind": "match"}, {"pattern": "Classroom", "vendor": "Google", "kind": "match"}, {"pattern": "Google Classroom", "vendor": "Google", "kind": "match"}, {"pattern": "Google", "vendor": "Google", "kind": "match"}, {"pattern": "AWS", "vendor": "Amazon", "kind": "match"}, {"pattern": "Amazon Web Services", "vendor": "Amazon", "kind": "match"}, {"pattern": "Amazon", "vendor": "Amazon", "kind": "match"}, {"pattern": "Facebook", "vendor": "Meta", "kind": "match"}, {"pattern": "Instagram", "vendor": "Meta", "kind": "match"}, {"pattern": "WhatsApp", "vendor": "Meta", "kind": "match"}, {"pattern": "Meta Platforms", "vendor": "Meta", "kind": "match"}, {"pattern": "excelência", "vendor": "", "kind": "reject"}, {"pattern": "excelente", "vendor": "", "kind": "reject"}, {"pattern": "meta", "vendor": "", "kind": "reject"}, {"pattern": "office", "vendor": "", "kind": "reject"}], "generated_at": "2026-11-07T22:59:35.845928+00:00", "totals": {"2022": {"committed": 322076.64, "requested": 378000.0, "grants": 0}, "2023": {"committed": 1722042.5599999998, "requested": 105168.0, "grants": 0}, "2024": {"committed": 942307.28, "requested": 0, "grants": 0}, "2025": {"committed": 3501845.1399999997, "requested": 365681.0, "grants": 0}, "2026": {"committed": 3927960.16, "requested": 0, "grants": 0}}, "breakdowns": {"committed_by_region": {"2022": {"Norte": 263816.64, "sem local": 58260.00000000001}, "2023": {"Norte": 1513459.79, "sem local": 208582.77}, "2024": {"Norte": 659001.8400000001, "sem local": 283305.44}, "2025": {"sem local": 2712233.039999999, "Norte": 789612.1}, "2026": {"Norte": 3652028.79, "sem local": 275931.37}}, "committed_by_category": {"2022": {"administração local": 239220.74, "outra entidade pública": 77796.1, "administração central": 5059.8}, "2023": {"privado": 1094341.92, "ensino superior": 332267.87, "administração local": 208582.77, "saúde": 86850.0}, "2024": {"privado": 659001.8400000001, "administração local": 222746.13999999998, "outra entidade pública": 60559.3}, "2025": {"saúde": 2973602.48, "administração local": 511302.5, "privado": 16940.16}, "2026": {"saúde": 3626986.9, "administração local": 263931.37, "ensino superior": 18370.97, "administração central": 12000.0, "outra entidade pública": 6670.92}}, "committed_by_vendor": {"2022": {"Microsoft": 271855.89999999997, "Google": 50220.740000000005}, "2023": {"Microsoft": 1701221.6, "Google": 20820.96}, "2024": {"Microsoft": 854220.8000000002, "Apple": 60559.3, "Google": 22577.18, "Meta": 4950.0}, "2025": {"Microsoft": 3460309.9299999997, "Google": 41535.21}, "2026": {"Microsoft": 3876980.8, "Google": 31979.36, "Meta": 19000.0}}, "committed_by_place": {"2022": {"Vila Real": 263816.64, "Santa Marta de Penaguião": 19995.9, "Chaves": 19928.84, "Alijó": 10296.0, "Peso da Régua": 8039.26}, "2023": {"Vila Real": 1513459.79, "Montalegre": 85730.28, "Alijó": 72540.52, "Chaves": 20820.96, "Peso da Régua": 13921.61, "Mesão Frio": 10410.0, "Boticas": 5159.4}, "2024": {"Vila Real": 659001.8400000001, "Chaves": 83136.48000000001, "Vila Pouca de Aguiar": 74974.9, "Alijó": 73018.85, "Peso da Régua": 19950.93, "Mesão Frio": 17322.6, "Montalegre": 9742.28, "Boticas": 5159.4}, "2025": {"": 2565157.3, "Vila Real": 789612.1, "Ribeira de Pena": 50823.8, "Chaves": 26895.33, "Mesão Frio": 24438.6, "Montalegre": 15220.4, "Peso da Régua": 15057.73, "Santa Marta de Penaguião": 14639.88}, "2026": {"Vila Real": 3652028.79, "Alijó": 74335.17, "Peso da Régua": 38072.17, "Chaves": 31979.36, "Valpaços": 26749.76, "Mesão Frio": 25686.0, "Montalegre": 23940.9, "Santa Marta de Penaguião": 17290.4, "Boticas": 16400.57, "Murça": 12000.0, "Mondim de Basto": 9477.04}}}, "prr": {}, "sciproj": {"total": 0, "count": 0}, "private_grants_count": 0, "skipped": {"sem montante": 0, "correspondência incerta": 0}, "press": [], "press_errors": {}, "press_note": "", "records": [{"source_id": "8660318", "channel": "committed", "buyer": "Município de Alijó", "excerpt": "licenças Correio Eletrónico gerido pela Google –165contas E-mail Aquisição de licenças", "amount_eur": 10296.0, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2022, "headline": true, "product": "Google", "url": "", "place": "Alijó", "district": ""}, {"source_id": "9106862", "channel": "committed", "buyer": "Município de Chaves", "excerpt": "ços de comunicações eletrónicas: google workspace, correio eletrónico, google apps, stora", "amount_eur": 19928.84, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2022, "headline": true, "product": "Workspace", "url": "", "place": "Chaves", "district": "Vila Real"}, {"source_id": "9288344", "channel": "committed", "buyer": "Escola Profissional Desenvolvimento Rural do Rodo", "excerpt": "Software Informático Microsoft EPDRR-AD09/2022(SI) nifEntContrato=6000", "amount_eur": 2979.46, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "9341729", "channel": "committed", "buyer": "Município de Vila Real", "excerpt": "Licenciamento e Manutenção de Software Microsoft Enterprise Agreement Aquisição de Licen", "amount_eur": 189000.0, "region": "Norte", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "9385318", "channel": "committed", "buyer": "Município de Santa Marta de Penaguião", "excerpt": "ções eletrónicas - correio eletrónico e google apps Aquisição de serviços de comunicaç", "amount_eur": 19995.9, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2022, "headline": true, "product": "Google", "url": "", "place": "Santa Marta de Penaguião", "district": "Vila Real"}, {"source_id": "9616283", "channel": "committed", "buyer": "Direção Regional de Cultura do Norte", "excerpt": "Aquisição de 100 licenças Microsoft 365 ao abrigo de Enterprise Agreement pelo", "amount_eur": 74816.64, "region": "Norte", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft 365", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "9633755", "channel": "committed", "buyer": "Instituto dos Vinhos do Douro e do Porto, IP", "excerpt": "sição de Produto da Microsoft - Licença Azure Monetary Commitment (com 5 créditos) Aq", "amount_eur": 5059.8, "region": "sem local", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Azure", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "9866227", "channel": "committed", "buyer": "Município de Chaves", "excerpt": "ços de comunicações eletrónicas: Google Workspace, Correio Eletrónico, Google Apps, Stora", "amount_eur": 20820.96, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2023, "headline": true, "product": "Workspace", "url": "", "place": "Chaves", "district": "Vila Real"}, {"source_id": "9930352", "channel": "committed", "buyer": "Município de Peso da Régua", "excerpt": "Aquisição de Serviços - Renovação Microsoft 365 Business Standard e Exchange Online par", "amount_eur": 13921.61, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft 365", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "9949873", "channel": "committed", "buyer": "Município de Montalegre", "excerpt": "ara renovação da subscrição de serviços Microsoft 365 Aquisição de serviços para renovação da", "amount_eur": 9742.28, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft 365", "url": "", "place": "Montalegre", "district": "Vila Real"}, {"source_id": "9962124", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "Aquisição de serviços cloud - Azure AD 1719-2023 - Aquisição de serviços cl", "amount_eur": 50000.0, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Azure", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "9962784", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "iços de suporte de produtos licenciados microsoft AD 1456-2023 nifEntContrato=508100496|d", "amount_eur": 36850.0, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "9975523", "channel": "committed", "buyer": "Município de Montalegre", "excerpt": "serviços de aluguer de bancadas para o Word RX Montalegre Aquisição de serviços de", "amount_eur": 75988.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Word", "url": "", "place": "Montalegre", "district": "Vila Real"}, {"source_id": "10067843", "channel": "committed", "buyer": "Município de Alijó", "excerpt": "Licenciamento Microsoft Licenciamento Microsoft nifEntContrato=", "amount_eur": 72540.52, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Alijó", "district": "Vila Real"}, {"source_id": "10066605", "channel": "committed", "buyer": "Município de Mesão Frio", "excerpt": "Licenciamento Microsoft Office 365. Licenciamento Microsoft Office 365. ni", "amount_eur": 10410.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Office 365", "url": "", "place": "Mesão Frio", "district": "Vila Real"}, {"source_id": "10308318", "channel": "committed", "buyer": "Município de Boticas", "excerpt": "RENOVAÇÃO DO LICENCIAMENTO MICROSOFT EXCHANGE ON-LINE, PELO PERÍODO DE 12 MESES  RENO", "amount_eur": 5159.4, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Exchange", "url": "", "place": "Boticas", "district": "Vila Real"}, {"source_id": "10379562", "channel": "committed", "buyer": "Universidade de Trás-os-Montes e Alto Douro", "excerpt": "e Serviços de Licenciamento de Produtos Microsoft Campus Tipo A5 Aquisição de Serviços de", "amount_eur": 332267.87, "region": "Norte", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "10406838", "channel": "committed", "buyer": "Águas do Norte, SA", "excerpt": "CP - Subscrição de licenças de Software Microsoft e serviços de suporte para as empresas", "amount_eur": 1094341.92, "region": "Norte", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": ""}, {"source_id": "10523503", "channel": "committed", "buyer": "Município de Boticas", "excerpt": "RENOVAÇÃO DO LICENCIAMENTO MICROSOFT EXCHANGE ON-LINE, PELO PERÍODO DE 12 MESES  RENO", "amount_eur": 5159.4, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Exchange", "url": "", "place": "Boticas", "district": "Vila Real"}, {"source_id": "10583824", "channel": "committed", "buyer": "Município de Montalegre", "excerpt": "Aquisição de licenciamento Microsoft Cloud Solutions Provider Aquisição de l", "amount_eur": 9742.28, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Montalegre", "district": "Vila Real"}, {"source_id": "10626352", "channel": "committed", "buyer": "Município de Chaves", "excerpt": "Aquisição de serviços de google workspace, manutenção e suporte/DNS/Serviços Regi", "amount_eur": 22577.18, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2024, "headline": true, "product": "Workspace", "url": "", "place": "Chaves", "district": "Vila Real"}, {"source_id": "10657831", "channel": "committed", "buyer": "Município de Peso da Régua", "excerpt": "Renovação Licenciamento  Microsoft para o Município do Peso da Régua, para", "amount_eur": 15000.93, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "10665458", "channel": "committed", "buyer": "Freguesia de Nogueira da Montanha", "excerpt": "Reabilitação da Escola Primária de Maços Reabilitação da Escola Primária de Maço", "amount_eur": 60559.3, "region": "sem local", "category": "outra entidade pública", "vendor": "Apple", "fundos": "", "year": 2024, "headline": true, "product": "macOS", "url": "", "place": "Chaves", "district": "Vila Real"}, {"source_id": "10730429", "channel": "committed", "buyer": "Município de Alijó", "excerpt": "Licenciamento de Microsoft Office 365 e Prevenção com Backups Imutáveis Licen", "amount_eur": 73018.85, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Office 365", "url": "", "place": "Alijó", "district": "Vila Real"}, {"source_id": "10744348", "channel": "committed", "buyer": "Município de Mesão Frio", "excerpt": "Licenciamento do Office 365 e Microsoft Teams Licenciamento do Offi", "amount_eur": 13291.8, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Office 365", "url": "", "place": "Mesão Frio", "district": "Vila Real"}, {"source_id": "10841090", "channel": "committed", "buyer": "Águas do Norte, SA", "excerpt": "2CP) Subscrição de licenças de software MICROSOFT e serviços de suporte para as empresas", "amount_eur": 384642.84, "region": "Norte", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "10897928", "channel": "committed", "buyer": "Águas do Interior - Norte, EIM, SA", "excerpt": "tares(AEQUIS, NAVHR, ARQEBI E Microsoft Azure) Aquisição de Prestação de Serviços par", "amount_eur": 274359.0, "region": "Norte", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Azure", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "10923173", "channel": "committed", "buyer": "Município de Peso da Régua", "excerpt": "ampeonato do Mundo de Motonáutica F2 no Facebook Aquisição de serviços - Transmissão do", "amount_eur": 4950.0, "region": "sem local", "category": "administração local", "vendor": "Meta", "fundos": "", "year": 2024, "headline": true, "product": "Facebook", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "11113452", "channel": "committed", "buyer": "Município de Vila Pouca de Aguiar", "excerpt": "AQUISIÇÃO E INSTALAÇÃO DE LICENCIAMENTO OFFICE 365 AQUISIÇÃO E INSTALAÇÃO DE LICENCIAMENTO", "amount_eur": 74974.9, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Office 365", "url": "", "place": "Vila Pouca de Aguiar", "district": "Vila Real"}, {"source_id": "11119856", "channel": "committed", "buyer": "Município de Mesão Frio", "excerpt": "ve SSL Encriptação 128/256 BIT SHA-2 TO Windows Server 2022 Standard Prestação de Servi", "amount_eur": 4030.8, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Windows", "url": "", "place": "Mesão Frio", "district": "Vila Real"}, {"source_id": "11301821", "channel": "committed", "buyer": "Município de Chaves", "excerpt": "Aquisição de serviços de Google Workspace, manutenção e suporte/DNS/Serviços Regi", "amount_eur": 26895.33, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2025, "headline": true, "product": "Workspace", "url": "", "place": "Chaves", "district": "Vila Real"}, {"source_id": "11325721", "channel": "committed", "buyer": "Município de Montalegre", "excerpt": "Aquisição de licenciamento Microsoft Cloud Solutions Provider. Aquisição de", "amount_eur": 15220.4, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Montalegre", "district": "Vila Real"}, {"source_id": "11344614", "channel": "committed", "buyer": "Município de Peso da Régua", "excerpt": "Serviços- Licenciamento Subscrição CSP Microsoft para o Município do Peso da Régua, comp", "amount_eur": 15057.73, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "11475512", "channel": "committed", "buyer": "Município de Vila Real", "excerpt": "licenciamento e manutenção de Software Microsoft Enterprise Agreement Aquisição de licen", "amount_eur": 364226.76, "region": "Norte", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "11477680", "channel": "committed", "buyer": "Município de Mesão Frio", "excerpt": "Licenciamento do Office 365 e Microsoft Teams Licenciamento do Offi", "amount_eur": 19087.8, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Office 365", "url": "", "place": "Mesão Frio", "district": "Vila Real"}, {"source_id": "11486470", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do", "amount_eur": 258481.96, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "11486848", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do", "amount_eur": 2565157.3, "region": "sem local", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "", "district": "Vila Real"}, {"source_id": "11530545", "channel": "committed", "buyer": "Município de Ribeira de Pena", "excerpt": "ftware para os Serviços de SQL e Server Exchange Aquisição de Bens - Licenças de Softwar", "amount_eur": 50823.8, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Exchange", "url": "", "place": "Ribeira de Pena", "district": "Vila Real"}, {"source_id": "11599224", "channel": "committed", "buyer": "Município de Santa Marta de Penaguião", "excerpt": "ações eletrónicas: Correio eletrónico e google apps Aquisição de serviços de comunicaç", "amount_eur": 14639.88, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2025, "headline": true, "product": "Google", "url": "", "place": "Santa Marta de Penaguião", "district": "Vila Real"}, {"source_id": "11650309", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "AQUISIÇÃO LICENCIAMENTO SOFTWARE MICROSOFT E SERVIÇOS CONEXOS PARA A ULSTMAD, EPE", "amount_eur": 149963.22, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "11823393", "channel": "committed", "buyer": "Águas do Norte, SA", "excerpt": "para Subscrição de licenças de software MICROSOFT e serviços de suporte associados para a", "amount_eur": 16940.16, "region": "Norte", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "12174060", "channel": "committed", "buyer": "Município de Mesão Frio", "excerpt": "ve SSL Encriptação 128/256 BIT SHA-2 TO Windows Server 2022 Standard) Prestação de Serv", "amount_eur": 5350.8, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Windows", "url": "", "place": "Mesão Frio", "district": "Vila Real"}, {"source_id": "12961346", "channel": "committed", "buyer": "Agência de Desenvolvimento Regional do Vale do Tua - Associação ADRVT", "excerpt": "•\tGestão das redes sociais (Facebook e Instagram) do PNRVT, enaltecendo aspetos relativo", "amount_eur": 12000.0, "region": "sem local", "category": "administração central", "vendor": "Meta", "fundos": "", "year": 2026, "headline": true, "product": "Instagram", "url": "", "place": "Murça", "district": "Vila Real"}, {"source_id": "13988936", "channel": "committed", "buyer": "Município de Montalegre", "excerpt": "respetiva promoção na Rádio Comercial e Instagram Aquisição de serviços para atuação do D", "amount_eur": 7000.0, "region": "sem local", "category": "administração local", "vendor": "Meta", "fundos": "", "year": 2026, "headline": true, "product": "Instagram", "url": "", "place": "Montalegre", "district": "Vila Real"}, {"source_id": "14106570", "channel": "committed", "buyer": "Município de Boticas", "excerpt": "RENOVAÇÃO DO LICENCIAMENTO MICROSOFT EXCHANGE ON-LINE, PERÍODO DE 12 MESES RENOVAÇÃO", "amount_eur": 6845.57, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Exchange", "url": "", "place": "Boticas", "district": "Vila Real"}, {"source_id": "14277413", "channel": "committed", "buyer": "Município de Chaves", "excerpt": "Aquisição de Serviços de Google Workspace, manutenção e suporte / DNS / Serviços", "amount_eur": 31979.36, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2026, "headline": true, "product": "Workspace", "url": "", "place": "Chaves", "district": "Vila Real"}, {"source_id": "14399154", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "CI 0041-2026 GESTÃO DE SERVIÇOS  MICROSOFT 365, SEGURANÇA DO ENTRA ID/ACTIVE DIRECTORY", "amount_eur": 235000.0, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "14562519", "channel": "committed", "buyer": "Município de Montalegre", "excerpt": "Aquisição de serviços de licenciamento Microsoft Cloud Solutions Provider Aquisição de s", "amount_eur": 16940.9, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Montalegre", "district": "Vila Real"}, {"source_id": "14620490", "channel": "committed", "buyer": "Município de Peso da Régua", "excerpt": "o de Serviços de Proteção Avançada para Office 365 (CheckPoint Harmony Email & Collaborati", "amount_eur": 12913.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Office 365", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "14621419", "channel": "committed", "buyer": "Município de Peso da Régua", "excerpt": "viços – Subscrição de Licenciamento CSP Microsoft para o Município do Peso da Régua” “Aqu", "amount_eur": 14333.49, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "14978466", "channel": "committed", "buyer": "Município de Peso da Régua", "excerpt": "“Aquisição de Licenciamento Microsoft Windows Server e Microsoft SQL”\n\n “Aquisição de", "amount_eur": 10825.68, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Windows", "url": "", "place": "Peso da Régua", "district": "Vila Real"}, {"source_id": "15013772", "channel": "committed", "buyer": "Município de Mondim de Basto", "excerpt": "Aquisição Microsoft SQL Server Aquisição Microsoft SQL Serv", "amount_eur": 9477.04, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Mondim de Basto", "district": "Vila Real"}, {"source_id": "15041611", "channel": "committed", "buyer": "Comunidade Intermunicipal do Douro", "excerpt": "Aquisição de Licenças Microsoft 365 Aquisição de Licenças Microsoft 365 nif", "amount_eur": 6670.92, "region": "Norte", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "15073097", "channel": "committed", "buyer": "Município de Mesão Frio", "excerpt": "Licenciamento do Office 365 e Microsoft Teams Licenciamento do Offi", "amount_eur": 25686.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Office 365", "url": "", "place": "Mesão Frio", "district": "Vila Real"}, {"source_id": "15218217", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do", "amount_eur": 2982108.06, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "15248057", "channel": "committed", "buyer": "Município de Boticas", "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT PARA O MUNICÍPIO DE BOTICAS AQUISIÇÃO D", "amount_eur": 9555.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Boticas", "district": "Vila Real"}, {"source_id": "15263733", "channel": "committed", "buyer": "Município de Valpaços", "excerpt": "Aquisição de licenciamento Microsoft SQL Server 2025 Standard Core, em regim", "amount_eur": 26749.76, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Valpaços", "district": ""}, {"source_id": "15466516", "channel": "committed", "buyer": "Município de Santa Marta de Penaguião", "excerpt": "Licenças Microsoft Office 365 com emails Licenças Microsoft Office 36", "amount_eur": 17290.4, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Office 365", "url": "", "place": "Santa Marta de Penaguião", "district": "Vila Real"}, {"source_id": "15504953", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "AD 1495/2026 Aquisição de serviços Azure. AD 1495/2026 Aquisição de serviços Azu", "amount_eur": 397840.8, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Azure", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "15520445", "channel": "committed", "buyer": "Município de Alijó", "excerpt": "Licenciamento Microsoft 365 Licenciamento Microsoft 365 nifEntContr", "amount_eur": 74335.17, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Alijó", "district": "Vila Real"}, {"source_id": "15681553", "channel": "committed", "buyer": "Universidade de Trás-os-Montes e Alto Douro", "excerpt": "ção de 10 Licenças da Subscrição Claude Teams Plan 10 Premium Seat 1 YR Subscription", "amount_eur": 18370.97, "region": "Norte", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Teams", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "15882815", "channel": "committed", "buyer": "Unidade Local de Saúde de Trás-os-Montes e Alto Douro, EPE", "excerpt": "Aquisição de licenciamento Microsoft Teams Pro para os Centros de Saúde da ULSTMAD", "amount_eur": 12038.04, "region": "Norte", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Teams", "url": "", "place": "Vila Real", "district": "Vila Real"}, {"source_id": "904/2022", "channel": "requested", "buyer": "Município de Vila Real", "excerpt": "Licenciamento e Manutenção de Software Microsoft Enterprise Agreement Município de Vila", "amount_eur": 189000.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "https://dre.pt/application/file/183159447", "place": "Vila Real", "district": ""}, {"source_id": "4239/2022", "channel": "requested", "buyer": "Município de Vila Real", "excerpt": "Licenciamento e Manutenção de Software Microsoft Enterprise Agreement Município de Vila", "amount_eur": 189000.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "https://dre.pt/application/file/181606661", "place": "Vila Real", "district": ""}, {"source_id": "5814/2023", "channel": "requested", "buyer": "Município de Montalegre", "excerpt": "serviços de aluguer de bancadas para o Word RX Montalegre Município de Montalegre 9", "amount_eur": 105168.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Word", "url": "https://dre.pt/application/file/211668943", "place": "Montalegre", "district": ""}, {"source_id": "3837/2025", "channel": "requested", "buyer": "Município de Vila Real", "excerpt": "licenciamento e manutenção de Software Microsoft Enterprise Agreement Município de Vila", "amount_eur": 365681.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "https://files.diariodarepublica.pt/cp_hora/2025/02/033/418685327.pdf", "place": "Vila Real", "district": ""}]}</script>
+  <script>
+    const payload = JSON.parse(document.getElementById('report-data').textContent);
+    const yearLabels = ["2022", "2023", "2024", "2025", "2026"];
+    const placeData = {"Vila Real": 789612.1, "Ribeira de Pena": 50823.8, "Chaves": 26895.33, "Mesão Frio": 24438.6, "Montalegre": 15220.4, "Peso da Régua": 15057.73, "Santa Marta de Penaguião": 14639.88};
+    const eurTooltip = {
+      callbacks: {
+        label: function (ctx) {
+          const label = ctx.dataset.label ? ctx.dataset.label + ': ' : '';
+          const v = ctx.chart.options.indexAxis === 'y' ? ctx.parsed.x : ctx.parsed.y;
+          return label + eurTick(v != null ? v : ctx.raw);
+        }
+      }
+    };
+    function eurTick(v) {
+      return Number(v).toLocaleString('pt-PT', { maximumFractionDigits: 0 }) + ' €';
+    }
+    const slides = [...document.querySelectorAll('.slide')];
+    const dots = document.getElementById('dots');
+    const progress = document.getElementById('progress');
+    slides.forEach((slide) => {
+      const a = document.createElement('a');
+      a.href = '#' + slide.id;
+      a.title = slide.dataset.title || slide.id;
+      dots.appendChild(a);
+    });
+    const dotLinks = [...dots.querySelectorAll('a')];
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll('.reveal').forEach((el, idx) => {
+          el.style.transitionDelay = (idx * 50) + 'ms';
+          el.classList.add('is-in');
+        });
+        const i = slides.indexOf(entry.target);
+        if (i >= 0) {
+          dotLinks.forEach((d, j) => d.classList.toggle('is-active', j === i));
+          progress.style.width = (((i + 1) / slides.length) * 100) + '%';
+          if (entry.target.id === 's2' && window.__fitLeiriaMap) window.__fitLeiriaMap();
+        }
+      });
+    }, { threshold: 0.45 });
+    slides.forEach((slide) => io.observe(slide));
+    new Chart(document.getElementById('chartLeiriaYears'), {
+      type: 'bar',
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: eurTooltip
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { callback: (v) => eurTick(v) } }
+        }
+      },
+      data: {
+        labels: yearLabels,
+        datasets: [
+          {
+            label: 'contrato assinado',
+            data: yearLabels.map((y) => payload.totals[y].committed),
+            backgroundColor: '#fd5288', borderRadius: 6
+          },
+          {
+            label: 'pedido ao mercado',
+            data: yearLabels.map((y) => payload.totals[y].requested),
+            backgroundColor: '#72e123', borderRadius: 6
+          }
+        ]
+      }
+    });
+    const vendorByYear = Object.fromEntries(
+      yearLabels.map((y) => [y, (payload.breakdowns.committed_by_vendor || {})[y] || {}])
+    );
+    const vendorColors = yearLabels.map((_, i) => {
+      const t = yearLabels.length <= 1 ? 1 : i / (yearLabels.length - 1);
+      const shade = Math.round(210 - t * 185);
+      return 'rgb(' + shade + ',' + shade + ',' + shade + ')';
+    });
+    const vendorLabels = [...new Set(
+      yearLabels.flatMap((y) => Object.keys(vendorByYear[y]))
+    )].sort((a, b) => {
+      const sum = (name) => yearLabels.reduce(
+        (acc, y) => acc + (vendorByYear[y][name] || 0), 0
+      );
+      return sum(b) - sum(a);
+    });
+    new Chart(document.getElementById('chartLeiriaVendor'), {
+      type: 'bar',
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: eurTooltip
+        },
+        scales: {
+          x: { beginAtZero: true, ticks: { callback: (v) => eurTick(v) } },
+          y: { ticks: { autoSkip: false } }
+        }
+      },
+      data: {
+        labels: vendorLabels,
+        datasets: yearLabels.map((y, i) => ({
+          label: y,
+          data: vendorLabels.map((k) => vendorByYear[y][k] || 0),
+          backgroundColor: vendorColors[i],
+          borderRadius: 6
+        }))
+      }
+    });
+    (function drawLeiriaMap() {
+      if (!document.getElementById('mapLeiria')) return;
+      const bands = ['#f4ea15', '#eb5423', '#010101'];
+      const zeroFill = '#f4f4f0';
+      function fold(s) {
+        return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+      }
+      function eurLabel(v) {
+        return Number(v).toLocaleString('pt-PT', { maximumFractionDigits: 0 }) + ' €';
+      }
+      function amountFor(name) {
+        const g = fold(name);
+        for (const [k, v] of Object.entries(placeData)) {
+          if (fold(k) === g) return v;
+        }
+        if (g === fold("Distrito de Vila Real")) {
+          return Object.values(placeData).reduce((sum, v) => sum + Number(v), 0);
+        }
+        return 0;
+      }
+      function paint(munGeo) {
+        const values = Object.values(placeData).filter((v) => v > 0).sort((a, b) => a - b);
+        const cuts = [];
+        if (values.length) {
+          for (let i = 1; i <= 3; i++) {
+            const idx = Math.min(values.length - 1, Math.ceil((i / 3) * values.length) - 1);
+            cuts.push(values[idx]);
+          }
+        }
+        function bin(v) {
+          if (!cuts.length || v <= 0) return 0;
+          for (let i = 0; i < cuts.length; i++) {
+            if (v <= cuts[i]) return i + 1;
+          }
+          return cuts.length;
+        }
+        function binLabel(i) {
+          if (!cuts.length) return '—';
+          if (i === 1) return '< ' + eurLabel(cuts[0]);
+          if (i === cuts.length) return '≥ ' + eurLabel(cuts[Math.max(0, cuts.length - 2)]);
+          return '≤ ' + eurLabel(cuts[i - 1]);
+        }
+        const map = L.map('mapLeiria', {
+          zoomControl: false, attributionControl: false,
+          dragging: false, scrollWheelZoom: false,
+          doubleClickZoom: false, boxZoom: false, keyboard: false
+        });
+        const layer = L.geoJSON(munGeo, {
+          style: function (feat) {
+            const v = amountFor(feat.properties.name);
+            const b = bin(v);
+            if (b === 0) {
+              return {
+                color: '#9a9588', weight: 1,
+                fillColor: zeroFill, fillOpacity: 1
+              };
+            }
+            return {
+              color: b === 1 ? '#ffe9a0' : '#1c1c22',
+              weight: 1.2,
+              fillColor: bands[b - 1],
+              fillOpacity: 0.98,
+              className: b === 1 ? 'night-lit' : ''
+            };
+          },
+          onEachFeature: function (feat, lyr) {
+            const v = amountFor(feat.properties.name);
+            lyr.bindTooltip(feat.properties.name + ' — ' + eurLabel(v));
+          }
+        }).addTo(map);
+        function fit() {
+          map.invalidateSize();
+          const bounds = layer.getBounds();
+          if (bounds.isValid()) map.fitBounds(bounds, { padding: [12, 12] });
+        }
+        window.__fitLeiriaMap = fit;
+        fit();
+        requestAnimationFrame(fit);
+        setTimeout(fit, 200);
+        document.getElementById('mapLeiriaLegend').innerHTML =
+          'CAOP2025 DGT · <span style="background:' + zeroFill + '"></span>0 € · ' +
+          bands.map((c, i) => '<span style="background:' + c + '"></span>' + binLabel(i + 1)).join(' · ');
+      }
+      fetch('vila-real.geojson')
+        .then((r) => r.json())
+        .then(paint)
+        .catch(function () {
+          document.getElementById('mapLeiriaLegend').textContent =
+            'Mapa indisponível (falha a carregar CAOP).';
+        });
+    })();
+  </script>
+<footer class="cfp-bar"><a class="cfp-brand" href="https://codefor.pt" rel="noopener noreferrer" title="Realização: code for portugal — codefor.pt (em breve)"><img class="mark" src="../assets/favicon.png" width="28" height="28" alt="code for portugal" /><span class="name">Realização: code for portugal</span><span class="soon">codefor.pt · em breve</span></a><span class="cfp-lic"><a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener noreferrer license" title="Conteúdo · CC BY-SA 4.0"><img src="../assets/cc-by-sa.png" width="88" height="31" alt="CC BY-SA 4.0" /></a><a href="https://github.com/codeforportugal/gafam-portugal-report" rel="noopener noreferrer" title="Código · AGPL-3.0"><img src="../assets/agplv3.png" width="88" height="31" alt="AGPL-3.0" /></a></span></footer>
+</body>
+</html>

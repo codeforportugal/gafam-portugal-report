@@ -200,6 +200,17 @@ def region_from_local(local: str, concelho_map: dict[str, str]) -> str:
     return "sem local"
 
 
+def load_concelhos_by_distrito(path: Path) -> dict[str, dict[str, str]]:
+    """fold(distrito) -> {fold(concelho): nome do concelho}."""
+    grouped: dict[str, dict[str, str]] = {}
+    with path.open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            distrito = row["distrito"].strip()
+            concelho = row["concelho"].strip()
+            grouped.setdefault(fold(distrito), {})[fold(concelho)] = concelho
+    return grouped
+
+
 def load_distrito_concelhos(path: Path) -> set[str]:
     names: set[str] = set()
     for line in path.read_text(encoding="utf-8").splitlines():

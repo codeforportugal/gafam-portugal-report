@@ -6,6 +6,7 @@ import csv
 import html
 import json
 import shutil
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -15,11 +16,11 @@ from jsonschema import Draft202012Validator
 
 from gafam_contratos.aggregate import breakdowns, national_totals, prr_subtotal
 from gafam_contratos.amounts import format_eur, format_eur_compact
+from gafam_contratos.classify import fold, load_concelhos_by_distrito
 from gafam_contratos.constants import YEAR_LIST
-from gafam_contratos.classify import fold
 from gafam_contratos.lexicon import keywords_for_report
 from gafam_contratos.models import PressLink, Record, SourceMeta
-from gafam_contratos.paths import data_dir, schema_path
+from gafam_contratos.paths import data_dir, project_root, schema_path
 
 _BRAND_FILES = (
     "favicon.png",
@@ -31,11 +32,18 @@ _BRAND_FILES = (
 
 
 def _brand_asset_prefix(*, scope: str) -> str:
-    return "../assets/" if scope == "leiria" else "assets/"
+    return "assets/" if scope == "national" else "../assets/"
+
+
+def _brand_dir() -> Path:
+    shared = project_root().parent / "assets"
+    if (shared / "favicon.png").is_file():
+        return shared
+    return data_dir() / "brand"
 
 
 def _copy_brand_assets(reports_root: Path) -> None:
-    src = data_dir() / "brand"
+    src = _brand_dir()
     dest = reports_root / "assets"
     dest.mkdir(parents=True, exist_ok=True)
     for name in _BRAND_FILES:
@@ -127,8 +135,8 @@ def _cfp_footer(asset_prefix: str) -> str:
         'rel="noopener noreferrer license" title="Conteúdo · CC BY-SA 4.0">'
         f'<img src="{cc}" width="88" height="31" alt="CC BY-SA 4.0" />'
         "</a>"
-        '<a href="https://www.gnu.org/licenses/agpl-3.0.html" '
-        'rel="noopener noreferrer license" title="Código · AGPL-3.0">'
+        '<a href="https://github.com/codeforportugal/gafam-portugal-report" '
+        'rel="noopener noreferrer" title="Código · AGPL-3.0">'
         f'<img src="{agpl}" width="88" height="31" alt="AGPL-3.0" />'
         "</a>"
         "</span>"
@@ -158,9 +166,7 @@ def build_report_payload(
     skipped: dict[str, int],
 ) -> dict[str, Any]:
     sciproj_rows = [r for r in records if r.channel == "sciproj" and r.headline]
-    private_grants = [
-        r for r in records if r.channel == "grant" and not r.headline
-    ]
+    private_grants = [r for r in records if r.channel == "grant" and not r.headline]
     notes: list[str] = []
     if press_errors:
         soft: list[str] = []
@@ -256,10 +262,70 @@ def eur_compact(value: object) -> str:
     return format_eur_compact(float(value or 0))
 
 
+@dataclass(frozen=True, slots=True)
+class AreaPage:
+    slug: str
+    name: str
+    button: str
+    where: str
+    nuts_name: str = ""
+    geojson: str = ""
+    unit: str = "distrito"
+
+
+def _district_pages() -> tuple[AreaPage, ...]:
+    seen: list[str] = []
+    with (data_dir() / "concelho_distrito.csv").open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            name = row["distrito"].strip()
+            if name not in seen:
+                seen.append(name)
+    pages = []
+    for name in seen:
+        slug = fold(name).replace(" ", "-")
+        pages.append(
+            AreaPage(
+                slug,
+                f"Distrito de {name}",
+                name,
+                "do distrito",
+            )
+        )
+    pages.append(
+        AreaPage(
+            "acores",
+            "Açores",
+            "Açores",
+            "da região",
+            "Região Autónoma dos Açores",
+            unit="regiao",
+        )
+    )
+    pages.append(
+        AreaPage(
+            "madeira",
+            "Madeira",
+            "Madeira",
+            "da região",
+            "Região Autónoma da Madeira",
+            unit="regiao",
+        )
+    )
+    return tuple(pages)
+
+
+AREA_PAGES: tuple[AreaPage, ...] = _district_pages()
+_AREAS = {area.slug: area for area in AREA_PAGES}
+
+
+def area_by_slug(slug: str) -> AreaPage:
+    return _AREAS[slug]
+
+
 def render_html(payload: dict[str, Any], *, scope: str = "national") -> str:
-    if scope == "leiria":
-        return render_leiria_html(payload)
-    return render_presentation_html(payload)
+    if scope == "national":
+        return render_presentation_html(payload)
+    return render_leiria_html(payload, area=area_by_slug(scope))
 
 
 def render_presentation_html(payload: dict[str, Any]) -> str:
@@ -283,6 +349,7 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
         f"<span> · {_esc(s.get('coverage') or '')}</span></li>"
         for s in payload.get("sources") or []
     )
+
     def year_total(y: str) -> dict[str, float]:
         row = totals.get(y) or {}
         return {
@@ -322,7 +389,10 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
         )
 
     year_cards = "".join(year_card(y) for y in years)
-    algema_html = _algema_cards_html(_committed_top100(payload))
+    algema_records = _committed_top100(payload)
+    algema_html = _algema_cards_html(algema_records)
+    algema_lead = _algema_lead("do país", algema_records)
+    base_href = _base_contratos_href(payload)
     data_json = _escape_json(_embed_payload(payload))
     nuts_geo = _escape_json(
         (data_dir() / "nuts2_pt.geojson").read_text(encoding="utf-8")
@@ -333,12 +403,16 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
     brand_tokens = _brand_tokens_css()
     brand_footer_css = _brand_footer_css()
     cfp_footer = _cfp_footer(assets)
+    region_buttons = "".join(
+        f'<a class="alt" href="{area.slug}/">{_esc(area.button)}</a>'
+        for area in AREA_PAGES
+    )
     return f"""<!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dinheiro público e produtos GAFAM (2022–2026)</title>
+  <title>Dinheiro público em cinco empresas americanas (2022–2026)</title>
   {brand_head}
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
@@ -528,12 +602,19 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
       position: absolute; right: -0.4rem; bottom: -0.6rem;
       font-size: 6rem; opacity: .12; transform: rotate(-18deg); pointer-events: none;
     }}
+    .chart-title {{
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin: 0.25rem 0 0.75rem;
+    }}
     .chart-box {{
       flex: 1;
       min-height: 280px;
       max-height: 62vh;
       position: relative;
-      margin-top: 1rem;
+      margin-top: 0.25rem;
     }}
     .chart-box canvas, #mapRegion {{
       width: 100% !important;
@@ -680,74 +761,98 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
   <main class="deck">
     <section class="slide slide--hero" id="s0" data-title="Início">
       <p class="meta reveal">Apresentação · 2022–2026</p>
-      <h1 class="reveal">Dinheiro público e produtos GAFAM</h1>
-      <p class="lead reveal">As big tech americanas operam sob o Cloud Act dos EUA:
-      no «dia 0», uma decisão política em Washington pode cortar o serviço —
-      ou as agências (FBI e outras) podem aceder aos dados sem notificar
-      o Estado português. Este relatório rastreia contratos e pedidos públicos
-      com nomes GAFAM nos ficheiros oficiais, 2022–2026, para medir essa
-      dependência.</p>
+      <h1 class="reveal">Dinheiro público em cinco empresas americanas</h1>
+      <p class="lead reveal">Google, Amazon, Facebook, Apple e Microsoft vendem
+      serviços ao Estado. Os Estados Unidos controlam essas empresas e podem
+      obrigá-las a cortar o serviço. O Cloud Act é outra lei: obriga-as a
+      entregar dados que tenham sob controlo, estejam onde estiverem. O aviso
+      ao cliente pode ser adiado. Esta conta mostra só o dinheiro público em
+      que esses nomes aparecem.</p>
       <div class="linkbar reveal">
-        <a href="leiria/">Distrito de Leiria</a>
-        <a class="alt" href="#s1">Começar</a>
+        {region_buttons}
+        <a href="#s1">Começar</a>
       </div>
     </section>
 
     <section class="slide slide--years" id="s1" data-title="Anos">
-      <h2 class="reveal">Cinco anos com Google, Amazon, Facebook, Apple, Microsoft</h2>
+      <h2 class="reveal">Cinco anos de contratos assinados</h2>
+      <p class="lead reveal">A soma dos contratos assinados de 2022 a 2026.
+      Pedidos ao mercado ficam fora da conta.</p>
+      <p class="chart-title reveal">Contratos assinados, por ano</p>
       <div class="year-grid">{year_cards}</div>
     </section>
 
     <section class="slide slide--chart" id="s2" data-title="Série">
-      <h2 class="reveal">Assinatura VS pedidos</h2>
-      <p class="lead reveal">Contrato assinado vs pedido ao mercado (2022–2026).</p>
-      <div class="chart-box reveal"><canvas id="chartYears"></canvas></div>
+      <h2 class="reveal">O que foi assinado e o que foi pedido</h2>
+      <p class="lead reveal">A barra rosa é dinheiro de contratos já assinados.
+      A verde é o valor pedido ao mercado, que pode ainda não ter sido assinado.
+      Não some as duas.</p>
+      <p class="chart-title reveal">Contratos assinados e pedidos ao mercado, por ano</p>
+      <div class="chart-box reveal"><canvas id="chartYears" aria-label="Contratos assinados e pedidos ao mercado, por ano"></canvas></div>
     </section>
 
     <section class="slide slide--map" id="s3" data-title="Dia 0">
-      <h2 class="reveal">Portugal no dia 0</h2>
-      <p class="lead reveal">Imagina que os EUA desligam os produtos GAFAM.
-      Quais regiões seriam mais impactadas? As zonas claras dependem pouco;
-      as escuras ficam com problemas sérios (contrato assinado 2025, continente).</p>
+      <h2 class="reveal">Onde um corte doeria mais</h2>
+      <p class="lead reveal">Se os Estados Unidos desligarem estes serviços, as
+      regiões mais escuras são as que mais contrataram em 2025. As claras
+      dependem menos. O mapa é o continente.</p>
+      <p class="lead reveal">Esta conta é só dinheiro público. As empresas privadas
+      também dependem muito destas tecnologias, e isso não entra no mapa.</p>
+      <p class="chart-title reveal">Contratos assinados em 2025, por região</p>
       <div class="chart-box reveal">
-        <div id="mapRegion" role="img" aria-label="Mapa NUTS II continental 2025 — impacto no dia 0"></div>
+        <div id="mapRegion" role="img" aria-label="Contratos assinados em 2025, por região do continente"></div>
       </div>
       <div class="map-legend" id="mapLegend"></div>
     </section>
 
     <section class="slide slide--chart" id="s4" data-title="Categoria">
-      <h2 class="reveal">Por categoria · 2025</h2>
-      <div class="chart-box reveal"><canvas id="chartCategory"></canvas></div>
+      <h2 class="reveal">Quem gastou o dinheiro em 2025</h2>
+      <p class="lead reveal">Cada barra é um tipo de entidade pública. O valor é
+      a soma dos contratos assinados nesse ano.</p>
+      <p class="chart-title reveal">Contratos assinados por categoria, 2025</p>
+      <div class="chart-box reveal"><canvas id="chartCategory" aria-label="Contratos assinados por categoria em 2025"></canvas></div>
     </section>
 
     <section class="slide slide--chart" id="s5" data-title="Fornecedor">
-      <h2 class="reveal">Por fornecedor · 2022–2026</h2>
-      <div class="chart-box reveal"><canvas id="chartVendor"></canvas></div>
+      <h2 class="reveal">Quem levou os contratos</h2>
+      <p class="lead reveal">Cada linha é um fornecedor. Na legenda, cada tom de
+      cinzento é um ano: o mais claro é o mais antigo e o mais escuro é 2026.</p>
+      <p class="chart-title reveal">Contratos assinados por fornecedor e por ano</p>
+      <div class="chart-box reveal"><canvas id="chartVendor" aria-label="Contratos assinados por fornecedor e por ano"></canvas></div>
     </section>
 
     <section class="slide slide--years" id="s6" data-title="Lock-in">
-      <h2 class="reveal">As algemas das Big Techs</h2>
-      <p class="lead reveal">Nos 100 maiores contratos nacionais, Microsoft e Google
-      voltam ano após ano — algemas medidas em anos distintos com despesa.</p>
+      <h2 class="reveal">As algemas</h2>
+      <p class="lead reveal">{algema_lead}</p>
+      <p class="chart-title reveal">Anos com contratos assinados no setor público, 2022–2026</p>
       {algema_html}
+      <p class="meta reveal" style="margin-top:1rem">Fonte: Portal Base, contratos
+      públicos celebrados (IMPIC), 2022–2026.
+      <a href="{base_href}">dados.gov.pt</a></p>
     </section>
 
     <section class="slide slide--kw" id="s7" data-title="Léxico">
-      <h2 class="reveal">Palavras-chave</h2>
-      <p class="lead reveal">Uma coluna por big tech.</p>
+      <h2 class="reveal">O que procurámos</h2>
+      <p class="lead reveal">Cada coluna é uma empresa. Se um destes nomes aparece
+      no documento oficial, o contrato entra na conta.</p>
       <div class="kw-grid">{kw_cols}</div>
     </section>
 
     <section class="slide slide--end" id="s8" data-title="Fontes">
       <h2 class="reveal">Fontes</h2>
+      <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
+      de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
+      mercado não se somam.</p>
       <ul class="list">{sources_html}</ul>
+      <p class="meta reveal">Contagem das algemas</p>
+      <ul class="list">{_algema_source_html(base_href)}</ul>
+      <p class="meta reveal">Leis citadas no início</p>
+      <ul class="list">{_legal_sources_html()}</ul>
       <div class="linkbar reveal">
         <a href="data.json">data.json</a>
         <a href="contratos.csv">contratos.csv</a>
-        <a class="alt" href="leiria/">Abrir Leiria</a>
+        {region_buttons}
       </div>
-      <p class="meta reveal" style="margin-top:1.5rem">2026 incompleto até à data dos ficheiros.
-      Contrato e pedido não se somam.</p>
     </section>
   </main>
   <script id="report-data" type="application/json">{data_json}</script>
@@ -848,7 +953,7 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
         indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {{ legend: {{ display: false }}, tooltip: eurTooltip }},
+        plugins: {{ legend: {{ position: 'bottom' }}, tooltip: eurTooltip }},
         scales: {{
           x: {{
             beginAtZero: true,
@@ -863,6 +968,7 @@ def render_presentation_html(payload: dict[str, Any]) -> str:
       data: {{
         labels: categoryPairs.map((p) => p[0]),
         datasets: [{{
+          label: 'contrato assinado',
           data: categoryPairs.map((p) => p[1]),
           backgroundColor: [coral, teal, gold, violet, ink, '#72e123'],
           borderRadius: 6
@@ -1069,6 +1175,55 @@ _ALGEMA_ICONS = {
 }
 
 
+_LEGAL_SOURCES: tuple[tuple[str, str, str], ...] = (
+    (
+        "18 U.S.C. § 2713 (CLOUD Act)",
+        "https://uscode.house.gov/us/usc/t18/s2713/",
+        "entrega de dados sob controlo da empresa, em qualquer país",
+    ),
+    (
+        "18 U.S.C. § 2705",
+        "https://uscode.house.gov/us/usc/t18/s2705/",
+        "o aviso ao cliente pode ser adiado",
+    ),
+    (
+        "50 U.S.C. § 1702 (IEEPA)",
+        "https://uscode.house.gov/us/usc/t50/s1702/",
+        "o Presidente pode proibir serviços de empresas americanas",
+    ),
+)
+
+
+def _algema_source_html(href: str) -> str:
+    return (
+        "<li class='reveal'>"
+        f'<a href="{href}" rel="noopener noreferrer">'
+        "Portal Base, contratos públicos celebrados (IMPIC)</a>"
+        "<span> · anos com contratos assinados no setor público, 2022–2026</span>"
+        "</li>"
+    )
+
+
+def _legal_sources_html() -> str:
+    return "".join(
+        "<li class='reveal'>"
+        f'<a href="{_safe_href(url)}" rel="noopener noreferrer">{_esc(title)}</a>'
+        f"<span> · {_esc(note)}</span></li>"
+        for title, url, note in _LEGAL_SOURCES
+    )
+
+
+def _base_contratos_href(payload: dict[str, Any]) -> str:
+    fallback = (
+        "https://dados.gov.pt/pt/datasets/"
+        "contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/"
+    )
+    for source in payload.get("sources") or []:
+        if source.get("id") == "base-contratos" and source.get("url"):
+            return _safe_href(source["url"])
+    return _safe_href(fallback)
+
+
 def _committed_top100(payload: dict[str, Any]) -> list[dict[str, Any]]:
     records = [
         r
@@ -1081,8 +1236,7 @@ def _committed_top100(payload: dict[str, Any]) -> list[dict[str, Any]]:
 
 def _algema_card(product: str, years_n: int) -> str:
     chain = "".join(
-        f"<span class='bead{' is-on' if i < years_n else ''}'></span>"
-        for i in range(5)
+        f"<span class='bead{' is-on' if i < years_n else ''}'></span>" for i in range(5)
     )
     anos = (
         f"{years_n} ano de algemas"
@@ -1100,87 +1254,129 @@ def _algema_card(product: str, years_n: int) -> str:
     )
 
 
-def _algema_cards_html(records: list[dict[str, Any]]) -> str:
-    lockin_by_name = {row[0]: row for row in _lockin_from_top(records)}
-    rows_html: list[str] = []
-    any_hit = False
-    for vendor, products in _ALGEMA_ROWS:
-        cards: list[str] = []
+def _algema_years(records: list[dict[str, Any]]) -> dict[str, int]:
+    """Anos distintos com despesa, em todos os contratos assinados — não só no top 100."""
+    by_product: dict[str, set[int]] = {}
+    for row in records:
+        product = str(row.get("product") or "")
+        year = int(row.get("year") or 0)
+        if product and year:
+            by_product.setdefault(product, set()).add(year)
+    years: dict[str, int] = {}
+    for _vendor, products in _ALGEMA_ROWS:
         for name in products:
-            row = lockin_by_name.get(name)
-            years_n = int(row[3]) if row else 0
-            if row:
-                any_hit = True
-            cards.append(_algema_card(name, years_n))
+            years[name] = len(by_product.get(name, ()))
+    return years
+
+
+def _algema_lead(where: str, records: list[dict[str, Any]]) -> str:
+    years = _algema_years(records)
+    present = [
+        vendor
+        for vendor, products in _ALGEMA_ROWS
+        if any(years[name] > 0 for name in products)
+    ]
+    if not present:
+        return (
+            f"Nos contratos assinados {where}, entre 2022 e 2026, "
+            "não há Microsoft nem Google."
+        )
+    names = " e ".join(present)
+    verb = "aparece" if len(present) == 1 else "aparecem"
+    return (
+        f"Nos contratos assinados {where}, {names} {verb} em vários anos. "
+        "No setor público a repetição é longa: cada cartão conta esses anos, "
+        "não a duração de um único contrato."
+    )
+
+
+def _algema_cards_html(records: list[dict[str, Any]]) -> str:
+    years = _algema_years(records)
+    rows_html: list[str] = []
+    for vendor, products in _ALGEMA_ROWS:
+        cards = [
+            _algema_card(name, years[name]) for name in products if years[name] > 0
+        ]
+        if not cards:
+            continue
         rows_html.append(
             "<div class='algema-row'>"
             f"<p class='algema-vendor'>{_esc(vendor)}</p>"
             f"<div class='algema-grid'>{''.join(cards)}</div>"
             "</div>"
         )
-    if not any_hit:
+    if not rows_html:
         return (
-            "<p class='reveal'>Sem Microsoft / Google no top 100 "
-            "(Office 365, Teams, Google Cloud, Android…).</p>"
+            "<p class='reveal'>Sem Microsoft nem Google nos contratos assinados "
+            "deste período (Office 365, Teams, Google Cloud, Android…).</p>"
         )
     return f"<div class='algema-stack'>{''.join(rows_html)}</div>"
 
 
-def render_leiria_html(payload: dict[str, Any]) -> str:
+def render_leiria_html(
+    payload: dict[str, Any],
+    area: AreaPage | None = None,
+) -> str:
+    area = area or area_by_slug("leiria")
     totals = payload["totals"]
     years = [str(y) for y in YEAR_LIST]
-    mun_labels = {
-        line.strip()
-        for line in (data_dir() / "distrito_leiria.txt").read_text(encoding="utf-8").splitlines()
-        if line.strip() and not line.strip().startswith("#")
-    }
-    mun_fold = {fold(name) for name in mun_labels}
+    if area.unit == "distrito":
+        mun_fold: set[str] | None = set(
+            load_concelhos_by_distrito(data_dir() / "concelho_distrito.csv")[
+                fold(area.button)
+            ]
+        )
+    else:
+        mun_fold = None
     records = _committed_top100(payload)
-    rows = "".join(
-        "<tr class='reveal'>"
-        f"<td>{_esc(r.get('year'))}</td>"
-        f"<td>{_esc(r.get('place') or '—')}</td>"
-        f"<td>{_esc(r.get('buyer'))}</td>"
-        f"<td>{_esc(r.get('product'))}</td>"
-        f"<td class='num'>{eur(r.get('amount_eur'))}</td>"
-        f"<td>{_esc((r.get('excerpt') or '')[:120])}</td>"
-        "</tr>"
-        for r in records[:100]
-    ) or "<tr><td colspan='6'>Sem contratos no distrito neste período.</td></tr>"
+    rows = (
+        "".join(
+            "<tr class='reveal'>"
+            f"<td>{_esc(r.get('year'))}</td>"
+            f"<td>{_esc(r.get('place') or '—')}</td>"
+            f"<td>{_esc(r.get('buyer'))}</td>"
+            f"<td>{_esc(r.get('product'))}</td>"
+            f"<td class='num'>{eur(r.get('amount_eur'))}</td>"
+            f"<td>{_esc((r.get('excerpt') or '')[:120])}</td>"
+            "</tr>"
+            for r in records[:100]
+        )
+        or "<tr><td colspan='6'>Sem contratos neste período.</td></tr>"
+    )
     place_year = (
-        (payload.get("breakdowns") or {})
-        .get("committed_by_place", {})
-        .get("2025", {})
+        (payload.get("breakdowns") or {}).get("committed_by_place", {}).get("2025", {})
     )
     place_pairs = sorted(
         (
             (name, value)
             for name, value in place_year.items()
-            if fold(str(name)) in mun_fold
+            if mun_fold is None or fold(str(name)) in mun_fold
         ),
         key=lambda item: item[1],
         reverse=True,
     )[:10]
-    place_list = "".join(
-        f"<li class='reveal'><strong>{_esc(name)}</strong> — {eur(value)}</li>"
-        for name, value in place_pairs
-    ) or "<li class='reveal'>Sem repartição por concelho.</li>"
-    vendor_pairs = sorted(
-        (
-            (payload.get("breakdowns") or {})
-            .get("committed_by_vendor", {})
-            .get("2025", {})
-            .items()
-        ),
-        key=lambda item: item[1],
-        reverse=True,
+    place_list = (
+        "".join(
+            f"<li class='reveal'><strong>{_esc(name)}</strong> — {eur(value)}</li>"
+            for name, value in place_pairs
+        )
+        or "<li class='reveal'>Sem repartição por concelho.</li>"
     )
     algema_html = _algema_cards_html(records)
+    algema_lead = _algema_lead(area.where, records)
+    base_href = _base_contratos_href(payload)
+    sources_html = "".join(
+        "<li class='reveal'>"
+        f'<a href="{_safe_href(s["url"])}" rel="noopener noreferrer">'
+        f"{_esc(s['title'])}</a>"
+        f"<span> · {_esc(s.get('coverage') or '')}</span></li>"
+        for s in payload.get("sources") or []
+    )
     year_cards = "".join(
         "<article class='year-card reveal'>"
         f"<p class='y'>{_esc(y)}</p>"
         f"<p class='n'>{_esc(eur_compact(totals[y]['committed']))}</p>"
-        "<p class='c'>€ contratado GAFAM</p>"
+        "<p class='c'>contrato assinado</p>"
         "</article>"
         for y in years
     )
@@ -1189,11 +1385,39 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
     place_all = {
         name: value
         for name, value in place_year.items()
-        if fold(str(name)) in mun_fold
+        if mun_fold is None or fold(str(name)) in mun_fold
     }
     place_json = json.dumps(place_all, ensure_ascii=False)
-    vendor_json = json.dumps(vendor_pairs, ensure_ascii=False)
-    assets = _brand_asset_prefix(scope="leiria")
+    assets = _brand_asset_prefix(scope=area.slug)
+    geo_file = f"{area.slug}.geojson"
+    map_credit = "CAOP2025 DGT" if area.unit == "distrito" else "NUTS II"
+    paint_name = area.nuts_name or area.name
+    local_phrase = "do distrito" if area.unit == "distrito" else "desta região"
+    if area.unit == "distrito":
+        map_lead = (
+            "Se os Estados Unidos desligarem estes serviços, os "
+            "concelhos mais escuros são os que mais contrataram em 2025. Os claros "
+            "dependem menos."
+        )
+        map_title = "Contratos assinados em 2025, por concelho"
+        map_aria = f"Contratos assinados em 2025, por concelho do distrito de {area.button}"
+    else:
+        map_lead = (
+            "Se os Estados Unidos desligarem estes serviços, o mapa mostra "
+            "quanto esta região contratou em 2025."
+        )
+        map_title = "Contratos assinados em 2025, nesta região"
+        map_aria = f"Contratos assinados em 2025, {area.name}"
+    map_html = (
+        "<div class='split'>"
+        "<div class='map-panel reveal'>"
+        f"<div id='mapLeiria' role='img' aria-label='{_esc(map_aria)}'></div>"
+        "</div><div>"
+        "<p class='meta reveal'>Os dez concelhos com mais contratos assinados</p>"
+        f"<ul>{place_list}</ul></div></div>"
+        "<div class='map-legend' id='mapLeiriaLegend'></div>"
+    )
+    fora = "e isso não entra no mapa."
     brand_head = _brand_head(assets)
     brand_tokens = _brand_tokens_css()
     brand_footer_css = _brand_footer_css()
@@ -1203,7 +1427,7 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GAFAM · Distrito de Leiria (2022–2026)</title>
+  <title>GAFAM · {_esc(area.name)} (2022–2026)</title>
   {brand_head}
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
@@ -1233,32 +1457,43 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
     }}
     .dots a.is-active {{ background: var(--coral); transform: scale(1.25); }}
     .slide {{
-      min-height: 100vh; min-height: 100dvh;
-      scroll-snap-align: start; scroll-snap-stop: always;
-      padding: clamp(1.25rem, 4vw, 2.5rem);
-      padding-bottom: calc(clamp(1.25rem, 4vw, 2.5rem) + var(--cfp-bar));
-      display: flex; flex-direction: column; justify-content: center;
-      max-width: 1100px; margin: 0 auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      padding-bottom: calc(clamp(1.5rem, 4vw, 3rem) + var(--cfp-bar));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
     }}
     .slide--hero {{
-      max-width: none; color: var(--paper);
+      color: var(--paper);
       background:
         radial-gradient(circle at 82% 18%, rgba(253,82,136,.45), transparent 40%),
         radial-gradient(circle at 10% 80%, rgba(114,225,35,.3), transparent 35%),
         linear-gradient(135deg, #010101, #2a0a14 70%, #1a1a1a);
-      padding-left: max(clamp(1.25rem, 4vw, 2.5rem), calc(50vw - 550px));
-      padding-right: max(clamp(1.25rem, 4vw, 2.5rem), calc(50vw - 550px));
     }}
     .slide--map {{
-      max-width: none; color: #f4f4f0; background: #010101;
-      padding-left: max(clamp(1.25rem, 4vw, 2.5rem), calc(50vw - 550px));
-      padding-right: max(clamp(1.25rem, 4vw, 2.5rem), calc(50vw - 550px));
+      color: #f4f4f0; background: #010101;
     }}
-    h1 {{ font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -0.03em; margin: 0 0 .4em; font-weight: 800; }}
-    h2 {{ font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 .6em; letter-spacing: -0.02em; font-weight: 800; }}
+    .slide--map .lead {{ opacity: 0.85; }}
+    .slide h1, .slide h2 {{
+      margin: 0 0 0.4em;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 18ch;
+    }}
+    .slide h1 {{ font-size: clamp(2.4rem, 7vw, 5rem); }}
+    .slide h2 {{ font-size: clamp(1.8rem, 5vw, 3.4rem); }}
     .lead {{
-      max-width: 42rem; font-size: 1.1rem; line-height: 1.45; margin: 0 0 1rem;
-      text-align: left; text-wrap: pretty;
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      max-width: 42rem;
+      line-height: 1.45;
+      margin: 0 0 1.5rem;
     }}
     .meta {{ font-family: var(--mono); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; opacity: .8; }}
     .year-grid {{
@@ -1341,7 +1576,27 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
       position: absolute; right: -0.4rem; bottom: -0.6rem;
       font-size: 6rem; opacity: .12; transform: rotate(-18deg); pointer-events: none;
     }}
-    .chart-box {{ height: min(42vh, 320px); background: #fff; border-radius: 1rem; padding: 1rem; }}
+    .chart-title {{
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin: 0.25rem 0 0.75rem;
+    }}
+    .chart-box {{
+      flex: 1;
+      min-height: 280px;
+      max-height: 62vh;
+      position: relative;
+      margin-top: 0.25rem;
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+    }}
+    .chart-box canvas {{
+      width: 100% !important;
+      height: 100% !important;
+    }}
     .slide--map .chart-box, .map-panel {{
       background: transparent; padding: 0; height: auto;
     }}
@@ -1410,44 +1665,52 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
   <main class="deck">
   <section class="slide slide--hero" id="s0" data-title="Início">
       <p class="meta reveal"><a href="../">← apresentação nacional</a></p>
-      <h1 class="reveal">Distrito de Leiria</h1>
-      <p class="lead reveal">As big tech americanas operam sob o Cloud Act dos EUA:
-      no «dia 0», uma decisão política em Washington pode cortar o serviço —
-      ou as agências (FBI e outras) podem aceder aos dados sem notificar
-      o Estado português. Aqui medimos essa dependência no distrito de Leiria:
-      análise dos 16 concelhos (2022–2026), contrato e pedido GAFAM por município,
-      com leitura dos apoios (grants) e da concentração da despesa local.</p>
+      <h1 class="reveal">{_esc(area.name)}</h1>
+      <p class="lead reveal">Entre 2022 e 2026, câmaras, escolas e hospitais {local_phrase}
+      assinaram contratos com grandes tecnológicas americanas. Os Estados Unidos
+      podem obrigar essas empresas a cortar o serviço. O Cloud Act é outra lei:
+      obriga-as a entregar dados sob o seu controlo, estejam onde estiverem.
+      O aviso ao cliente pode ser adiado. Os números são só dinheiro público.</p>
+      <p class="chart-title reveal">Contratos assinados, por ano</p>
       <div class="year-grid">{year_cards}</div>
   </section>
   <section class="slide" id="s1" data-title="Série">
-    <h2 class="reveal">Assinatura VS Pedidos</h2>
-    <div class="chart-box reveal"><canvas id="chartLeiriaYears"></canvas></div>
+    <h2 class="reveal">O que foi assinado e o que foi pedido</h2>
+    <p class="lead reveal">A barra rosa é dinheiro de contratos já assinados.
+    A verde é o valor pedido ao mercado, que pode ainda não ter sido assinado.
+    Não some as duas.</p>
+    <p class="chart-title reveal">Contratos assinados e pedidos ao mercado, por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaYears" aria-label="Contratos assinados e pedidos ao mercado, por ano"></canvas></div>
   </section>
-  <section class="slide slide--map" id="s2" data-title="Concelhos">
-    <h2 class="reveal">Uso nos conselhos</h2>
-    <div class="split">
-      <div class="map-panel reveal">
-        <div id="mapLeiria" role="img" aria-label="Mapa dos concelhos do distrito de Leiria 2025"></div>
-        <div class="map-legend" id="mapLeiriaLegend"></div>
-      </div>
-      <div>
-        <p class="meta reveal">10 maiores concelhos · gastos</p>
-        <ul>{place_list}</ul>
-      </div>
-    </div>
+  <section class="slide slide--map" id="s2" data-title="Dia 0">
+    <h2 class="reveal">Onde um corte doeria mais</h2>
+    <p class="lead reveal">{_esc(map_lead)}</p>
+    <p class="lead reveal">Esta conta é só dinheiro público. As empresas privadas
+    também dependem muito destas tecnologias, {fora}</p>
+    <p class="chart-title reveal">{_esc(map_title)}</p>
+    {map_html}
   </section>
-  <section class="slide" id="s3" data-title="Big tech">
-    <h2 class="reveal">As Big Tech quem mandam</h2>
-    <div class="chart-box reveal"><canvas id="chartLeiriaVendor"></canvas></div>
+  <section class="slide" id="s3" data-title="Fornecedor">
+    <h2 class="reveal">Quem levou os contratos</h2>
+    <p class="lead reveal">Cada linha é um fornecedor. Na legenda, cada tom de
+    cinzento é um ano: o mais claro é o mais antigo e o mais escuro é 2026.</p>
+    <p class="chart-title reveal">Contratos assinados por fornecedor e por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaVendor" aria-label="Contratos assinados por fornecedor e por ano"></canvas></div>
   </section>
   <section class="slide" id="s4" data-title="Lock-in">
-    <h2 class="reveal">As algemas das Big Techs</h2>
-    <p class="lead reveal">Nos 100 maiores contratos do distrito, Microsoft e Google
-    voltam ano após ano — algemas medidas em anos distintos com despesa.</p>
+    <h2 class="reveal">As algemas</h2>
+    <p class="lead reveal">{algema_lead}</p>
+    <p class="chart-title reveal">Anos com contratos assinados no setor público, 2022–2026</p>
     {algema_html}
+    <p class="meta reveal" style="margin-top:1rem">Fonte: Portal Base, contratos
+    públicos celebrados (IMPIC), 2022–2026.
+    <a href="{base_href}">dados.gov.pt</a></p>
   </section>
   <section class="slide" id="s5" data-title="Contratos">
-    <h2 class="reveal">Top 100 das maiores algemas</h2>
+    <h2 class="reveal">Os 100 maiores contratos</h2>
+    <p class="lead reveal">Os maiores contratos assinados {local_phrase}, do mais
+    caro para o mais barato. O excerto é a frase do documento oficial onde o
+    produto aparece.</p>
     <div style="overflow:auto; max-height:62vh">
       <table>
         <thead>
@@ -1465,13 +1728,32 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
       <a href="data.json">data.json</a>
     </p>
   </section>
+  <section class="slide" id="s6" data-title="Fontes">
+    <h2 class="reveal">Fontes</h2>
+    <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
+    de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
+    mercado não se somam.</p>
+    <ul class="list">{sources_html}</ul>
+    <p class="meta reveal">Contagem das algemas</p>
+    <ul class="list">{_algema_source_html(base_href)}</ul>
+    <p class="meta reveal">Leis citadas no início</p>
+    <ul class="list">{_legal_sources_html()}</ul>
+  </section>
   </main>
   <script id="report-data" type="application/json">{data_json}</script>
   <script>
     const payload = JSON.parse(document.getElementById('report-data').textContent);
     const yearLabels = {year_labels};
     const placeData = {place_json};
-    const vendorPairs = {vendor_json};
+    const eurTooltip = {{
+      callbacks: {{
+        label: function (ctx) {{
+          const label = ctx.dataset.label ? ctx.dataset.label + ': ' : '';
+          const v = ctx.chart.options.indexAxis === 'y' ? ctx.parsed.x : ctx.parsed.y;
+          return label + eurTick(v != null ? v : ctx.raw);
+        }}
+      }}
+    }};
     function eurTick(v) {{
       return Number(v).toLocaleString('pt-PT', {{ maximumFractionDigits: 0 }}) + ' €';
     }}
@@ -1507,7 +1789,7 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
         responsive: true, maintainAspectRatio: false,
         plugins: {{
           legend: {{ position: 'bottom' }},
-          tooltip: {{ callbacks: {{ label: (c) => (c.dataset.label || '') + ': ' + eurTick(c.parsed.y) }} }}
+          tooltip: eurTooltip
         }},
         scales: {{
           y: {{ beginAtZero: true, ticks: {{ callback: (v) => eurTick(v) }} }}
@@ -1529,30 +1811,50 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
         ]
       }}
     }});
+    const vendorByYear = Object.fromEntries(
+      yearLabels.map((y) => [y, (payload.breakdowns.committed_by_vendor || {{}})[y] || {{}}])
+    );
+    const vendorColors = yearLabels.map((_, i) => {{
+      const t = yearLabels.length <= 1 ? 1 : i / (yearLabels.length - 1);
+      const shade = Math.round(210 - t * 185);
+      return 'rgb(' + shade + ',' + shade + ',' + shade + ')';
+    }});
+    const vendorLabels = [...new Set(
+      yearLabels.flatMap((y) => Object.keys(vendorByYear[y]))
+    )].sort((a, b) => {{
+      const sum = (name) => yearLabels.reduce(
+        (acc, y) => acc + (vendorByYear[y][name] || 0), 0
+      );
+      return sum(b) - sum(a);
+    }});
     new Chart(document.getElementById('chartLeiriaVendor'), {{
       type: 'bar',
       options: {{
         indexAxis: 'y',
-        responsive: true, maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {{
-          legend: {{ display: false }},
-          tooltip: {{ callbacks: {{ label: (c) => eurTick(c.parsed.x) }} }}
+          legend: {{ position: 'bottom' }},
+          tooltip: eurTooltip
         }},
         scales: {{
-          x: {{ beginAtZero: true, ticks: {{ callback: (v) => eurTick(v) }} }}
+          x: {{ beginAtZero: true, ticks: {{ callback: (v) => eurTick(v) }} }},
+          y: {{ ticks: {{ autoSkip: false }} }}
         }}
       }},
       data: {{
-        labels: vendorPairs.map((p) => p[0]),
-        datasets: [{{
-          data: vendorPairs.map((p) => p[1]),
-          backgroundColor: ['#fd5288','#72e123','#f4ea15','#eb5423','#010101'],
+        labels: vendorLabels,
+        datasets: yearLabels.map((y, i) => ({{
+          label: y,
+          data: vendorLabels.map((k) => vendorByYear[y][k] || 0),
+          backgroundColor: vendorColors[i],
           borderRadius: 6
-        }}]
+        }}))
       }}
     }});
     (function drawLeiriaMap() {{
-      const night = ['#f4ea15', '#fd5288', '#eb5423', '#3a2a22', '#0a0a0c'];
+      if (!document.getElementById('mapLeiria')) return;
+      const bands = ['#f4ea15', '#eb5423', '#010101'];
       const zeroFill = '#f4f4f0';
       function fold(s) {{
         return (s || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').trim();
@@ -1565,14 +1867,17 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
         for (const [k, v] of Object.entries(placeData)) {{
           if (fold(k) === g) return v;
         }}
+        if (g === fold({json.dumps(paint_name)})) {{
+          return Object.values(placeData).reduce((sum, v) => sum + Number(v), 0);
+        }}
         return 0;
       }}
       function paint(munGeo) {{
         const values = Object.values(placeData).filter((v) => v > 0).sort((a, b) => a - b);
         const cuts = [];
         if (values.length) {{
-          for (let i = 1; i <= 5; i++) {{
-            const idx = Math.min(values.length - 1, Math.ceil((i / 5) * values.length) - 1);
+          for (let i = 1; i <= 3; i++) {{
+            const idx = Math.min(values.length - 1, Math.ceil((i / 3) * values.length) - 1);
             cuts.push(values[idx]);
           }}
         }}
@@ -1605,11 +1910,11 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
               }};
             }}
             return {{
-              color: b <= 2 ? '#ffe9a0' : '#1c1c22',
+              color: b === 1 ? '#ffe9a0' : '#1c1c22',
               weight: 1.2,
-              fillColor: night[b - 1],
+              fillColor: bands[b - 1],
               fillOpacity: 0.98,
-              className: b <= 2 ? 'night-lit' : ''
+              className: b === 1 ? 'night-lit' : ''
             }};
           }},
           onEachFeature: function (feat, lyr) {{
@@ -1627,10 +1932,10 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
         requestAnimationFrame(fit);
         setTimeout(fit, 200);
         document.getElementById('mapLeiriaLegend').innerHTML =
-          'CAOP2025 DGT · <span style="background:' + zeroFill + '"></span>0 € · ' +
-          night.map((c, i) => '<span style="background:' + c + '"></span>' + binLabel(i + 1)).join(' · ');
+          '{map_credit} · <span style="background:' + zeroFill + '"></span>0 € · ' +
+          bands.map((c, i) => '<span style="background:' + c + '"></span>' + binLabel(i + 1)).join(' · ');
       }}
-      fetch('concelhos_leiria.geojson')
+      fetch('{geo_file}')
         .then((r) => r.json())
         .then(paint)
         .catch(function () {{
@@ -1647,6 +1952,53 @@ def render_leiria_html(payload: dict[str, Any]) -> str:
 
 def _escape_json(raw: str) -> str:
     return raw.replace("<", "\\u003c")
+
+
+def _write_area_geojson(out_dir: Path, area: AreaPage) -> None:
+    if area.unit == "distrito":
+        raw = json.loads(
+            (data_dir() / "concelhos_continente.geojson").read_text(encoding="utf-8")
+        )
+        wanted = fold(area.button)
+        features = []
+        for feat in raw["features"]:
+            props = feat["properties"]
+            if fold(props["distrito"]) != wanted:
+                continue
+            features.append(
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": props["name"],
+                        "name": props["name"],
+                        "source": props["source"],
+                    },
+                    "geometry": feat["geometry"],
+                }
+            )
+        (out_dir / f"{area.slug}.geojson").write_text(
+            json.dumps(
+                {"type": "FeatureCollection", "features": features},
+                ensure_ascii=False,
+                separators=(",", ":"),
+            ),
+            encoding="utf-8",
+        )
+        return
+    raw = json.loads((data_dir() / "nuts2_pt.geojson").read_text(encoding="utf-8"))
+    wanted = fold(area.nuts_name)
+    features = [
+        feat
+        for feat in raw.get("features") or []
+        if fold(str((feat.get("properties") or {}).get("name") or "")) == wanted
+    ]
+    (out_dir / f"{area.slug}.geojson").write_text(
+        json.dumps(
+            {"type": "FeatureCollection", "features": features},
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
 
 
 def write_report(
@@ -1671,9 +2023,5 @@ def write_report(
     write_csv(out_dir / "contratos.csv", records, "committed")
     write_csv(out_dir / "anuncios.csv", records, "requested")
     write_csv(out_dir / "pt2030.csv", records, "grant")
-    if scope == "leiria":
-        geo_src = data_dir() / "concelhos_leiria.geojson"
-        (out_dir / "concelhos_leiria.geojson").write_text(
-            geo_src.read_text(encoding="utf-8"),
-            encoding="utf-8",
-        )
+    if scope != "national":
+        _write_area_geojson(out_dir, area_by_slug(scope))

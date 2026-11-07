@@ -1,0 +1,600 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.357502+00:00",
+  "totals": {
+    "2022": {
+      "committed": 11563.2,
+      "requested": 0,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 8663.9,
+      "requested": 0,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 135360.12,
+      "requested": 0,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 277816.97,
+      "requested": 0,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 64748.12,
+      "requested": 0,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "Alentejo": 11563.2
+      },
+      "2023": {
+        "Alentejo": 8663.9
+      },
+      "2024": {
+        "sem local": 71801.31,
+        "Alentejo": 63558.81
+      },
+      "2025": {
+        "sem local": 209010.53,
+        "Alentejo": 68806.44
+      },
+      "2026": {
+        "Alentejo": 64748.12
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "saúde": 11563.2
+      },
+      "2023": {
+        "saúde": 8663.9
+      },
+      "2024": {
+        "administração local": 71801.31,
+        "saúde": 52976.76,
+        "outra entidade pública": 10582.05
+      },
+      "2025": {
+        "administração local": 189036.0,
+        "saúde": 48601.44,
+        "ensino superior": 40179.53
+      },
+      "2026": {
+        "saúde": 64748.12
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 11563.2
+      },
+      "2023": {
+        "Microsoft": 8663.9
+      },
+      "2024": {
+        "Microsoft": 135360.12
+      },
+      "2025": {
+        "Microsoft": 237637.44,
+        "Google": 40179.53
+      },
+      "2026": {
+        "Microsoft": 64748.12
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Évora": 11563.2
+      },
+      "2023": {
+        "Évora": 8663.9
+      },
+      "2024": {
+        "Évora": 63558.81,
+        "Vila Viçosa": 43491.0,
+        "Portel": 28310.31
+      },
+      "2025": {
+        "Montemor-o-Novo": 189036.0,
+        "Évora": 88780.97
+      },
+      "2026": {
+        "Évora": 64748.12
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "9249697",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alentejo Central, EPE",
+      "excerpt": "Público para aquisição de Licenciamento Microsoft 365 para as entidades do SNS Concurso Públi",
+      "amount_eur": 11563.2,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    },
+    {
+      "source_id": "11031402",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alentejo Central, EPE",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO DE SOFTWARE MICROSOFT - 2ª FASE E SERVIÇOS CONEXOS PARA VÁRIA",
+      "amount_eur": 8663.9,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    },
+    {
+      "source_id": "10855804",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alentejo Central, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 51755.76,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    },
+    {
+      "source_id": "11026421",
+      "channel": "committed",
+      "buyer": "Município de São Brás de Alportel",
+      "excerpt": "h, placa gráfica para Cluster de VDIs e Windows Server Datacenter 2022 para 32 cores O",
+      "amount_eur": 28310.31,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Portel",
+      "district": ""
+    },
+    {
+      "source_id": "11087580",
+      "channel": "committed",
+      "buyer": "Fundação Alentejo",
+      "excerpt": "Licenciamento de Software Microsoft Educação OVS ES Licenciamento de Softwa",
+      "amount_eur": 10582.05,
+      "region": "Alentejo",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    },
+    {
+      "source_id": "11409654",
+      "channel": "committed",
+      "buyer": "Administração Regional de Saúde do Alentejo, IP",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 1221.0,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    },
+    {
+      "source_id": "11667382",
+      "channel": "committed",
+      "buyer": "Município de Vila Viçosa",
+      "excerpt": "de serviço de licenciamento de software Microsoft - AQ n.º 1/2024 Aquisição de serviço de",
+      "amount_eur": 43491.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Vila Viçosa",
+      "district": "Évora"
+    },
+    {
+      "source_id": "11218607",
+      "channel": "committed",
+      "buyer": "Município de Montemor-o-Novo",
+      "excerpt": "Renovação de licenças Microsoft Licenças de Software nifEntContrato=506",
+      "amount_eur": 189036.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Montemor-o-Novo",
+      "district": "Évora"
+    },
+    {
+      "source_id": "11825312",
+      "channel": "committed",
+      "buyer": "Universidade de Évora",
+      "excerpt": "serviços especializados dos domínios da Google Aquisição de serviços especializados do",
+      "amount_eur": 19974.53,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Google",
+      "url": "",
+      "place": "Évora",
+      "district": ""
+    },
+    {
+      "source_id": "11955014",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alentejo Central, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 48601.44,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    },
+    {
+      "source_id": "15441889",
+      "channel": "committed",
+      "buyer": "Universidade de Évora",
+      "excerpt": "moto dos Investigadores à base de dados Workspace LSEG  Procedimento n.º 126/DCP-GCE/UE/2",
+      "amount_eur": 20205.0,
+      "region": "Alentejo",
+      "category": "ensino superior",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Workspace",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    },
+    {
+      "source_id": "15470314",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alentejo Central, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 63732.12,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    },
+    {
+      "source_id": "15504291",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alentejo Central, EPE",
+      "excerpt": "ca: Licença do Adobe Creative Cloud for Teams Aquisição de Contrato de Assistência Té",
+      "amount_eur": 1016.0,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Évora",
+      "district": "Évora"
+    }
+  ]
+}

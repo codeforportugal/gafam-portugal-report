@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GAFAM · Madeira (2022–2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../assets/favicon.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --ink: #010101;
+      --paper: #f4f4f0;
+      --coral: #fd5288;
+      --teal: #72e123;
+      --lime: #72e123;
+      --gold: #f4ea15;
+      --sky: #eb5423;
+      --violet: #eb5423;
+      --muted: #6a6a6a;
+      --font: "Inter", system-ui, sans-serif;
+      --mono: "Courier Prime", "Courier New", monospace;
+      --cfp-bar: 3.5rem;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font); font-weight: 500; color: var(--ink);
+      background: var(--paper); overflow-x: hidden;
+    }
+    body { padding-bottom: var(--cfp-bar); }
+    .cfp-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+      display: flex; justify-content: center; align-items: center;
+      flex-wrap: wrap; gap: 0.75rem 1.25rem;
+      min-height: var(--cfp-bar);
+      background: var(--ink);
+      border-top: 2px solid var(--lime);
+      padding: 0.4rem 1rem;
+    }
+    .cfp-bar .cfp-brand {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; color: var(--paper);
+      font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .cfp-bar .cfp-brand:hover { color: var(--gold); }
+    .cfp-bar .mark {
+      width: 28px; height: 28px; border-radius: 4px;
+      object-fit: cover; flex: 0 0 auto;
+      box-shadow: 0 0 0 1px rgba(244,234,21,.35);
+    }
+    .cfp-bar .name { color: inherit; }
+    .cfp-bar .soon { color: var(--lime); opacity: 0.95; font-weight: 400; }
+    .cfp-lic {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+    }
+    .cfp-lic a { display: inline-flex; line-height: 0; opacity: 0.95; }
+    .cfp-lic a:hover { opacity: 1; }
+    .cfp-lic img { height: 22px; width: auto; display: block; }
+    @media (max-width: 520px) {
+      .cfp-bar .soon { display: none; }
+    }
+    .progress {
+      position: fixed; top: 0; left: 0; height: 4px; width: 0; z-index: 40;
+      background: linear-gradient(90deg, var(--coral), var(--lime), var(--gold), var(--sky));
+      transition: width .15s linear;
+    }
+    .dots {
+      position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: .45rem; z-index: 30;
+    }
+    .dots a {
+      width: 10px; height: 10px; border-radius: 999px;
+      background: rgba(1,1,1,.25); border: 1px solid rgba(1,1,1,.2);
+    }
+    .dots a.is-active { background: var(--coral); transform: scale(1.25); }
+    .slide {
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      padding-bottom: calc(clamp(1.5rem, 4vw, 3rem) + var(--cfp-bar));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide--hero {
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 82% 18%, rgba(253,82,136,.45), transparent 40%),
+        radial-gradient(circle at 10% 80%, rgba(114,225,35,.3), transparent 35%),
+        linear-gradient(135deg, #010101, #2a0a14 70%, #1a1a1a);
+    }
+    .slide--map {
+      color: #f4f4f0; background: #010101;
+    }
+    .slide--map .lead { opacity: 0.85; }
+    .slide h1, .slide h2 {
+      margin: 0 0 0.4em;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 18ch;
+    }
+    .slide h1 { font-size: clamp(2.4rem, 7vw, 5rem); }
+    .slide h2 { font-size: clamp(1.8rem, 5vw, 3.4rem); }
+    .lead {
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      max-width: 42rem;
+      line-height: 1.45;
+      margin: 0 0 1.5rem;
+    }
+    .meta { font-family: var(--mono); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; opacity: .8; }
+    .year-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .year-card {
+      background: rgba(5, 8, 12, .45);
+      color: var(--paper);
+      padding: 1rem 1.1rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(246,241,231,.12);
+    }
+    .year-card:nth-child(2) { background: var(--coral); border-color: transparent; }
+    .year-card:nth-child(3) { background: var(--teal); border-color: transparent; }
+    .year-card:nth-child(4) { background: var(--violet); border-color: transparent; }
+    .year-card:nth-child(5) { background: var(--gold); color: var(--ink); border-color: transparent; }
+    .year-card .y {
+      font-family: var(--mono); font-size: .75rem; margin: 0 0 .5rem; letter-spacing: .06em;
+    }
+    .year-card .n {
+      font-size: clamp(1.05rem, 2.6vw, 1.45rem); font-weight: 800; margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .year-card .c { margin: .4rem 0 0; font-size: .78rem; opacity: .9; }
+    .algema-stack {
+      display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem;
+    }
+    .algema-vendor {
+      margin: 0 0 .55rem;
+      font-family: var(--mono); font-size: .72rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; opacity: .7;
+    }
+    .algema-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 860px) { .algema-grid { grid-template-columns: 1fr; } }
+    .algema {
+      background: #fff;
+      border-radius: 1.25rem;
+      padding: 1.25rem 1.35rem 1.4rem;
+      border: 1px solid #e5dfd2;
+      position: relative;
+      overflow: hidden;
+    }
+    .algema:nth-child(1) { background: linear-gradient(160deg, #010101, #222); color: var(--paper); border: 0; }
+    .algema:nth-child(2) { background: linear-gradient(160deg, #fd5288, #eb5423); color: #fff; border: 0; }
+    .algema:nth-child(3) { background: linear-gradient(160deg, #72e123, #3d8f12); color: #010101; border: 0; }
+    .algema i {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: .65rem;
+      opacity: .95;
+    }
+    .algema h3 { margin: 0; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .algema .anos {
+      margin: .55rem 0 .85rem;
+      font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .algema .chain {
+      display: flex; gap: .35rem; align-items: center; margin-bottom: .35rem;
+    }
+    .algema .bead {
+      width: 14px; height: 14px; border-radius: 999px;
+      background: rgba(255,255,255,.2);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.25);
+    }
+    .algema .bead.is-on {
+      background: var(--gold);
+      box-shadow: 0 0 0 1px rgba(244,234,21,.55), 0 0 10px rgba(244,234,21,.45);
+    }
+    .handcuff-mark {
+      position: absolute; right: -0.4rem; bottom: -0.6rem;
+      font-size: 6rem; opacity: .12; transform: rotate(-18deg); pointer-events: none;
+    }
+    .chart-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin: 0.25rem 0 0.75rem;
+    }
+    .chart-box {
+      flex: 1;
+      min-height: 280px;
+      max-height: 62vh;
+      position: relative;
+      margin-top: 0.25rem;
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+    .chart-box canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .slide--map .chart-box, .map-panel {
+      background: transparent; padding: 0; height: auto;
+    }
+    .map-panel {
+      background: #0a0a0e;
+      color: #f4f4f0;
+      border-radius: 1.25rem;
+      padding: 1rem;
+    }
+    #mapLeiria {
+      height: min(48vh, 420px);
+      border-radius: 1rem;
+      background: radial-gradient(ellipse 55% 45% at 48% 42%, #1a1520 0%, #010101 100%);
+    }
+    #mapLeiria .night-lit {
+      filter: drop-shadow(0 0 6px rgba(244,234,21,.55)) drop-shadow(0 0 14px rgba(253,82,136,.35));
+    }
+    .map-legend {
+      margin-top: .75rem;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #c8c4b8;
+    }
+    .map-legend span {
+      display: inline-block; width: 14px; height: 10px; margin-right: 4px;
+      vertical-align: middle; border: 1px solid rgba(244,244,240,.25);
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .split { grid-template-columns: 1fr; }
+      .dots { display: none; }
+    }
+    table {
+      width: 100%; border-collapse: collapse; font-size: .92rem;
+      background: #fff; border-radius: 1rem; overflow: hidden;
+    }
+    th, td {
+      text-align: left; padding: .65rem .7rem;
+      border-bottom: 1px solid #e5dfd2; vertical-align: top;
+    }
+    th {
+      font-family: var(--mono); font-size: .7rem; letter-spacing: .05em;
+      text-transform: uppercase; background: #010101; color: #f4f4f0;
+    }
+    td.num { font-family: var(--mono); white-space: nowrap; }
+    ul { padding-left: 1.1rem; margin: 0; }
+    a { color: var(--coral); font-weight: 700; }
+    .slide--hero a { color: var(--lime); }
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.is-in { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <nav class="dots" id="dots" aria-label="Slides"></nav>
+  <main class="deck">
+  <section class="slide slide--hero" id="s0" data-title="Início">
+      <p class="meta reveal"><a href="../">← apresentação nacional</a></p>
+      <h1 class="reveal">Madeira</h1>
+      <p class="lead reveal">Entre 2022 e 2026, câmaras, escolas e hospitais desta região
+      assinaram contratos com grandes tecnológicas americanas. Os Estados Unidos
+      podem obrigar essas empresas a cortar o serviço. O Cloud Act é outra lei:
+      obriga-as a entregar dados sob o seu controlo, estejam onde estiverem.
+      O aviso ao cliente pode ser adiado. Os números são só dinheiro público.</p>
+      <p class="chart-title reveal">Contratos assinados, por ano</p>
+      <div class="year-grid"><article class='year-card reveal'><p class='y'>2022</p><p class='n'>860 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2023</p><p class='n'>864 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2024</p><p class='n'>3 milhões €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2025</p><p class='n'>1 milhão €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2026</p><p class='n'>1 milhão €</p><p class='c'>contrato assinado</p></article></div>
+  </section>
+  <section class="slide" id="s1" data-title="Série">
+    <h2 class="reveal">O que foi assinado e o que foi pedido</h2>
+    <p class="lead reveal">A barra rosa é dinheiro de contratos já assinados.
+    A verde é o valor pedido ao mercado, que pode ainda não ter sido assinado.
+    Não some as duas.</p>
+    <p class="chart-title reveal">Contratos assinados e pedidos ao mercado, por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaYears" aria-label="Contratos assinados e pedidos ao mercado, por ano"></canvas></div>
+  </section>
+  <section class="slide slide--map" id="s2" data-title="Dia 0">
+    <h2 class="reveal">Onde um corte doeria mais</h2>
+    <p class="lead reveal">Se os Estados Unidos desligarem estes serviços, o mapa mostra quanto esta região contratou em 2025.</p>
+    <p class="lead reveal">Esta conta é só dinheiro público. As empresas privadas
+    também dependem muito destas tecnologias, e isso não entra no mapa.</p>
+    <p class="chart-title reveal">Contratos assinados em 2025, nesta região</p>
+    <div class='split'><div class='map-panel reveal'><div id='mapLeiria' role='img' aria-label='Contratos assinados em 2025, Madeira'></div></div><div><p class='meta reveal'>Os dez concelhos com mais contratos assinados</p><ul><li class='reveal'><strong>Funchal</strong> — 1 273 888,50 €</li><li class='reveal'><strong>Câmara de Lobos</strong> — 76 907,75 €</li></ul></div></div><div class='map-legend' id='mapLeiriaLegend'></div>
+  </section>
+  <section class="slide" id="s3" data-title="Fornecedor">
+    <h2 class="reveal">Quem levou os contratos</h2>
+    <p class="lead reveal">Cada linha é um fornecedor. Na legenda, cada tom de
+    cinzento é um ano: o mais claro é o mais antigo e o mais escuro é 2026.</p>
+    <p class="chart-title reveal">Contratos assinados por fornecedor e por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaVendor" aria-label="Contratos assinados por fornecedor e por ano"></canvas></div>
+  </section>
+  <section class="slide" id="s4" data-title="Lock-in">
+    <h2 class="reveal">As algemas</h2>
+    <p class="lead reveal">Nos contratos assinados da região, Microsoft e Google aparecem em vários anos. No setor público a repetição é longa: cada cartão conta esses anos, não a duração de um único contrato.</p>
+    <p class="chart-title reveal">Anos com contratos assinados no setor público, 2022–2026</p>
+    <div class='algema-stack'><div class='algema-row'><p class='algema-vendor'>Microsoft</p><div class='algema-grid'><article class='algema reveal'><i class='ri-file-word-2-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Office 365</h3><p class='anos'>5 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span></div></article><article class='algema reveal'><i class='ri-windows-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Microsoft</h3><p class='anos'>5 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span></div></article><article class='algema reveal'><i class='ri-team-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Teams</h3><p class='anos'>1 ano de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span></div></article></div></div><div class='algema-row'><p class='algema-vendor'>Google</p><div class='algema-grid'><article class='algema reveal'><i class='ri-cloud-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Google Cloud</h3><p class='anos'>1 ano de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span></div></article></div></div></div>
+    <p class="meta reveal" style="margin-top:1rem">Fonte: Portal Base, contratos
+    públicos celebrados (IMPIC), 2022–2026.
+    <a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/">dados.gov.pt</a></p>
+  </section>
+  <section class="slide" id="s5" data-title="Contratos">
+    <h2 class="reveal">Os 100 maiores contratos</h2>
+    <p class="lead reveal">Os maiores contratos assinados desta região, do mais
+    caro para o mais barato. O excerto é a frase do documento oficial onde o
+    produto aparece.</p>
+    <div style="overflow:auto; max-height:62vh">
+      <table>
+        <thead>
+          <tr>
+            <th>Ano</th><th>Concelho</th><th>Entidade</th>
+            <th>Produto</th><th>Montante</th><th>Excerto</th>
+          </tr>
+        </thead>
+        <tbody><tr class='reveal'><td>2024</td><td>Funchal</td><td>Serviço de Saúde da Região Autónoma da Madeira, EPERAM</td><td>Exchange</td><td class='num'>3 555 425,16 €</td><td>DE SERVIÇOS DE LICENCIAMENTO MICROSOFT EXCHANGE, OFFICE M365/O365 PRESTAÇÃO DE SERVIÇOS</td></tr><tr class='reveal'><td>2026</td><td>Funchal</td><td>Município do Funchal</td><td>Microsoft</td><td class='num'>1 088 619,27 €</td><td>Renovação do Licenciamento de Software Microsoft  Renovação do Licenciamento de Software</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>EEM - Empresa de Electricidade da Madeira, SA</td><td>Microsoft</td><td class='num'>1 065 936,59 €</td><td>Fornecimento de licenças de software Microsoft, através da modalidade Microsoft Enterp</td></tr><tr class='reveal'><td>2023</td><td>Funchal</td><td>Município do Funchal</td><td>Microsoft</td><td class='num'>654 060,54 €</td><td>Renovação de Licenciamento de Software Microsoft Renovação de Licenciamento de Software</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>EEM - Empresa de Electricidade da Madeira, SA</td><td>Microsoft</td><td class='num'>610 502,43 €</td><td>Fornecimento de licenças de software Microsoft em Enterprise Agreement (EA) Fornecimen</td></tr><tr class='reveal'><td>2022</td><td>Câmara de Lobos</td><td>Câmara Municipal de Câmara de Lobos</td><td>Microsoft</td><td class='num'>70 014,72 €</td><td>Renovação do contrato de licenciamento Microsoft Renovação do contrato de licenciamento</td></tr><tr class='reveal'><td>2024</td><td>Funchal</td><td>Agência de Inovação e Modernização da Região Autónoma da Madeira, IP-RAM</td><td>Microsoft</td><td class='num'>53 132,40 €</td><td>Aquisição de Licenciamento de Software Microsoft na modalidade de subscrição para a Loja</td></tr><tr class='reveal'><td>2025</td><td>Câmara de Lobos</td><td>Câmara Municipal de Câmara de Lobos</td><td>Microsoft</td><td class='num'>52 963,05 €</td><td>Renovação do suporte Microsoft (Software Assurance) Renovação do supor</td></tr><tr class='reveal'><td>2023</td><td>Câmara de Lobos</td><td>Câmara Municipal de Câmara de Lobos</td><td>Microsoft</td><td class='num'>47 513,70 €</td><td>Renovação das 130 licenças Microsoft Office Renovação das 130 licenças Micro</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>Assembleia Legislativa da Região Autónoma da Madeira</td><td>Microsoft 365</td><td class='num'>44 756,60 €</td><td>Prestação de Serviços de Licenciamento Microsoft 365 Prestação de Serviços de Licenciamento</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>Instituto de Desenvolvimento Regional</td><td>Microsoft 365</td><td class='num'>39 018,17 €</td><td>ciamento de software e serviços conexos Microsoft 365 ou equivalente - 2025 PROC N.º 2024-AQU</td></tr><tr class='reveal'><td>2024</td><td>Funchal</td><td>Instituto de Desenvolvimento Regional</td><td>Microsoft 365</td><td class='num'>39 013,85 €</td><td>ciamento de software e serviços conexos Microsoft 365 ou equivalente - 2024 Aquisição de lice</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>Instituto de Emprego da Madeira, IP-RAM</td><td>Teams</td><td class='num'>37 944,00 €</td><td>trónico e acesso à plataforma Microsoft Teams para o Instituto de Emprego da Madeira,</td></tr><tr class='reveal'><td>2023</td><td>Funchal</td><td>Instituto de Desenvolvimento Regional</td><td>Microsoft 365</td><td class='num'>36 094,77 €</td><td>ciamento de software e serviços conexos Microsoft 365-2023 Aquisição de pacote de licenciamen</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>IHM - Investimentos Habitacionais da Madeira, EPERAM</td><td>Microsoft</td><td class='num'>34 980,00 €</td><td>Aquisição de licenciamento Microsoft Office, conforme as condições fixadas n</td></tr><tr class='reveal'><td>2024</td><td>Funchal</td><td>Universidade da Madeira</td><td>Microsoft</td><td class='num'>31 745,04 €</td><td>uer operacional de licenças do software Microsoft Campus Agreement M365 A3, para o func</td></tr><tr class='reveal'><td>2023</td><td>Funchal</td><td>Universidade da Madeira</td><td>Microsoft</td><td class='num'>30 521,54 €</td><td>uer operacional de licenças do software Microsoft “Campus Agreement M365 A3” para a Unive</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>Instituto de Desenvolvimento Empresarial, IP-RAM</td><td>Microsoft 365</td><td class='num'>29 665,81 €</td><td>a e duas) licenças do sistema operativo Microsoft 365 para o Instituto de Desenvolvimento Emp</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>Universidade da Madeira</td><td>Microsoft</td><td class='num'>28 838,04 €</td><td>uer operacional de licenças de software Microsoft Campus Agreement M365 A3 0004-25-DGF-</td></tr><tr class='reveal'><td>2026</td><td>Funchal</td><td>Instituto de Desenvolvimento Empresarial, IP-RAM</td><td>Microsoft 365</td><td class='num'>28 065,47 €</td><td>ços de 62 (sessenta e duas) licenças do Microsoft 365 para o IDE, IP-RAM Aquisição de serviço</td></tr><tr class='reveal'><td>2026</td><td>Câmara de Lobos</td><td>Câmara Municipal de Câmara de Lobos</td><td>Microsoft 365</td><td class='num'>27 999,00 €</td><td>Subscrição de 170 licenças do Microsoft 365 Business Standard e respetivos serviços</td></tr><tr class='reveal'><td>2023</td><td>Funchal</td><td>Serviço de Saúde da Região Autónoma da Madeira, EPERAM</td><td>Exchange</td><td class='num'>27 710,00 €</td><td>Contratualização de serviços Microsoft Exchange on-line Contratualização de serviços Mi</td></tr><tr class='reveal'><td>2023</td><td>Funchal</td><td>Serviço de Saúde da Região Autónoma da Madeira, EPERAM</td><td>Microsoft</td><td class='num'>26 994,00 €</td><td>enção e assistência técnica ao Software Microsoft Dynamics NAV Prestação de serviços de m</td></tr><tr class='reveal'><td>2024</td><td>Funchal</td><td>Serviço de Saúde da Região Autónoma da Madeira, EPERAM</td><td>Microsoft</td><td class='num'>26 994,00 €</td><td>enção e assistência técnica ao Software Microsoft Dynamics NAV Prestação de serviços de m</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>Serviço de Saúde da Região Autónoma da Madeira, EPERAM</td><td>Microsoft</td><td class='num'>26 994,00 €</td><td>enção e Assistência Técnica ao Software Microsoft Dynamics NAV Prestação de serviços de M</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>IHM - Investimentos Habitacionais da Madeira, EPERAM</td><td>macOS</td><td class='num'>26 905,56 €</td><td>l de 204 licenças (incluindo 3 licenças macOS) ABS-C/15/2022 - Contratação de serviço</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>Universidade da Madeira</td><td>Microsoft</td><td class='num'>26 690,00 €</td><td>uer operacional de licenças de software Microsoft &#x27;Campus Agreement M365 A3&#x27; 0002-22-DGF-</td></tr><tr class='reveal'><td>2024</td><td>Funchal</td><td>Instituto de Desenvolvimento Empresarial, IP-RAM</td><td>Microsoft 365</td><td class='num'>26 177,76 €</td><td>a e duas) licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição de serviço</td></tr><tr class='reveal'><td>2025</td><td>Câmara de Lobos</td><td>Câmara Municipal de Câmara de Lobos</td><td>Windows</td><td class='num'>23 944,70 €</td><td>Subscrição de 130 licenças Microsoft Windows 10/11 Enterprise E3 VDA Subscrição de 1</td></tr><tr class='reveal'><td>2024</td><td>Câmara de Lobos</td><td>Câmara Municipal de Câmara de Lobos</td><td>Windows</td><td class='num'>21 572,40 €</td><td>Subscrições de 120 licenças Microsoft Windows Enterprise  Subscrições de 120 licenças</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>Instituto de Desenvolvimento Empresarial, IP-RAM</td><td>Microsoft 365</td><td class='num'>21 213,31 €</td><td>ta e uma) licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição do Licenci</td></tr><tr class='reveal'><td>2024</td><td>Funchal</td><td>APRAM - Administração dos Portos da Região Autónoma da Madeira, SA</td><td>Office 365</td><td class='num'>19 466,40 €</td><td>prévia para a locação de licenciamento Office 365 2024  Consulta prévia para a locação de</td></tr><tr class='reveal'><td>2026</td><td>Funchal</td><td>APRAM - Administração dos Portos da Região Autónoma da Madeira, SA</td><td>Office 365</td><td class='num'>18 979,61 €</td><td>Locação de licenciamento Office 365 Consulta prévia para a locação de licen</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>Instituto de Desenvolvimento Regional</td><td>Microsoft 365</td><td class='num'>17 500,74 €</td><td>ciamento de software e serviços conexos Microsoft 365. Aquisição de licenciamento de software</td></tr><tr class='reveal'><td>2023</td><td>Funchal</td><td>APRAM - Administração dos Portos da Região Autónoma da Madeira, SA</td><td>Office 365</td><td class='num'>17 101,31 €</td><td>Licenciamento de Office 365 Consulta prévia para a celebração do co</td></tr><tr class='reveal'><td>2026</td><td>Câmara de Lobos</td><td>Câmara Municipal de Câmara de Lobos</td><td>Windows</td><td class='num'>16 851,90 €</td><td>Renovação do licenciamento Microsoft Windows Renovação do licenciamento Microsoft Wi</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>APRAM - Administração dos Portos da Região Autónoma da Madeira, SA</td><td>Office 365</td><td class='num'>16 823,33 €</td><td>Locação de licenciamento Office 365 Consulta prévia para a locação de licen</td></tr><tr class='reveal'><td>2023</td><td>Funchal</td><td>Instituto de Desenvolvimento Empresarial, IP-RAM</td><td>Microsoft 365</td><td class='num'>16 290,72 €</td><td>ços de 62 licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição de serviço</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>Serviço Regional de Proteção Civil, IP-RAM</td><td>Microsoft 365</td><td class='num'>14 322,00 €</td><td>UISIÇÃO DE SERVIÇOS DE LICENCIAMENTO DO MICROSOFT 365, PELO PERÍODO DE 1 ANO
+
+ AJUSTE DIRETO</td></tr><tr class='reveal'><td>2026</td><td>Funchal</td><td>Serviço Regional de Proteção Civil, IP-RAM</td><td>Microsoft 365</td><td class='num'>14 018,36 €</td><td>estação de serviços de licenciamento do Microsoft 365, pelo período de 1 ano.  CONSULTA PRÉVI</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>APRAM - Administração dos Portos da Região Autónoma da Madeira, SA</td><td>Office 365</td><td class='num'>10 431,35 €</td><td>Fornecimento de Licenciamento de Office 365 Consulta Prévia para a Celebração do Co</td></tr><tr class='reveal'><td>2026</td><td>Funchal</td><td>GESBA - Empresa de Gestão do Sector da Banana, Lda</td><td>Microsoft 365</td><td class='num'>9 974,60 €</td><td>informáticos para renovação de licenças Microsoft 365, Microsoft  Exchange Online e Sala Micr</td></tr><tr class='reveal'><td>2026</td><td>Funchal</td><td>Instituto de Desenvolvimento Empresarial, IP-RAM</td><td>Microsoft</td><td class='num'>8 618,38 €</td><td>Aquisição de licenciamento de Microsoft SQL Server Standard (4 cores) Aquisição</td></tr><tr class='reveal'><td>2024</td><td>Funchal</td><td>Secretaria Regional de Saúde e Proteção Civil</td><td>Google Cloud</td><td class='num'>7 933,92 €</td><td>ara participar no evento promovido pela Google Cloud - Executive Briefing Center, em São Fra</td></tr><tr class='reveal'><td>2023</td><td>Funchal</td><td>Secretaria Regional das Finanças</td><td>Excel</td><td class='num'>7 860,00 €</td><td>e formações especializadas em Microsoft Excel. Aquisição de serviços para a realizaçã</td></tr><tr class='reveal'><td>2025</td><td>Funchal</td><td>Associação de Municípios da Região Autónoma da Madeira</td><td>Outlook</td><td class='num'>7 533,96 €</td><td>TÉCNICA AO NÍVEL DO CORREIO ELETRÓNICO [OUTLOOK];
+1.4. AQUISIÇÃO DE SERVIÇOS DE MANUTEN</td></tr><tr class='reveal'><td>2026</td><td>Funchal</td><td>PATRIRAM - Titularidade e Gestão de Património Público Regional, SA</td><td>Microsoft</td><td class='num'>6 229,13 €</td><td>Subscrição de licenças de Software Microsoft Office Subscrição de licenças de Softwa</td></tr><tr class='reveal'><td>2022</td><td>Funchal</td><td>EEM - Empresa de Electricidade da Madeira, SA</td><td>Power BI</td><td class='num'>4 100,00 €</td><td>iços de formação em Analysing Data with Power BI (DA-100) Consulta prévia tendente à cel</td></tr></tbody>
+      </table>
+    </div>
+    <p class="meta" style="margin-top:1rem">
+      <a href="contratos.csv">contratos.csv</a> ·
+      <a href="anuncios.csv">anuncios.csv</a> ·
+      <a href="data.json">data.json</a>
+    </p>
+  </section>
+  <section class="slide" id="s6" data-title="Fontes">
+    <h2 class="reveal">Fontes</h2>
+    <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
+    de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
+    mercado não se somam.</p>
+    <ul class="list"><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Contratos</a><span> · Contratos celebrados 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Anúncios</a><span> · Anúncios publicados 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Modificações</a><span> · Alterações de preço 2022–2026</span></li><li class='reveal'><a href="https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx" rel="noopener noreferrer">Lista de Operações Aprovadas Portugal 2030</a><span> · Operações com início em 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/" rel="noopener noreferrer">Contratos Públicos do PRR</a><span> · Marca contratos BASE financiados pelo PRR</span></li><li class='reveal'><a href="https://sciproj.ptcris.pt/" rel="noopener noreferrer">Portal SciPROJ</a><span> · Financiamento científico 2025–2026 (melhor esforço)</span></li></ul>
+    <p class="meta reveal">Contagem das algemas</p>
+    <ul class="list"><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/" rel="noopener noreferrer">Portal Base, contratos públicos celebrados (IMPIC)</a><span> · anos com contratos assinados no setor público, 2022–2026</span></li></ul>
+    <p class="meta reveal">Leis citadas no início</p>
+    <ul class="list"><li class='reveal'><a href="https://uscode.house.gov/us/usc/t18/s2713/" rel="noopener noreferrer">18 U.S.C. § 2713 (CLOUD Act)</a><span> · entrega de dados sob controlo da empresa, em qualquer país</span></li><li class='reveal'><a href="https://uscode.house.gov/us/usc/t18/s2705/" rel="noopener noreferrer">18 U.S.C. § 2705</a><span> · o aviso ao cliente pode ser adiado</span></li><li class='reveal'><a href="https://uscode.house.gov/us/usc/t50/s1702/" rel="noopener noreferrer">50 U.S.C. § 1702 (IEEPA)</a><span> · o Presidente pode proibir serviços de empresas americanas</span></li></ul>
+  </section>
+  </main>
+  <script id="report-data" type="application/json">{"sources": [{"id": "base-contratos", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Contratos", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/", "file_name": "contratos2022…2026.xlsx", "licence": "Domínio Público", "coverage": "Contratos celebrados 2022–2026", "updated": "2026-11-04"}, {"id": "base-anuncios", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Anúncios", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/", "file_name": "anuncios2022…2026", "licence": "Domínio Público", "coverage": "Anúncios publicados 2022–2026", "updated": "2026-10-25"}, {"id": "base-mods", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Modificações", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/", "file_name": "modcontrats2022…2026", "licence": "Domínio Público", "coverage": "Alterações de preço 2022–2026", "updated": "2026-10-18"}, {"id": "pt2030", "publisher": "Agência para o Desenvolvimento e Coesão", "title": "Lista de Operações Aprovadas Portugal 2030", "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx", "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx", "licence": "Não especificada", "coverage": "Operações com início em 2022–2026", "updated": "2026-09-30"}, {"id": "prr-contratos", "publisher": "Estrutura de Missão Recuperar Portugal", "title": "Contratos Públicos do PRR", "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/", "file_name": "listagem-de-contratos-do-prr.xlsx", "licence": "Aberta", "coverage": "Marca contratos BASE financiados pelo PRR", "updated": "2026-10-23"}, {"id": "sciproj", "publisher": "FCT / PTCRIS", "title": "Portal SciPROJ", "url": "https://sciproj.ptcris.pt/", "file_name": "pesquisa HTML", "licence": "Acesso público", "coverage": "Financiamento científico 2025–2026 (melhor esforço)", "updated": "2026-11-06"}], "keywords": [{"pattern": "Excel", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Office 365", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Microsoft 365", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Windows", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Teams", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Azure", "vendor": "Microsoft", "kind": "match"}, {"pattern": "SharePoint", "vendor": "Microsoft", "kind": "match"}, {"pattern": "OneDrive", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Outlook", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Exchange", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Power BI", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Word", "vendor": "Microsoft", "kind": "match"}, {"pattern": "PowerPoint", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Microsoft", "vendor": "Microsoft", "kind": "match"}, {"pattern": "iPhone", "vendor": "Apple", "kind": "match"}, {"pattern": "iPad", "vendor": "Apple", "kind": "match"}, {"pattern": "MacBook", "vendor": "Apple", "kind": "match"}, {"pattern": "macOS", "vendor": "Apple", "kind": "match"}, {"pattern": "Apple", "vendor": "Apple", "kind": "match"}, {"pattern": "Workspace", "vendor": "Google", "kind": "match"}, {"pattern": "Gmail", "vendor": "Google", "kind": "match"}, {"pattern": "Android", "vendor": "Google", "kind": "match"}, {"pattern": "Chromebook", "vendor": "Google", "kind": "match"}, {"pattern": "Google Cloud", "vendor": "Google", "kind": "match"}, {"pattern": "Classroom", "vendor": "Google", "kind": "match"}, {"pattern": "Google Classroom", "vendor": "Google", "kind": "match"}, {"pattern": "Google", "vendor": "Google", "kind": "match"}, {"pattern": "AWS", "vendor": "Amazon", "kind": "match"}, {"pattern": "Amazon Web Services", "vendor": "Amazon", "kind": "match"}, {"pattern": "Amazon", "vendor": "Amazon", "kind": "match"}, {"pattern": "Facebook", "vendor": "Meta", "kind": "match"}, {"pattern": "Instagram", "vendor": "Meta", "kind": "match"}, {"pattern": "WhatsApp", "vendor": "Meta", "kind": "match"}, {"pattern": "Meta Platforms", "vendor": "Meta", "kind": "match"}, {"pattern": "excelência", "vendor": "", "kind": "reject"}, {"pattern": "excelente", "vendor": "", "kind": "reject"}, {"pattern": "meta", "vendor": "", "kind": "reject"}, {"pattern": "office", "vendor": "", "kind": "reject"}], "generated_at": "2026-11-07T22:59:35.916265+00:00", "totals": {"2022": {"committed": 860282.1100000001, "requested": 0, "grants": 0}, "2023": {"committed": 864146.5800000001, "requested": 0, "grants": 0}, "2024": {"committed": 3781460.93, "requested": 0, "grants": 0}, "2025": {"committed": 1350796.25, "requested": 0, "grants": 0}, "2026": {"committed": 1219355.72, "requested": 0, "grants": 0}}, "breakdowns": {"committed_by_region": {"2022": {"Madeira": 860282.11}, "2023": {"Madeira": 864146.5800000001}, "2024": {"Madeira": 3781460.9299999997}, "2025": {"Madeira": 1350796.2500000002}, "2026": {"Madeira": 1219355.7200000002}}, "committed_by_category": {"2022": {"privado": 625033.78, "administração central": 76658.05, "administração local": 70014.72, "empresas públicas": 61885.56, "ensino superior": 26690.0}, "2023": {"administração local": 701574.24, "empresas públicas": 54704.0, "administração central": 52385.49, "ensino superior": 30521.54, "privado": 17101.31, "outra entidade pública": 7860.0}, "2024": {"empresas públicas": 3582419.16, "administração central": 118324.01000000001, "ensino superior": 31745.04, "administração local": 21572.4, "privado": 19466.4, "outra entidade pública": 7933.92}, "2025": {"privado": 1082759.9200000002, "administração local": 84441.71, "administração central": 83005.98, "outra entidade pública": 44756.6, "ensino superior": 28838.04, "empresas públicas": 26994.0}, "2026": {"administração local": 1133470.17, "administração central": 50702.21, "privado": 35183.34}}, "committed_by_vendor": {"2022": {"Microsoft": 833376.55, "Apple": 26905.56}, "2023": {"Microsoft": 864146.5800000001}, "2024": {"Microsoft": 3773527.01, "Google": 7933.92}, "2025": {"Microsoft": 1350796.2500000002}, "2026": {"Microsoft": 1219355.7200000002}}, "committed_by_place": {"2022": {"Funchal": 790267.39, "Câmara de Lobos": 70014.72}, "2023": {"Funchal": 816632.88, "Câmara de Lobos": 47513.7}, "2024": {"Funchal": 3759888.53, "Câmara de Lobos": 21572.4}, "2025": {"Funchal": 1273888.5000000002, "Câmara de Lobos": 76907.75}, "2026": {"Funchal": 1174504.82, "Câmara de Lobos": 44850.9}}}, "prr": {}, "sciproj": {"total": 0, "count": 0}, "private_grants_count": 0, "skipped": {"sem montante": 0, "correspondência incerta": 0}, "press": [], "press_errors": {}, "press_note": "", "records": [{"source_id": "9149644", "channel": "committed", "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM", "excerpt": "ta e uma) licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição do Licenci", "amount_eur": 21213.31, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9338164", "channel": "committed", "buyer": "EEM - Empresa de Electricidade da Madeira, SA", "excerpt": "iços de formação em Analysing Data with Power BI (DA-100) Consulta prévia tendente à cel", "amount_eur": 4100.0, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Power BI", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9408985", "channel": "committed", "buyer": "IHM - Investimentos Habitacionais da Madeira, EPERAM", "excerpt": "l de 204 licenças (incluindo 3 licenças macOS) ABS-C/15/2022 - Contratação de serviço", "amount_eur": 26905.56, "region": "Madeira", "category": "empresas públicas", "vendor": "Apple", "fundos": "", "year": 2022, "headline": true, "product": "macOS", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9410765", "channel": "committed", "buyer": "Instituto de Desenvolvimento Regional", "excerpt": "ciamento de software e serviços conexos Microsoft 365. Aquisição de licenciamento de software", "amount_eur": 17500.74, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9414518", "channel": "committed", "buyer": "EEM - Empresa de Electricidade da Madeira, SA", "excerpt": "Fornecimento de licenças de software Microsoft em Enterprise Agreement (EA) Fornecimen", "amount_eur": 610502.43, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9523961", "channel": "committed", "buyer": "Câmara Municipal de Câmara de Lobos", "excerpt": "Renovação do contrato de licenciamento Microsoft Renovação do contrato de licenciamento", "amount_eur": 70014.72, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Câmara de Lobos", "district": "Região Autónoma da Madeira"}, {"source_id": "9540371", "channel": "committed", "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA", "excerpt": "Fornecimento de Licenciamento de Office 365 Consulta Prévia para a Celebração do Co", "amount_eur": 10431.35, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Office 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9548902", "channel": "committed", "buyer": "Instituto de Emprego da Madeira, IP-RAM", "excerpt": "trónico e acesso à plataforma Microsoft Teams para o Instituto de Emprego da Madeira,", "amount_eur": 37944.0, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Teams", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9564874", "channel": "committed", "buyer": "IHM - Investimentos Habitacionais da Madeira, EPERAM", "excerpt": "Aquisição de licenciamento Microsoft Office, conforme as condições fixadas n", "amount_eur": 34980.0, "region": "Madeira", "category": "empresas públicas", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9567585", "channel": "committed", "buyer": "Universidade da Madeira", "excerpt": "uer operacional de licenças de software Microsoft 'Campus Agreement M365 A3' 0002-22-DGF-", "amount_eur": 26690.0, "region": "Madeira", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9797346", "channel": "committed", "buyer": "Instituto de Desenvolvimento Regional", "excerpt": "ciamento de software e serviços conexos Microsoft 365-2023 Aquisição de pacote de licenciamen", "amount_eur": 36094.77, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9877951", "channel": "committed", "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM", "excerpt": "ços de 62 licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição de serviço", "amount_eur": 16290.72, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "9924331", "channel": "committed", "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM", "excerpt": "enção e assistência técnica ao Software Microsoft Dynamics NAV Prestação de serviços de m", "amount_eur": 26994.0, "region": "Madeira", "category": "empresas públicas", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10241575", "channel": "committed", "buyer": "Câmara Municipal de Câmara de Lobos", "excerpt": "Renovação das 130 licenças Microsoft Office Renovação das 130 licenças Micro", "amount_eur": 47513.7, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Câmara de Lobos", "district": "Região Autónoma da Madeira"}, {"source_id": "10274563", "channel": "committed", "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM", "excerpt": "Contratualização de serviços Microsoft Exchange on-line Contratualização de serviços Mi", "amount_eur": 27710.0, "region": "Madeira", "category": "empresas públicas", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Exchange", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10286338", "channel": "committed", "buyer": "Secretaria Regional das Finanças", "excerpt": "e formações especializadas em Microsoft Excel. Aquisição de serviços para a realizaçã", "amount_eur": 7860.0, "region": "Madeira", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Excel", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10324499", "channel": "committed", "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA", "excerpt": "Licenciamento de Office 365 Consulta prévia para a celebração do co", "amount_eur": 17101.31, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Office 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10333910", "channel": "committed", "buyer": "Universidade da Madeira", "excerpt": "uer operacional de licenças do software Microsoft “Campus Agreement M365 A3” para a Unive", "amount_eur": 30521.54, "region": "Madeira", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10385861", "channel": "committed", "buyer": "Município do Funchal", "excerpt": "Renovação de Licenciamento de Software Microsoft Renovação de Licenciamento de Software", "amount_eur": 654060.54, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10554000", "channel": "committed", "buyer": "Instituto de Desenvolvimento Regional", "excerpt": "ciamento de software e serviços conexos Microsoft 365 ou equivalente - 2024 Aquisição de lice", "amount_eur": 39013.85, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10573417", "channel": "committed", "buyer": "Câmara Municipal de Câmara de Lobos", "excerpt": "Subscrições de 120 licenças Microsoft Windows Enterprise  Subscrições de 120 licenças", "amount_eur": 21572.4, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Windows", "url": "", "place": "Câmara de Lobos", "district": "Região Autónoma da Madeira"}, {"source_id": "10606442", "channel": "committed", "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM", "excerpt": "enção e assistência técnica ao Software Microsoft Dynamics NAV Prestação de serviços de m", "amount_eur": 26994.0, "region": "Madeira", "category": "empresas públicas", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10642951", "channel": "committed", "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM", "excerpt": "a e duas) licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição de serviço", "amount_eur": 26177.76, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10677686", "channel": "committed", "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM", "excerpt": "DE SERVIÇOS DE LICENCIAMENTO MICROSOFT EXCHANGE, OFFICE M365/O365 PRESTAÇÃO DE SERVIÇOS", "amount_eur": 3555425.16, "region": "Madeira", "category": "empresas públicas", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Exchange", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10800363", "channel": "committed", "buyer": "Agência de Inovação e Modernização da Região Autónoma da Madeira, IP-RAM", "excerpt": "Aquisição de Licenciamento de Software Microsoft na modalidade de subscrição para a Loja", "amount_eur": 53132.4, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10964200", "channel": "committed", "buyer": "Secretaria Regional de Saúde e Proteção Civil", "excerpt": "ara participar no evento promovido pela Google Cloud - Executive Briefing Center, em São Fra", "amount_eur": 7933.92, "region": "Madeira", "category": "outra entidade pública", "vendor": "Google", "fundos": "", "year": 2024, "headline": true, "product": "Google Cloud", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "10995040", "channel": "committed", "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA", "excerpt": "prévia para a locação de licenciamento Office 365 2024  Consulta prévia para a locação de", "amount_eur": 19466.4, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Office 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11002522", "channel": "committed", "buyer": "Universidade da Madeira", "excerpt": "uer operacional de licenças do software Microsoft Campus Agreement M365 A3, para o func", "amount_eur": 31745.04, "region": "Madeira", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11222051", "channel": "committed", "buyer": "Instituto de Desenvolvimento Regional", "excerpt": "ciamento de software e serviços conexos Microsoft 365 ou equivalente - 2025 PROC N.º 2024-AQU", "amount_eur": 39018.17, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11223790", "channel": "committed", "buyer": "Câmara Municipal de Câmara de Lobos", "excerpt": "Subscrição de 130 licenças Microsoft Windows 10/11 Enterprise E3 VDA Subscrição de 1", "amount_eur": 23944.7, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Windows", "url": "", "place": "Câmara de Lobos", "district": "Região Autónoma da Madeira"}, {"source_id": "11276661", "channel": "committed", "buyer": "Assembleia Legislativa da Região Autónoma da Madeira", "excerpt": "Prestação de Serviços de Licenciamento Microsoft 365 Prestação de Serviços de Licenciamento", "amount_eur": 44756.6, "region": "Madeira", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11292385", "channel": "committed", "buyer": "Associação de Municípios da Região Autónoma da Madeira", "excerpt": "TÉCNICA AO NÍVEL DO CORREIO ELETRÓNICO [OUTLOOK];\n1.4. AQUISIÇÃO DE SERVIÇOS DE MANUTEN", "amount_eur": 7533.96, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Outlook", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11294960", "channel": "committed", "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM", "excerpt": "a e duas) licenças do sistema operativo Microsoft 365 para o Instituto de Desenvolvimento Emp", "amount_eur": 29665.81, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11367115", "channel": "committed", "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM", "excerpt": "enção e Assistência Técnica ao Software Microsoft Dynamics NAV Prestação de serviços de M", "amount_eur": 26994.0, "region": "Madeira", "category": "empresas públicas", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11406361", "channel": "committed", "buyer": "Serviço Regional de Proteção Civil, IP-RAM", "excerpt": "UISIÇÃO DE SERVIÇOS DE LICENCIAMENTO DO MICROSOFT 365, PELO PERÍODO DE 1 ANO\n\n AJUSTE DIRETO", "amount_eur": 14322.0, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11700689", "channel": "committed", "buyer": "Câmara Municipal de Câmara de Lobos", "excerpt": "Renovação do suporte Microsoft (Software Assurance) Renovação do supor", "amount_eur": 52963.05, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Câmara de Lobos", "district": "Região Autónoma da Madeira"}, {"source_id": "11718968", "channel": "committed", "buyer": "EEM - Empresa de Electricidade da Madeira, SA", "excerpt": "Fornecimento de licenças de software Microsoft, através da modalidade Microsoft Enterp", "amount_eur": 1065936.59, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "11868325", "channel": "committed", "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA", "excerpt": "Locação de licenciamento Office 365 Consulta prévia para a locação de licen", "amount_eur": 16823.33, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Office 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "12075111", "channel": "committed", "buyer": "Universidade da Madeira", "excerpt": "uer operacional de licenças de software Microsoft Campus Agreement M365 A3 0004-25-DGF-", "amount_eur": 28838.04, "region": "Madeira", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "13121600", "channel": "committed", "buyer": "PATRIRAM - Titularidade e Gestão de Património Público Regional, SA", "excerpt": "Subscrição de licenças de Software Microsoft Office Subscrição de licenças de Softwa", "amount_eur": 6229.13, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "13431883", "channel": "committed", "buyer": "Câmara Municipal de Câmara de Lobos", "excerpt": "Renovação do licenciamento Microsoft Windows Renovação do licenciamento Microsoft Wi", "amount_eur": 16851.9, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Windows", "url": "", "place": "Câmara de Lobos", "district": "Região Autónoma da Madeira"}, {"source_id": "13479129", "channel": "committed", "buyer": "GESBA - Empresa de Gestão do Sector da Banana, Lda", "excerpt": "informáticos para renovação de licenças Microsoft 365, Microsoft  Exchange Online e Sala Micr", "amount_eur": 9974.6, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "14411480", "channel": "committed", "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM", "excerpt": "Aquisição de licenciamento de Microsoft SQL Server Standard (4 cores) Aquisição", "amount_eur": 8618.38, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "14547138", "channel": "committed", "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM", "excerpt": "ços de 62 (sessenta e duas) licenças do Microsoft 365 para o IDE, IP-RAM Aquisição de serviço", "amount_eur": 28065.47, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "15082510", "channel": "committed", "buyer": "Serviço Regional de Proteção Civil, IP-RAM", "excerpt": "estação de serviços de licenciamento do Microsoft 365, pelo período de 1 ano.  CONSULTA PRÉVI", "amount_eur": 14018.36, "region": "Madeira", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "15193707", "channel": "committed", "buyer": "Câmara Municipal de Câmara de Lobos", "excerpt": "Subscrição de 170 licenças do Microsoft 365 Business Standard e respetivos serviços", "amount_eur": 27999.0, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Câmara de Lobos", "district": "Região Autónoma da Madeira"}, {"source_id": "15545166", "channel": "committed", "buyer": "Município do Funchal", "excerpt": "Renovação do Licenciamento de Software Microsoft  Renovação do Licenciamento de Software", "amount_eur": 1088619.27, "region": "Madeira", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}, {"source_id": "15864171", "channel": "committed", "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA", "excerpt": "Locação de licenciamento Office 365 Consulta prévia para a locação de licen", "amount_eur": 18979.61, "region": "Madeira", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Office 365", "url": "", "place": "Funchal", "district": "Região Autónoma da Madeira"}]}</script>
+  <script>
+    const payload = JSON.parse(document.getElementById('report-data').textContent);
+    const yearLabels = ["2022", "2023", "2024", "2025", "2026"];
+    const placeData = {"Funchal": 1273888.5000000002, "Câmara de Lobos": 76907.75};
+    const eurTooltip = {
+      callbacks: {
+        label: function (ctx) {
+          const label = ctx.dataset.label ? ctx.dataset.label + ': ' : '';
+          const v = ctx.chart.options.indexAxis === 'y' ? ctx.parsed.x : ctx.parsed.y;
+          return label + eurTick(v != null ? v : ctx.raw);
+        }
+      }
+    };
+    function eurTick(v) {
+      return Number(v).toLocaleString('pt-PT', { maximumFractionDigits: 0 }) + ' €';
+    }
+    const slides = [...document.querySelectorAll('.slide')];
+    const dots = document.getElementById('dots');
+    const progress = document.getElementById('progress');
+    slides.forEach((slide) => {
+      const a = document.createElement('a');
+      a.href = '#' + slide.id;
+      a.title = slide.dataset.title || slide.id;
+      dots.appendChild(a);
+    });
+    const dotLinks = [...dots.querySelectorAll('a')];
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll('.reveal').forEach((el, idx) => {
+          el.style.transitionDelay = (idx * 50) + 'ms';
+          el.classList.add('is-in');
+        });
+        const i = slides.indexOf(entry.target);
+        if (i >= 0) {
+          dotLinks.forEach((d, j) => d.classList.toggle('is-active', j === i));
+          progress.style.width = (((i + 1) / slides.length) * 100) + '%';
+          if (entry.target.id === 's2' && window.__fitLeiriaMap) window.__fitLeiriaMap();
+        }
+      });
+    }, { threshold: 0.45 });
+    slides.forEach((slide) => io.observe(slide));
+    new Chart(document.getElementById('chartLeiriaYears'), {
+      type: 'bar',
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: eurTooltip
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { callback: (v) => eurTick(v) } }
+        }
+      },
+      data: {
+        labels: yearLabels,
+        datasets: [
+          {
+            label: 'contrato assinado',
+            data: yearLabels.map((y) => payload.totals[y].committed),
+            backgroundColor: '#fd5288', borderRadius: 6
+          },
+          {
+            label: 'pedido ao mercado',
+            data: yearLabels.map((y) => payload.totals[y].requested),
+            backgroundColor: '#72e123', borderRadius: 6
+          }
+        ]
+      }
+    });
+    const vendorByYear = Object.fromEntries(
+      yearLabels.map((y) => [y, (payload.breakdowns.committed_by_vendor || {})[y] || {}])
+    );
+    const vendorColors = yearLabels.map((_, i) => {
+      const t = yearLabels.length <= 1 ? 1 : i / (yearLabels.length - 1);
+      const shade = Math.round(210 - t * 185);
+      return 'rgb(' + shade + ',' + shade + ',' + shade + ')';
+    });
+    const vendorLabels = [...new Set(
+      yearLabels.flatMap((y) => Object.keys(vendorByYear[y]))
+    )].sort((a, b) => {
+      const sum = (name) => yearLabels.reduce(
+        (acc, y) => acc + (vendorByYear[y][name] || 0), 0
+      );
+      return sum(b) - sum(a);
+    });
+    new Chart(document.getElementById('chartLeiriaVendor'), {
+      type: 'bar',
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: eurTooltip
+        },
+        scales: {
+          x: { beginAtZero: true, ticks: { callback: (v) => eurTick(v) } },
+          y: { ticks: { autoSkip: false } }
+        }
+      },
+      data: {
+        labels: vendorLabels,
+        datasets: yearLabels.map((y, i) => ({
+          label: y,
+          data: vendorLabels.map((k) => vendorByYear[y][k] || 0),
+          backgroundColor: vendorColors[i],
+          borderRadius: 6
+        }))
+      }
+    });
+    (function drawLeiriaMap() {
+      if (!document.getElementById('mapLeiria')) return;
+      const night = ['#f4ea15', '#fd5288', '#eb5423', '#3a2a22', '#0a0a0c'];
+      const zeroFill = '#f4f4f0';
+      function fold(s) {
+        return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+      }
+      function eurLabel(v) {
+        return Number(v).toLocaleString('pt-PT', { maximumFractionDigits: 0 }) + ' €';
+      }
+      function amountFor(name) {
+        const g = fold(name);
+        for (const [k, v] of Object.entries(placeData)) {
+          if (fold(k) === g) return v;
+        }
+        if (g === fold("Regi\u00e3o Aut\u00f3noma da Madeira")) {
+          return Object.values(placeData).reduce((sum, v) => sum + Number(v), 0);
+        }
+        return 0;
+      }
+      function paint(munGeo) {
+        const values = Object.values(placeData).filter((v) => v > 0).sort((a, b) => a - b);
+        const cuts = [];
+        if (values.length) {
+          for (let i = 1; i <= 5; i++) {
+            const idx = Math.min(values.length - 1, Math.ceil((i / 5) * values.length) - 1);
+            cuts.push(values[idx]);
+          }
+        }
+        function bin(v) {
+          if (!cuts.length || v <= 0) return 0;
+          for (let i = 0; i < cuts.length; i++) {
+            if (v <= cuts[i]) return i + 1;
+          }
+          return cuts.length;
+        }
+        function binLabel(i) {
+          if (!cuts.length) return '—';
+          if (i === 1) return '< ' + eurLabel(cuts[0]);
+          if (i === cuts.length) return '≥ ' + eurLabel(cuts[Math.max(0, cuts.length - 2)]);
+          return '≤ ' + eurLabel(cuts[i - 1]);
+        }
+        const map = L.map('mapLeiria', {
+          zoomControl: false, attributionControl: false,
+          dragging: false, scrollWheelZoom: false,
+          doubleClickZoom: false, boxZoom: false, keyboard: false
+        });
+        const layer = L.geoJSON(munGeo, {
+          style: function (feat) {
+            const v = amountFor(feat.properties.name);
+            const b = bin(v);
+            if (b === 0) {
+              return {
+                color: '#9a9588', weight: 1,
+                fillColor: zeroFill, fillOpacity: 1
+              };
+            }
+            return {
+              color: b <= 2 ? '#ffe9a0' : '#1c1c22',
+              weight: 1.2,
+              fillColor: night[b - 1],
+              fillOpacity: 0.98,
+              className: b <= 2 ? 'night-lit' : ''
+            };
+          },
+          onEachFeature: function (feat, lyr) {
+            const v = amountFor(feat.properties.name);
+            lyr.bindTooltip(feat.properties.name + ' — ' + eurLabel(v));
+          }
+        }).addTo(map);
+        function fit() {
+          map.invalidateSize();
+          const bounds = layer.getBounds();
+          if (bounds.isValid()) map.fitBounds(bounds, { padding: [12, 12] });
+        }
+        window.__fitLeiriaMap = fit;
+        fit();
+        requestAnimationFrame(fit);
+        setTimeout(fit, 200);
+        document.getElementById('mapLeiriaLegend').innerHTML =
+          'NUTS II · <span style="background:' + zeroFill + '"></span>0 € · ' +
+          night.map((c, i) => '<span style="background:' + c + '"></span>' + binLabel(i + 1)).join(' · ');
+      }
+      fetch('madeira.geojson')
+        .then((r) => r.json())
+        .then(paint)
+        .catch(function () {
+          document.getElementById('mapLeiriaLegend').textContent =
+            'Mapa indisponível (falha a carregar CAOP).';
+        });
+    })();
+  </script>
+<footer class="cfp-bar"><a class="cfp-brand" href="https://codefor.pt" rel="noopener noreferrer" title="Realização: code for portugal — codefor.pt (em breve)"><img class="mark" src="../assets/favicon.png" width="28" height="28" alt="code for portugal" /><span class="name">Realização: code for portugal</span><span class="soon">codefor.pt · em breve</span></a><span class="cfp-lic"><a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener noreferrer license" title="Conteúdo · CC BY-SA 4.0"><img src="../assets/cc-by-sa.png" width="88" height="31" alt="CC BY-SA 4.0" /></a><a href="https://github.com/codeforportugal/gafam-portugal-report" rel="noopener noreferrer" title="Código · AGPL-3.0"><img src="../assets/agplv3.png" width="88" height="31" alt="AGPL-3.0" /></a></span></footer>
+</body>
+</html>

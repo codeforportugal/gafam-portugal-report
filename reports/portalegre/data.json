@@ -1,0 +1,708 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.624233+00:00",
+  "totals": {
+    "2022": {
+      "committed": 145622.7,
+      "requested": 0,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 64638.72,
+      "requested": 0,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 113194.05,
+      "requested": 0,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 153127.0,
+      "requested": 174690.0,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 5063.0,
+      "requested": 96855.66,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "Alentejo": 80629.83,
+        "sem local": 64992.87
+      },
+      "2023": {
+        "sem local": 64638.72
+      },
+      "2024": {
+        "Alentejo": 105571.05,
+        "sem local": 7623.0
+      },
+      "2025": {
+        "Alentejo": 152978.0,
+        "sem local": 149.0
+      },
+      "2026": {
+        "sem local": 5063.0
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "ensino superior": 74824.83,
+        "administração local": 64992.87,
+        "outra entidade pública": 5805.0
+      },
+      "2023": {
+        "administração local": 64638.72
+      },
+      "2024": {
+        "saúde": 105571.05,
+        "administração local": 7623.0
+      },
+      "2025": {
+        "ensino superior": 77627.76,
+        "saúde": 75350.24,
+        "administração local": 149.0
+      },
+      "2026": {
+        "administração local": 5063.0
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 145622.7
+      },
+      "2023": {
+        "Microsoft": 64638.72
+      },
+      "2024": {
+        "Microsoft": 105571.05,
+        "Google": 7623.0
+      },
+      "2025": {
+        "Microsoft": 152978.0,
+        "Apple": 149.0
+      },
+      "2026": {
+        "Microsoft": 4914.0,
+        "Apple": 149.0
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Portalegre": 80629.83,
+        "Sousel": 64992.87,
+        "Gavião": 0.0
+      },
+      "2023": {
+        "Nisa": 64638.72
+      },
+      "2024": {
+        "Portalegre": 105571.05,
+        "Gavião": 7623.0
+      },
+      "2025": {
+        "Portalegre": 152978.0,
+        "Avis": 149.0
+      },
+      "2026": {
+        "Sousel": 4914.0,
+        "Avis": 149.0
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "9325143",
+      "channel": "committed",
+      "buyer": "Município de Avis",
+      "excerpt": "Acordo Quadro CIMAA - Licenciamento Microsoft Enterprise Agreement 2022/2024 Acordo Q",
+      "amount_eur": 52752.24,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": false,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Avis",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "9408687",
+      "channel": "committed",
+      "buyer": "Município de Sousel",
+      "excerpt": "AQ_CIMAA_43/2022_LICENCIAMENTO SOFTWARE MICROSOFT-ENTERPRISE AGREEMENT 2022-2024, AO ABRI",
+      "amount_eur": 64992.87,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Sousel",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "9425786",
+      "channel": "committed",
+      "buyer": "Município de Gavião",
+      "excerpt": "Manutenção de Licenciamento Microsoft Manutenção de Licenciamento Microsoft n",
+      "amount_eur": 0.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Gavião",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "9497126",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Portalegre",
+      "excerpt": "Manutenção de Licenciamento de Software Microsoft, utilizado nas atividades letivas e adm",
+      "amount_eur": 74824.83,
+      "region": "Alentejo",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Portalegre",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "9505245",
+      "channel": "committed",
+      "buyer": "Centro de Emprego e Formação Profissional de Coimbra",
+      "excerpt": "Aquisição de bens -  Cabo Microsoft wireless display adapter e Ecrãs intera",
+      "amount_eur": 5805.0,
+      "region": "Alentejo",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Portalegre",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "10380735",
+      "channel": "committed",
+      "buyer": "Município de Nisa",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO EM VOLUME MICROSOFT, POR UM ANO. AQUISIÇÃO DE LICENCIAMENTO",
+      "amount_eur": 64638.72,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Nisa",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "11036166",
+      "channel": "committed",
+      "buyer": "Município de Gavião",
+      "excerpt": "ão App Mobile com versões mais recentes Android e IOS / Novas Funcionalidades e licenci",
+      "amount_eur": 7623.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Android",
+      "url": "",
+      "place": "Gavião",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "11156611",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alto Alentejo, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 105571.05,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Portalegre",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "11385814",
+      "channel": "committed",
+      "buyer": "Comunidade Intermunicipal do Alto Alentejo",
+      "excerpt": "licenciamento e manutenção de software Microsoft - Enterprise Agreement N.º 8826111 (ou",
+      "amount_eur": 0.0,
+      "region": "Alentejo",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": false,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Portalegre",
+      "district": ""
+    },
+    {
+      "source_id": "11476487",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alto Alentejo, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 75350.24,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Portalegre",
+      "district": ""
+    },
+    {
+      "source_id": "11585873",
+      "channel": "committed",
+      "buyer": "Município de Avis",
+      "excerpt": "Serviço de renovação da conta apple developer Serviço de renovação da conta",
+      "amount_eur": 149.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Apple",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Apple",
+      "url": "",
+      "place": "Avis",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "11686188",
+      "channel": "committed",
+      "buyer": "Município de Sousel",
+      "excerpt": "AQ_CIMAA_60/2025_LICENCIAMENTO SOFTWARE MICROSOFT-ENTERPRISE AGREEMENT- 2025-2027- AO ABR",
+      "amount_eur": 94129.44,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": false,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Sousel",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "11738656",
+      "channel": "committed",
+      "buyer": "Comunidade Intermunicipal do Alto Alentejo",
+      "excerpt": "licenciamento e manutenção de software Microsoft - Enterprise Agreement N.º 8826111 (ou",
+      "amount_eur": 101899.8,
+      "region": "Alentejo",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": false,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Portalegre",
+      "district": ""
+    },
+    {
+      "source_id": "11980112",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Portalegre",
+      "excerpt": "Subscrição de Licenciamento Microsoft  M365 Campus e Serviços de Atualização",
+      "amount_eur": 77627.76,
+      "region": "Alentejo",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Portalegre",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "15261488",
+      "channel": "committed",
+      "buyer": "Município de Sousel",
+      "excerpt": "AJ_D_SA_61/2026 - AQUISIÇÃO DE LICENÇAS EXCHANGE ONLINE AJ_D_SA_61/2026 - AQUISIÇÃO DE L",
+      "amount_eur": 4914.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Sousel",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "15730225",
+      "channel": "committed",
+      "buyer": "Município de Avis",
+      "excerpt": "Renovação da conta apple developer Renovação da conta apple deve",
+      "amount_eur": 149.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Apple",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Apple",
+      "url": "",
+      "place": "Avis",
+      "district": "Portalegre"
+    },
+    {
+      "source_id": "26901/2025",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Portalegre",
+      "excerpt": "Subscrição de Licenciamento Microsoft  M365 Campus e Serviços de Atualização",
+      "amount_eur": 87345.0,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/10/197/419646976.pdf",
+      "place": "Portalegre",
+      "district": ""
+    },
+    {
+      "source_id": "28126/2025",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Portalegre",
+      "excerpt": "Subscrição de Licenciamento Microsoft  M365 Campus e Serviços de Atualização",
+      "amount_eur": 87345.0,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/10/208/419704022.pdf",
+      "place": "Portalegre",
+      "district": ""
+    },
+    {
+      "source_id": "16607/2026",
+      "channel": "requested",
+      "buyer": "Município de Portalegre",
+      "excerpt": "Aquisição de licenciamento Microsoft Município de Portalegre 48900000-7 - Pa",
+      "amount_eur": 96855.66,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/06/123/419965418.pdf",
+      "place": "Portalegre",
+      "district": ""
+    }
+  ]
+}

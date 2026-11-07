@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GAFAM · Distrito de Faro (2022–2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../assets/favicon.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --ink: #010101;
+      --paper: #f4f4f0;
+      --coral: #fd5288;
+      --teal: #72e123;
+      --lime: #72e123;
+      --gold: #f4ea15;
+      --sky: #eb5423;
+      --violet: #eb5423;
+      --muted: #6a6a6a;
+      --font: "Inter", system-ui, sans-serif;
+      --mono: "Courier Prime", "Courier New", monospace;
+      --cfp-bar: 3.5rem;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font); font-weight: 500; color: var(--ink);
+      background: var(--paper); overflow-x: hidden;
+    }
+    body { padding-bottom: var(--cfp-bar); }
+    .cfp-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+      display: flex; justify-content: center; align-items: center;
+      flex-wrap: wrap; gap: 0.75rem 1.25rem;
+      min-height: var(--cfp-bar);
+      background: var(--ink);
+      border-top: 2px solid var(--lime);
+      padding: 0.4rem 1rem;
+    }
+    .cfp-bar .cfp-brand {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; color: var(--paper);
+      font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .cfp-bar .cfp-brand:hover { color: var(--gold); }
+    .cfp-bar .mark {
+      width: 28px; height: 28px; border-radius: 4px;
+      object-fit: cover; flex: 0 0 auto;
+      box-shadow: 0 0 0 1px rgba(244,234,21,.35);
+    }
+    .cfp-bar .name { color: inherit; }
+    .cfp-bar .soon { color: var(--lime); opacity: 0.95; font-weight: 400; }
+    .cfp-lic {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+    }
+    .cfp-lic a { display: inline-flex; line-height: 0; opacity: 0.95; }
+    .cfp-lic a:hover { opacity: 1; }
+    .cfp-lic img { height: 22px; width: auto; display: block; }
+    @media (max-width: 520px) {
+      .cfp-bar .soon { display: none; }
+    }
+    .progress {
+      position: fixed; top: 0; left: 0; height: 4px; width: 0; z-index: 40;
+      background: linear-gradient(90deg, var(--coral), var(--lime), var(--gold), var(--sky));
+      transition: width .15s linear;
+    }
+    .dots {
+      position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: .45rem; z-index: 30;
+    }
+    .dots a {
+      width: 10px; height: 10px; border-radius: 999px;
+      background: rgba(1,1,1,.25); border: 1px solid rgba(1,1,1,.2);
+    }
+    .dots a.is-active { background: var(--coral); transform: scale(1.25); }
+    .slide {
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      padding-bottom: calc(clamp(1.5rem, 4vw, 3rem) + var(--cfp-bar));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide--hero {
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 82% 18%, rgba(253,82,136,.45), transparent 40%),
+        radial-gradient(circle at 10% 80%, rgba(114,225,35,.3), transparent 35%),
+        linear-gradient(135deg, #010101, #2a0a14 70%, #1a1a1a);
+    }
+    .slide--map {
+      color: #f4f4f0; background: #010101;
+    }
+    .slide--map .lead { opacity: 0.85; }
+    .slide h1, .slide h2 {
+      margin: 0 0 0.4em;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 18ch;
+    }
+    .slide h1 { font-size: clamp(2.4rem, 7vw, 5rem); }
+    .slide h2 { font-size: clamp(1.8rem, 5vw, 3.4rem); }
+    .lead {
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      max-width: 42rem;
+      line-height: 1.45;
+      margin: 0 0 1.5rem;
+    }
+    .meta { font-family: var(--mono); font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; opacity: .8; }
+    .year-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .year-card {
+      background: rgba(5, 8, 12, .45);
+      color: var(--paper);
+      padding: 1rem 1.1rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(246,241,231,.12);
+    }
+    .year-card:nth-child(2) { background: var(--coral); border-color: transparent; }
+    .year-card:nth-child(3) { background: var(--teal); border-color: transparent; }
+    .year-card:nth-child(4) { background: var(--violet); border-color: transparent; }
+    .year-card:nth-child(5) { background: var(--gold); color: var(--ink); border-color: transparent; }
+    .year-card .y {
+      font-family: var(--mono); font-size: .75rem; margin: 0 0 .5rem; letter-spacing: .06em;
+    }
+    .year-card .n {
+      font-size: clamp(1.05rem, 2.6vw, 1.45rem); font-weight: 800; margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .year-card .c { margin: .4rem 0 0; font-size: .78rem; opacity: .9; }
+    .algema-stack {
+      display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem;
+    }
+    .algema-vendor {
+      margin: 0 0 .55rem;
+      font-family: var(--mono); font-size: .72rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; opacity: .7;
+    }
+    .algema-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 860px) { .algema-grid { grid-template-columns: 1fr; } }
+    .algema {
+      background: #fff;
+      border-radius: 1.25rem;
+      padding: 1.25rem 1.35rem 1.4rem;
+      border: 1px solid #e5dfd2;
+      position: relative;
+      overflow: hidden;
+    }
+    .algema:nth-child(1) { background: linear-gradient(160deg, #010101, #222); color: var(--paper); border: 0; }
+    .algema:nth-child(2) { background: linear-gradient(160deg, #fd5288, #eb5423); color: #fff; border: 0; }
+    .algema:nth-child(3) { background: linear-gradient(160deg, #72e123, #3d8f12); color: #010101; border: 0; }
+    .algema i {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: .65rem;
+      opacity: .95;
+    }
+    .algema h3 { margin: 0; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .algema .anos {
+      margin: .55rem 0 .85rem;
+      font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .algema .chain {
+      display: flex; gap: .35rem; align-items: center; margin-bottom: .35rem;
+    }
+    .algema .bead {
+      width: 14px; height: 14px; border-radius: 999px;
+      background: rgba(255,255,255,.2);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.25);
+    }
+    .algema .bead.is-on {
+      background: var(--gold);
+      box-shadow: 0 0 0 1px rgba(244,234,21,.55), 0 0 10px rgba(244,234,21,.45);
+    }
+    .handcuff-mark {
+      position: absolute; right: -0.4rem; bottom: -0.6rem;
+      font-size: 6rem; opacity: .12; transform: rotate(-18deg); pointer-events: none;
+    }
+    .chart-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin: 0.25rem 0 0.75rem;
+    }
+    .chart-box {
+      flex: 1;
+      min-height: 280px;
+      max-height: 62vh;
+      position: relative;
+      margin-top: 0.25rem;
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+    .chart-box canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .slide--map .chart-box, .map-panel {
+      background: transparent; padding: 0; height: auto;
+    }
+    .map-panel {
+      background: #0a0a0e;
+      color: #f4f4f0;
+      border-radius: 1.25rem;
+      padding: 1rem;
+    }
+    #mapLeiria {
+      height: min(48vh, 420px);
+      border-radius: 1rem;
+      background: radial-gradient(ellipse 55% 45% at 48% 42%, #1a1520 0%, #010101 100%);
+    }
+    #mapLeiria .night-lit {
+      filter: drop-shadow(0 0 6px rgba(244,234,21,.55)) drop-shadow(0 0 14px rgba(253,82,136,.35));
+    }
+    .map-legend {
+      margin-top: .75rem;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #c8c4b8;
+    }
+    .map-legend span {
+      display: inline-block; width: 14px; height: 10px; margin-right: 4px;
+      vertical-align: middle; border: 1px solid rgba(244,244,240,.25);
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .split { grid-template-columns: 1fr; }
+      .dots { display: none; }
+    }
+    table {
+      width: 100%; border-collapse: collapse; font-size: .92rem;
+      background: #fff; border-radius: 1rem; overflow: hidden;
+    }
+    th, td {
+      text-align: left; padding: .65rem .7rem;
+      border-bottom: 1px solid #e5dfd2; vertical-align: top;
+    }
+    th {
+      font-family: var(--mono); font-size: .7rem; letter-spacing: .05em;
+      text-transform: uppercase; background: #010101; color: #f4f4f0;
+    }
+    td.num { font-family: var(--mono); white-space: nowrap; }
+    ul { padding-left: 1.1rem; margin: 0; }
+    a { color: var(--coral); font-weight: 700; }
+    .slide--hero a { color: var(--lime); }
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.is-in { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <nav class="dots" id="dots" aria-label="Slides"></nav>
+  <main class="deck">
+  <section class="slide slide--hero" id="s0" data-title="Início">
+      <p class="meta reveal"><a href="../">← apresentação nacional</a></p>
+      <h1 class="reveal">Distrito de Faro</h1>
+      <p class="lead reveal">Entre 2022 e 2026, câmaras, escolas e hospitais do distrito
+      assinaram contratos com grandes tecnológicas americanas. Os Estados Unidos
+      podem obrigar essas empresas a cortar o serviço. O Cloud Act é outra lei:
+      obriga-as a entregar dados sob o seu controlo, estejam onde estiverem.
+      O aviso ao cliente pode ser adiado. Os números são só dinheiro público.</p>
+      <p class="chart-title reveal">Contratos assinados, por ano</p>
+      <div class="year-grid"><article class='year-card reveal'><p class='y'>2022</p><p class='n'>1 milhão €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2023</p><p class='n'>957 mil €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2024</p><p class='n'>2 milhões €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2025</p><p class='n'>1 milhão €</p><p class='c'>contrato assinado</p></article><article class='year-card reveal'><p class='y'>2026</p><p class='n'>1 milhão €</p><p class='c'>contrato assinado</p></article></div>
+  </section>
+  <section class="slide" id="s1" data-title="Série">
+    <h2 class="reveal">O que foi assinado e o que foi pedido</h2>
+    <p class="lead reveal">A barra rosa é dinheiro de contratos já assinados.
+    A verde é o valor pedido ao mercado, que pode ainda não ter sido assinado.
+    Não some as duas.</p>
+    <p class="chart-title reveal">Contratos assinados e pedidos ao mercado, por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaYears" aria-label="Contratos assinados e pedidos ao mercado, por ano"></canvas></div>
+  </section>
+  <section class="slide slide--map" id="s2" data-title="Dia 0">
+    <h2 class="reveal">Onde um corte doeria mais</h2>
+    <p class="lead reveal">Se os Estados Unidos desligarem estes serviços, os concelhos mais escuros são os que mais contrataram em 2025. Os claros dependem menos.</p>
+    <p class="lead reveal">Esta conta é só dinheiro público. As empresas privadas
+    também dependem muito destas tecnologias, e isso não entra no mapa.</p>
+    <p class="chart-title reveal">Contratos assinados em 2025, por concelho</p>
+    <div class='split'><div class='map-panel reveal'><div id='mapLeiria' role='img' aria-label='Contratos assinados em 2025, por concelho do distrito de Faro'></div></div><div><p class='meta reveal'>Os dez concelhos com mais contratos assinados</p><ul><li class='reveal'><strong>Albufeira</strong> — 1 066 042,92 €</li><li class='reveal'><strong>Faro</strong> — 732 543,03 €</li><li class='reveal'><strong>Tavira</strong> — 60 407,34 €</li><li class='reveal'><strong>Lagos</strong> — 17 480,00 €</li><li class='reveal'><strong>Monchique</strong> — 8 880,00 €</li><li class='reveal'><strong>Loulé</strong> — 8 414,40 €</li></ul></div></div><div class='map-legend' id='mapLeiriaLegend'></div>
+  </section>
+  <section class="slide" id="s3" data-title="Fornecedor">
+    <h2 class="reveal">Quem levou os contratos</h2>
+    <p class="lead reveal">Cada linha é um fornecedor. Na legenda, cada tom de
+    cinzento é um ano: o mais claro é o mais antigo e o mais escuro é 2026.</p>
+    <p class="chart-title reveal">Contratos assinados por fornecedor e por ano</p>
+    <div class="chart-box reveal"><canvas id="chartLeiriaVendor" aria-label="Contratos assinados por fornecedor e por ano"></canvas></div>
+  </section>
+  <section class="slide" id="s4" data-title="Lock-in">
+    <h2 class="reveal">As algemas</h2>
+    <p class="lead reveal">Nos contratos assinados do distrito, Microsoft e Google aparecem em vários anos. No setor público a repetição é longa: cada cartão conta esses anos, não a duração de um único contrato.</p>
+    <p class="chart-title reveal">Anos com contratos assinados no setor público, 2022–2026</p>
+    <div class='algema-stack'><div class='algema-row'><p class='algema-vendor'>Microsoft</p><div class='algema-grid'><article class='algema reveal'><i class='ri-file-word-2-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Office 365</h3><p class='anos'>3 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span></div></article><article class='algema reveal'><i class='ri-windows-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Microsoft</h3><p class='anos'>5 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span></div></article><article class='algema reveal'><i class='ri-team-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Teams</h3><p class='anos'>1 ano de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span></div></article></div></div><div class='algema-row'><p class='algema-vendor'>Google</p><div class='algema-grid'><article class='algema reveal'><i class='ri-google-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Google</h3><p class='anos'>1 ano de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span><span class='bead'></span></div></article><article class='algema reveal'><i class='ri-android-fill' aria-hidden='true'></i><i class='ri-link handcuff-mark' aria-hidden='true'></i><h3>Android</h3><p class='anos'>3 anos de algemas</p><div class='chain' aria-hidden='true'><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead is-on'></span><span class='bead'></span><span class='bead'></span></div></article></div></div></div>
+    <p class="meta reveal" style="margin-top:1rem">Fonte: Portal Base, contratos
+    públicos celebrados (IMPIC), 2022–2026.
+    <a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/">dados.gov.pt</a></p>
+  </section>
+  <section class="slide" id="s5" data-title="Contratos">
+    <h2 class="reveal">Os 100 maiores contratos</h2>
+    <p class="lead reveal">Os maiores contratos assinados do distrito, do mais
+    caro para o mais barato. O excerto é a frase do documento oficial onde o
+    produto aparece.</p>
+    <div style="overflow:auto; max-height:62vh">
+      <table>
+        <thead>
+          <tr>
+            <th>Ano</th><th>Concelho</th><th>Entidade</th>
+            <th>Produto</th><th>Montante</th><th>Excerto</th>
+          </tr>
+        </thead>
+        <tbody><tr class='reveal'><td>2025</td><td>Albufeira</td><td>MUNICÍPIO DE ALBUFEIRA</td><td>Microsoft</td><td class='num'>1 066 042,92 €</td><td>AQUISIÇÃO DE LICENCIAMENTO MICROSOFT PARA O MUNICÍPIO DE ALBUFEIRA AQUISIÇÃO</td></tr><tr class='reveal'><td>2024</td><td>Loulé</td><td>Município de Loulé</td><td>Microsoft</td><td class='num'>784 255,41 €</td><td>QUISIÇÃO DE MANUTENÇÃO DE LICENCIAMENTO MICROSOFT E SERVIÇOS CONEXOS CONTRATAÇÃO DA AQUIS</td></tr><tr class='reveal'><td>2024</td><td>Portimão</td><td>Município de Portimão</td><td>Microsoft</td><td class='num'>709 077,78 €</td><td>ENOVAÇÃO DE SUBSCRIÇÃO DE LICENCIAMENTO MICROSOFT RENOVAÇÃO DE SUBSCRIÇÃO DE LICENCIAMENT</td></tr><tr class='reveal'><td>2022</td><td>Albufeira</td><td>MUNICÍPIO DE ALBUFEIRA</td><td>Microsoft</td><td class='num'>635 563,82 €</td><td>no JOUE para aquisição de licenciamento Microsoft para o município de Albufeira Concurso</td></tr><tr class='reveal'><td>2025</td><td>Faro</td><td>Universidade do Algarve</td><td>Microsoft</td><td class='num'>550 669,23 €</td><td>Aquisição de Serviços de Licenciamento Microsoft Aquisição de Serviços de Licenciamento</td></tr><tr class='reveal'><td>2023</td><td>Lagos</td><td>Município de Lagos</td><td>Microsoft</td><td class='num'>547 122,20 €</td><td>o de serviços  - Subscrição de Licenças Microsoft Aquisição de serviços  - Subscrição de</td></tr><tr class='reveal'><td>2024</td><td>—</td><td>Município de Lagoa</td><td>Microsoft</td><td class='num'>501 907,59 €</td><td>Licenciamento Microsoft EA Licenciamento Microsoft EA nifEntCon</td></tr><tr class='reveal'><td>2026</td><td>Faro</td><td>Unidade Local de Saúde do Algarve, E.P.E</td><td>Microsoft</td><td class='num'>313 132,72 €</td><td>aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do</td></tr><tr class='reveal'><td>2026</td><td>Lagos</td><td>Município de Lagos</td><td>Microsoft</td><td class='num'>280 790,13 €</td><td>serviços - Subscrição do licenciamento Microsoft Aquisição de serviços - Subscrição do l</td></tr><tr class='reveal'><td>2022</td><td>Faro</td><td>Universidade do Algarve</td><td>Microsoft</td><td class='num'>190 664,32 €</td><td>-2022 UALG - Aquisição de Licenciamento Microsoft Concurso Público N.º 12-2022 UALG - Aqu</td></tr><tr class='reveal'><td>2024</td><td>Faro</td><td>Universidade do Algarve</td><td>Microsoft</td><td class='num'>175 099,59 €</td><td>Aquisição de Licenciamento Microsoft  Aquisição de Licenciamento Microsoft n</td></tr><tr class='reveal'><td>2024</td><td>Faro</td><td>Unidade Local de Saúde do Algarve, E.P.E</td><td>Microsoft</td><td class='num'>161 375,99 €</td><td>aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do</td></tr><tr class='reveal'><td>2026</td><td>Alcoutim</td><td>Município de Alcoutim</td><td>Microsoft</td><td class='num'>148 287,18 €</td><td>Aquisição de licenças  Microsoft Open Value Subscription Governo e Sc</td></tr><tr class='reveal'><td>2023</td><td>Silves</td><td>Município de Silves</td><td>Microsoft</td><td class='num'>124 989,48 €</td><td>e serviços de implementação de Licenças Microsoft  Prestação de serviços de implementação</td></tr><tr class='reveal'><td>2022</td><td>—</td><td>Município de Lagoa</td><td>Microsoft</td><td class='num'>109 370,30 €</td><td>Prestação de serviços &quot;Licenciamento MICROSOFT&quot; Prestação de serviços &quot;Licenciamento M</td></tr><tr class='reveal'><td>2023</td><td>—</td><td>Município de Lagoa</td><td>Microsoft</td><td class='num'>107 819,58 €</td><td>- Prestação De Serviços - Licenciamento Microsoft Concurso Público - Prestação De Serviço</td></tr><tr class='reveal'><td>2025</td><td>Faro</td><td>Município de Faro</td><td>Windows</td><td class='num'>85 864,26 €</td><td>ento Microsoft para produtos servidores Windows Server 2025 Concurso público sem public</td></tr><tr class='reveal'><td>2026</td><td>Tavira</td><td>Taviraverde, Empresa Municipal de Ambiente, E.M.</td><td>Microsoft</td><td class='num'>62 303,84 €</td><td>Renovação do Licenciamento Microsoft Renovação do Licenciamento Microsoft ni</td></tr><tr class='reveal'><td>2025</td><td>Tavira</td><td>Taviraverde, Empresa Municipal de Ambiente, E.M.</td><td>Microsoft</td><td class='num'>60 407,34 €</td><td>Aquisição de Licenciamento Microsoft Aquisição de Licenciamento Microsoft ni</td></tr><tr class='reveal'><td>2026</td><td>Loulé</td><td>Inframoura, E.M.</td><td>Microsoft</td><td class='num'>56 000,00 €</td><td>m ambiente SaaS suportado na plataforma Microsoft Dynamics 365, incluindo todas as ativid</td></tr><tr class='reveal'><td>2024</td><td>Olhão</td><td>Município de Olhão</td><td>Microsoft</td><td class='num'>54 000,00 €</td><td>Aquisição de licenças de Software Microsoft Office Home &amp; Business 2021 PT Aquisiçã</td></tr><tr class='reveal'><td>2026</td><td>Portimão</td><td>EMARP - Empresa Municipal de Águas e Resíduos de Portimão, EM, SA</td><td>Microsoft 365</td><td class='num'>45 444,00 €</td><td>CP 0541/2026 - Aquisição de Licenças Microsoft 365 Business Standard, Microsoft 365 Copilo</td></tr><tr class='reveal'><td>2024</td><td>Loulé</td><td>Inframoura, E.M.</td><td>Microsoft</td><td class='num'>34 914,81 €</td><td>Aquisição de Licenciamento de Software Microsoft e Aquisição de Bolsa de Horas de Serviç</td></tr><tr class='reveal'><td>2026</td><td>Faro</td><td>Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP</td><td>Microsoft</td><td class='num'>34 883,72 €</td><td>garve_2026 - Aquisição de licenciamento Microsoft no âmbito da candidatura DIGITAlgarve A</td></tr><tr class='reveal'><td>2025</td><td>Faro</td><td>Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP</td><td>Microsoft 365</td><td class='num'>31 904,04 €</td><td>lução de Segurança XDR para Endpoints e Microsoft 365 Aquisição de Solução de Segurança XDR p</td></tr><tr class='reveal'><td>2026</td><td>Vila do Bispo</td><td>Município de Vila do Bispo</td><td>Microsoft 365</td><td class='num'>30 412,48 €</td><td>Renovação de licenciamento Microsoft 365 Concurso Público para renovação de lice</td></tr><tr class='reveal'><td>2024</td><td>Tavira</td><td>Taviraverde, Empresa Municipal de Ambiente, E.M.</td><td>Microsoft</td><td class='num'>30 147,76 €</td><td>Renovação e Aquisição de Licenciamento Microsoft Renovação e Aquisição de Licenciamento</td></tr><tr class='reveal'><td>2022</td><td>Faro</td><td>Centro Ciência Viva do Algarve</td><td>Android</td><td class='num'>30 000,00 €</td><td>lo “OCEANO” para os dispositivos móveis Android e iOS da Apple e Web, com o frontend de</td></tr><tr class='reveal'><td>2023</td><td>Loulé</td><td>Infralobo - Empresa de Infra-Estruturas de Vale do Lobo, EM</td><td>Microsoft</td><td class='num'>29 496,00 €</td><td>Aquisição de licenciamento Microsoft Dynamics CRM 365 - 51/23/IL Aquisição d</td></tr><tr class='reveal'><td>2024</td><td>São Brás de Alportel</td><td>Município de São Brás de Alportel</td><td>Windows</td><td class='num'>28 310,31 €</td><td>h, placa gráfica para Cluster de VDIs e Windows Server Datacenter 2022 para 32 cores O</td></tr><tr class='reveal'><td>2022</td><td>Loulé</td><td>Infralobo - Empresa de Infra-Estruturas de Vale do Lobo, EM</td><td>Microsoft</td><td class='num'>27 104,00 €</td><td>Aquisição de licenciamento Microsoft Dynamics CRM 365 - 26/22/IL Aquisição d</td></tr><tr class='reveal'><td>2024</td><td>Loulé</td><td>Infraquinta - Empresa de Infraestruturas da Quinta do Lago, EM</td><td>Office 365</td><td class='num'>26 618,76 €</td><td>e serviços de licenciamento do software Office 365 (Proc. Ref.ª CPr SER 001/JAN/2024) CPr</td></tr><tr class='reveal'><td>2026</td><td>Loulé</td><td>Inframoura, E.M.</td><td>Microsoft 365</td><td class='num'>26 408,56 €</td><td>mbiente Cloud/SaaS (CloudDR) abrangendo Microsoft 365, identidades e correio eletrónico para</td></tr><tr class='reveal'><td>2022</td><td>Vila Real de Santo António</td><td>Município de Vila Real de Santo António</td><td>Microsoft</td><td class='num'>24 775,95 €</td><td>subscrição anual para 150 utilizadores microsoft do Município de Vila Real de Santo Antó</td></tr><tr class='reveal'><td>2023</td><td>Tavira</td><td>Taviraverde, Empresa Municipal de Ambiente, E.M.</td><td>Microsoft</td><td class='num'>24 531,60 €</td><td>Licenciamento de software Microsoft Licenciamento de software Microsoft nif</td></tr><tr class='reveal'><td>2024</td><td>Faro</td><td>Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP</td><td>Microsoft 365</td><td class='num'>24 246,67 €</td><td>Renovação de licenciamento do software Microsoft 365 Renovação de licenciamento do software</td></tr><tr class='reveal'><td>2023</td><td>Faro</td><td>CI-AMAL-Comunidade Intermunicipal do Algarve</td><td>Workspace</td><td class='num'>22 690,56 €</td><td>Aquisição de 50 Licenças Google Workspace Business Standard e serviços Devoteam G</td></tr><tr class='reveal'><td>2023</td><td>Faro</td><td>Município de Faro</td><td>Instagram</td><td class='num'>22 000,00 €</td><td>sociais do ECRN, nomeadamente Facebook, Instagram e Linkedin, até 15 de novembro de 2024.</td></tr><tr class='reveal'><td>2023</td><td>São Brás de Alportel</td><td>Associação In Loco de Intervenção, Formação e Estudos para o Desenvolvimento Local</td><td>PowerPoint</td><td class='num'>21 228,00 €</td><td>de cartazes A3 e A4, notas de imprensa, powerpoint/canva, etc)
+2. Consultoria de Design e</td></tr><tr class='reveal'><td>2025</td><td>Faro</td><td>Município de Faro</td><td>Android</td><td class='num'>19 900,00 €</td><td>s de Terminais de Pagamento Automático (Android) Aquisição de serviços de cobrança atra</td></tr><tr class='reveal'><td>2025</td><td>Faro</td><td>Região de Turismo do Algarve</td><td>Windows</td><td class='num'>18 861,00 €</td><td>icenças/suporte dos softwares Microsoft Windows Virtual Desktop Access (VDA) e VMware H</td></tr><tr class='reveal'><td>2025</td><td>—</td><td>Município de Lagoa</td><td>WhatsApp</td><td class='num'>18 699,96 €</td><td>Plataforma de comunicação via whatsapp 495/2025 nifEntContrato=506804240|descE</td></tr><tr class='reveal'><td>2022</td><td>Tavira</td><td>Taviraverde, Empresa Municipal de Ambiente, E.M.</td><td>Office 365</td><td class='num'>17 795,74 €</td><td>to Microsoft Exchange Online, Microsoft Office 365 e Microsoft Visio Licenciamento Microso</td></tr><tr class='reveal'><td>2025</td><td>Lagos</td><td>Lagos em Forma, Gestão Desportiva, EM, SA</td><td>Android</td><td class='num'>17 480,00 €</td><td>o e licenciamento de aplicação para iOS/Android e Webservices Aquisição de serviços de</td></tr><tr class='reveal'><td>2026</td><td>Aljezur</td><td>Município de Aljezur</td><td>Microsoft 365</td><td class='num'>16 734,69 €</td><td>Serviços de Subscrição de Licenciamento Microsoft 365 Ajuste Direto para Serviços de Subscriç</td></tr><tr class='reveal'><td>2025</td><td>Faro</td><td>Universidade do Algarve</td><td>Google</td><td class='num'>16 500,00 €</td><td>Campanha Digital no Google Search e Social Média para Captação de</td></tr><tr class='reveal'><td>2024</td><td>Tavira</td><td>Taviraverde, Empresa Municipal de Ambiente, E.M.</td><td>AWS</td><td class='num'>15 000,00 €</td><td>Aquisição de recursos AWS para armazenamento de dados Aquisição d</td></tr><tr class='reveal'><td>2023</td><td>—</td><td>Município de Lagoa</td><td>Facebook</td><td class='num'>14 700,00 €</td><td>Amplificação Welcome to Lagoa: Facebook ADS, Google ADS &amp; TikTok ADS 529/2023 n</td></tr><tr class='reveal'><td>2023</td><td>Faro</td><td>Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP</td><td>Microsoft 365</td><td class='num'>14 097,67 €</td><td>Renovação de licenciamento do software Microsoft 365 CP_05_CCDRAlgarve_2023 nifEntContrato=5</td></tr><tr class='reveal'><td>2022</td><td>Faro</td><td>Comissão de Coordenação e Desenvolvimento Regional do Algarve</td><td>Office 365</td><td class='num'>13 013,30 €</td><td>do licenciamento do software Microsoft Office 365 Renovação do licenciamento do software</td></tr><tr class='reveal'><td>2022</td><td>Portimão</td><td>Município de Portimão</td><td>Teams</td><td class='num'>12 257,70 €</td><td>ão de licenças Adobe Creative Cloud For Teams e Adobe Acrobat Pro DC Renovação da sub</td></tr><tr class='reveal'><td>2022</td><td>Faro</td><td>Município de Faro</td><td>Instagram</td><td class='num'>11 010,00 €</td><td>s, gestão de redes sociais: facebook e  Instagram; Os serviços para o website da Assemble</td></tr><tr class='reveal'><td>2022</td><td>Portimão</td><td>EMARP - Empresa Municipal de Águas e Resíduos de Portimão, EM, SA</td><td>Microsoft</td><td class='num'>10 042,20 €</td><td>isição de licenças e subscrição anual - Microsoft Office CPR 72/2022 - Aquisição de licen</td></tr><tr class='reveal'><td>2026</td><td>—</td><td>Município de Lagoa</td><td>SharePoint</td><td class='num'>9 750,00 €</td><td>nentes Active Directory, Exchange, SQL, Sharepoint, SCCM, Intune e Azure 207/2026 nifEntCo</td></tr><tr class='reveal'><td>2024</td><td>Vila Real de Santo António</td><td>Município de Vila Real de Santo António</td><td>Microsoft</td><td class='num'>9 717,00 €</td><td>Aquisição de licenciamento de Software &quot;Microsoft Office 2021 PLUS COA -1 PC Aquisição de</td></tr><tr class='reveal'><td>2023</td><td>Faro</td><td>Administração Regional de Saúde do Algarve, I.P.</td><td>MacBook</td><td class='num'>9 642,00 €</td><td>M/471/2023 - Aquisição de 3 Portáteis MacBook M/471/2023 - Aquisição de 3 Portáteis M</td></tr><tr class='reveal'><td>2026</td><td>Faro</td><td>Universidade do Algarve</td><td>MacBook</td><td class='num'>9 622,77 €</td><td>Aquisição de MacBook Pro 14” M5 Space Black (M5 Max, 48GB RA</td></tr><tr class='reveal'><td>2023</td><td>Tavira</td><td>Taviraverde, Empresa Municipal de Ambiente, E.M.</td><td>Windows</td><td class='num'>9 246,40 €</td><td>e aquisição de licenciamento Microsoft Windows Server Renovação e aquisição de licenci</td></tr><tr class='reveal'><td>2025</td><td>Monchique</td><td>Município de Monchique</td><td>Exchange</td><td class='num'>8 880,00 €</td><td>novação de serviço de email  Microsoft Exchange Online. Renovação de serviço de email ?</td></tr><tr class='reveal'><td>2025</td><td>Loulé</td><td>Infralobo - Empresa de Infra-Estruturas de Vale do Lobo, EM</td><td>Microsoft</td><td class='num'>8 414,40 €</td><td>25-43-AD - Licença Microsoft para utilização de CRM 25-43-AD - Licen</td></tr><tr class='reveal'><td>2025</td><td>Faro</td><td>Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP</td><td>Microsoft 365</td><td class='num'>8 014,50 €</td><td>lução de Segurança XDR para Endpoints e Microsoft 365 Aquisição de Solução de Segurança XDR p</td></tr><tr class='reveal'><td>2026</td><td>Faro</td><td>Direção Executiva do Serviço Nacional de Saúde, IP</td><td>Microsoft</td><td class='num'>7 799,40 €</td><td>aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do</td></tr><tr class='reveal'><td>2022</td><td>Faro</td><td>Universidade do Algarve</td><td>Apple</td><td class='num'>7 746,00 €</td><td>Aquisição de 6 Computadores Apple iMac para a Escola Superior de Educação</td></tr><tr class='reveal'><td>2022</td><td>Vila Real de Santo António</td><td>Município de Vila Real de Santo António</td><td>Microsoft</td><td class='num'>7 740,00 €</td><td>Renovação de 90 Licenças da Microsoft para as Escolas do Concelho de Vila Rea</td></tr><tr class='reveal'><td>2024</td><td>Faro</td><td>Região de Turismo do Algarve</td><td>Windows</td><td class='num'>7 639,50 €</td><td>ção de licenças dos softwares Microsoft Windows Virtual Desktop Access (VDA), VMware Ho</td></tr><tr class='reveal'><td>2024</td><td>Lagos</td><td>Lagos em Forma, Gestão Desportiva, EM, SA</td><td>Office 365</td><td class='num'>7 369,34 €</td><td>ição de licenças de software “Microsoft Office 365”, de software “Veeam Backup” e de Upgra</td></tr><tr class='reveal'><td>2023</td><td>—</td><td>Município de Lagoa</td><td>iPad</td><td class='num'>7 286,10 €</td><td>IPAD 10,2-INCH e PENCIL, no âmbito do Kit de</td></tr><tr class='reveal'><td>2026</td><td>Lagos</td><td>Lagos em Forma, Gestão Desportiva, EM, SA</td><td>Office 365</td><td class='num'>7 249,34 €</td><td>nto de Licenças de Software &quot; Microsoft Office 365&quot; Contrato para Fornecimento de Licenças</td></tr><tr class='reveal'><td>2022</td><td>São Brás de Alportel</td><td>Município de São Brás de Alportel</td><td>Microsoft</td><td class='num'>6 913,50 €</td><td>omo objeto a Renovação de Licenciamento Microsoft Scholl Agreement por 36 Meses Renovação</td></tr><tr class='reveal'><td>2022</td><td>Faro</td><td>CI-AMAL-Comunidade Intermunicipal do Algarve</td><td>Excel</td><td class='num'>6 661,44 €</td><td>e ações de formação em Microsoft Word e Excel, a realizar no Município Albufeira - Pr</td></tr><tr class='reveal'><td>2022</td><td>Albufeira</td><td>MUNICÍPIO DE ALBUFEIRA</td><td>Android</td><td class='num'>6 458,65 €</td><td>apper 60 + Software Mobile Mapper Field Android) Ajuste direto para aquisição de equipa</td></tr><tr class='reveal'><td>2024</td><td>São Brás de Alportel</td><td>Associação In Loco de Intervenção, Formação e Estudos para o Desenvolvimento Local</td><td>Windows</td><td class='num'>6 300,00 €</td><td>0 computadores de secretária a correr o Windows 10, 9 pontos de acesso WiFi ligando 50</td></tr><tr class='reveal'><td>2026</td><td>Faro</td><td>Universidade do Algarve</td><td>Apple</td><td class='num'>6 099,65 €</td><td>Aquisição de Computadores Apple Aquisição de Computadores Apple nifEntC</td></tr><tr class='reveal'><td>2024</td><td>Faro</td><td>Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP</td><td>Microsoft 365</td><td class='num'>5 911,50 €</td><td>Aquisição de licenciamento do software Microsoft 365 CP_01_CCDRAlgarve_2024 nifEntContrato=5</td></tr><tr class='reveal'><td>2024</td><td>São Brás de Alportel</td><td>Associação In Loco de Intervenção, Formação e Estudos para o Desenvolvimento Local</td><td>Windows</td><td class='num'>5 203,80 €</td><td>das funções na rede informática local – Windows server 2019 e Windows 10;
+b) Equipament</td></tr><tr class='reveal'><td>2024</td><td>Lagos</td><td>Lagos em Forma, Gestão Desportiva, EM, SA</td><td>Android</td><td class='num'>2 240,00 €</td><td>das as funcionalidades da aplicação iOS/Android e das licenças necessárias para operar</td></tr><tr class='reveal'><td>2026</td><td>Faro</td><td>Universidade do Algarve</td><td>MacBook</td><td class='num'>1 782,50 €</td><td>Aquisição de Computador Portátil Apple MacBook Air Aquisição de Computador Portátil Ap</td></tr><tr class='reveal'><td>2023</td><td>Faro</td><td>Universidade do Algarve</td><td>iPad</td><td class='num'>1 300,00 €</td><td>Aquisição de Apple iPad Pro 2022 12,9&#x27;&#x27; Aquisição de Apple iPad</td></tr><tr class='reveal'><td>2024</td><td>Faro</td><td>Universidade do Algarve</td><td>Amazon</td><td class='num'>939,30 €</td><td>14/12/2024 e alojamento em single BB no Amazon Hotel Athens (6 noites, 8-14/12) nifEnt</td></tr><tr class='reveal'><td>2025</td><td>Faro</td><td>Universidade do Algarve</td><td>iPad</td><td class='num'>830,00 €</td><td>Aquisição de Apple iPad Air Aquisição de Apple iPad Air nifEntC</td></tr><tr class='reveal'><td>2023</td><td>Faro</td><td>Universidade do Algarve</td><td>iPad</td><td class='num'>812,20 €</td><td>Aquisição de 1 iPad Air 10.9&#x27;&#x27; Aquisição de iPad nifEntCont</td></tr><tr class='reveal'><td>2023</td><td>Faro</td><td>Universidade do Algarve</td><td>iPad</td><td class='num'>649,59 €</td><td>Aquisição de um iPad 10.9&#x27;&#x27; Wi-Fi 256Gb Aquisição de um iPad</td></tr></tbody>
+      </table>
+    </div>
+    <p class="meta" style="margin-top:1rem">
+      <a href="contratos.csv">contratos.csv</a> ·
+      <a href="anuncios.csv">anuncios.csv</a> ·
+      <a href="data.json">data.json</a>
+    </p>
+  </section>
+  <section class="slide" id="s6" data-title="Fontes">
+    <h2 class="reveal">Fontes</h2>
+    <p class="lead reveal">São os ficheiros oficiais usados nesta conta. O ano
+    de 2026 vai só até à data desses ficheiros. Contrato assinado e pedido ao
+    mercado não se somam.</p>
+    <ul class="list"><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Contratos</a><span> · Contratos celebrados 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Anúncios</a><span> · Anúncios publicados 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/" rel="noopener noreferrer">Contratos Públicos - Portal Base - Modificações</a><span> · Alterações de preço 2022–2026</span></li><li class='reveal'><a href="https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx" rel="noopener noreferrer">Lista de Operações Aprovadas Portugal 2030</a><span> · Operações com início em 2022–2026</span></li><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/" rel="noopener noreferrer">Contratos Públicos do PRR</a><span> · Marca contratos BASE financiados pelo PRR</span></li><li class='reveal'><a href="https://sciproj.ptcris.pt/" rel="noopener noreferrer">Portal SciPROJ</a><span> · Financiamento científico 2025–2026 (melhor esforço)</span></li></ul>
+    <p class="meta reveal">Contagem das algemas</p>
+    <ul class="list"><li class='reveal'><a href="https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/" rel="noopener noreferrer">Portal Base, contratos públicos celebrados (IMPIC)</a><span> · anos com contratos assinados no setor público, 2022–2026</span></li></ul>
+    <p class="meta reveal">Leis citadas no início</p>
+    <ul class="list"><li class='reveal'><a href="https://uscode.house.gov/us/usc/t18/s2713/" rel="noopener noreferrer">18 U.S.C. § 2713 (CLOUD Act)</a><span> · entrega de dados sob controlo da empresa, em qualquer país</span></li><li class='reveal'><a href="https://uscode.house.gov/us/usc/t18/s2705/" rel="noopener noreferrer">18 U.S.C. § 2705</a><span> · o aviso ao cliente pode ser adiado</span></li><li class='reveal'><a href="https://uscode.house.gov/us/usc/t50/s1702/" rel="noopener noreferrer">50 U.S.C. § 1702 (IEEPA)</a><span> · o Presidente pode proibir serviços de empresas americanas</span></li></ul>
+  </section>
+  </main>
+  <script id="report-data" type="application/json">{"sources": [{"id": "base-contratos", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Contratos", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/", "file_name": "contratos2022…2026.xlsx", "licence": "Domínio Público", "coverage": "Contratos celebrados 2022–2026", "updated": "2026-11-04"}, {"id": "base-anuncios", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Anúncios", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/", "file_name": "anuncios2022…2026", "licence": "Domínio Público", "coverage": "Anúncios publicados 2022–2026", "updated": "2026-10-25"}, {"id": "base-mods", "publisher": "IMPIC", "title": "Contratos Públicos - Portal Base - Modificações", "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/", "file_name": "modcontrats2022…2026", "licence": "Domínio Público", "coverage": "Alterações de preço 2022–2026", "updated": "2026-10-18"}, {"id": "pt2030", "publisher": "Agência para o Desenvolvimento e Coesão", "title": "Lista de Operações Aprovadas Portugal 2030", "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx", "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx", "licence": "Não especificada", "coverage": "Operações com início em 2022–2026", "updated": "2026-09-30"}, {"id": "prr-contratos", "publisher": "Estrutura de Missão Recuperar Portugal", "title": "Contratos Públicos do PRR", "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/", "file_name": "listagem-de-contratos-do-prr.xlsx", "licence": "Aberta", "coverage": "Marca contratos BASE financiados pelo PRR", "updated": "2026-10-23"}, {"id": "sciproj", "publisher": "FCT / PTCRIS", "title": "Portal SciPROJ", "url": "https://sciproj.ptcris.pt/", "file_name": "pesquisa HTML", "licence": "Acesso público", "coverage": "Financiamento científico 2025–2026 (melhor esforço)", "updated": "2026-11-06"}], "keywords": [{"pattern": "Excel", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Office 365", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Microsoft 365", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Windows", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Teams", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Azure", "vendor": "Microsoft", "kind": "match"}, {"pattern": "SharePoint", "vendor": "Microsoft", "kind": "match"}, {"pattern": "OneDrive", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Outlook", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Exchange", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Power BI", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Word", "vendor": "Microsoft", "kind": "match"}, {"pattern": "PowerPoint", "vendor": "Microsoft", "kind": "match"}, {"pattern": "Microsoft", "vendor": "Microsoft", "kind": "match"}, {"pattern": "iPhone", "vendor": "Apple", "kind": "match"}, {"pattern": "iPad", "vendor": "Apple", "kind": "match"}, {"pattern": "MacBook", "vendor": "Apple", "kind": "match"}, {"pattern": "macOS", "vendor": "Apple", "kind": "match"}, {"pattern": "Apple", "vendor": "Apple", "kind": "match"}, {"pattern": "Workspace", "vendor": "Google", "kind": "match"}, {"pattern": "Gmail", "vendor": "Google", "kind": "match"}, {"pattern": "Android", "vendor": "Google", "kind": "match"}, {"pattern": "Chromebook", "vendor": "Google", "kind": "match"}, {"pattern": "Google Cloud", "vendor": "Google", "kind": "match"}, {"pattern": "Classroom", "vendor": "Google", "kind": "match"}, {"pattern": "Google Classroom", "vendor": "Google", "kind": "match"}, {"pattern": "Google", "vendor": "Google", "kind": "match"}, {"pattern": "AWS", "vendor": "Amazon", "kind": "match"}, {"pattern": "Amazon Web Services", "vendor": "Amazon", "kind": "match"}, {"pattern": "Amazon", "vendor": "Amazon", "kind": "match"}, {"pattern": "Facebook", "vendor": "Meta", "kind": "match"}, {"pattern": "Instagram", "vendor": "Meta", "kind": "match"}, {"pattern": "WhatsApp", "vendor": "Meta", "kind": "match"}, {"pattern": "Meta Platforms", "vendor": "Meta", "kind": "match"}, {"pattern": "excelência", "vendor": "", "kind": "reject"}, {"pattern": "excelente", "vendor": "", "kind": "reject"}, {"pattern": "meta", "vendor": "", "kind": "reject"}, {"pattern": "office", "vendor": "", "kind": "reject"}], "generated_at": "2026-11-07T22:59:35.387548+00:00", "totals": {"2022": {"committed": 1117116.92, "requested": 601905.93, "grants": 0}, "2023": {"committed": 957611.38, "requested": 691369.0, "grants": 0}, "2024": {"committed": 2590275.11, "requested": 1510982.27, "grants": 0}, "2025": {"committed": 1912467.65, "requested": 1125524.0, "grants": 0}, "2026": {"committed": 1056700.98, "requested": 1323060.18, "grants": 0}}, "breakdowns": {"committed_by_region": {"2022": {"sem local": 808617.96, "Algarve": 308498.95999999996}, "2023": {"Algarve": 647810.22, "sem local": 309801.16000000003}, "2024": {"sem local": 1305664.2400000002, "Algarve": 1284610.87}, "2025": {"sem local": 1154030.22, "Algarve": 758437.43}, "2026": {"Algarve": 789212.79, "sem local": 267488.19}}, "committed_by_category": {"2022": {"administração local": 814089.92, "ensino superior": 198410.32, "outra entidade pública": 94574.48, "privado": 10042.2}, "2023": {"administração local": 823917.36, "outra entidade pública": 107192.56, "administração central": 14097.67, "saúde": 9642.0, "ensino superior": 2761.79}, "2024": {"administração local": 2087268.09, "ensino superior": 176038.88999999998, "saúde": 161375.99, "outra entidade pública": 125824.62999999999, "administração central": 30158.17, "privado": 9609.34}, "2025": {"administração local": 1199387.14, "ensino superior": 567999.23, "outra entidade pública": 87682.73999999999, "administração central": 39918.54, "privado": 17480.0}, "2026": {"administração local": 485974.48, "saúde": 313132.72, "outra entidade pública": 144712.4, "privado": 52693.34, "administração central": 42683.12, "ensino superior": 17504.92}}, "committed_by_vendor": {"2022": {"Microsoft": 1061902.27, "Google": 36458.65, "Meta": 11010.0, "Apple": 7746.0}, "2023": {"Microsoft": 878530.9299999999, "Meta": 36700.0, "Google": 22690.56, "Apple": 19689.89}, "2024": {"Microsoft": 2572095.81, "Amazon": 15939.3, "Google": 2240.0}, "2025": {"Microsoft": 1839057.6899999997, "Google": 53880.0, "Meta": 18699.96, "Apple": 830.0}, "2026": {"Microsoft": 1039196.06, "Apple": 17504.92}}, "committed_by_place": {"2022": {"Albufeira": 642022.47, "Faro": 259095.06, "": 109370.3, "Vila Real de Santo António": 32515.95, "Loulé": 27104.0, "Portimão": 22299.9, "Tavira": 17795.74, "São Brás de Alportel": 6913.5}, "2023": {"Lagos": 547122.2, "": 129805.68000000001, "Silves": 124989.48, "Faro": 71192.02, "Tavira": 33778.0, "Loulé": 29496.0, "São Brás de Alportel": 21228.0}, "2024": {"Loulé": 845788.98, "Portimão": 709077.78, "": 501907.59, "Faro": 375212.54999999993, "Olhão": 54000.0, "Tavira": 45147.759999999995, "São Brás de Alportel": 39814.11, "Vila Real de Santo António": 9717.0, "Lagos": 9609.34}, "2025": {"Albufeira": 1066042.92, "Faro": 732543.03, "Tavira": 60407.34, "": 18699.96, "Lagos": 17480.0, "Monchique": 8880.0, "Loulé": 8414.4}, "2026": {"Faro": 373320.76, "Lagos": 288039.47000000003, "Alcoutim": 148287.18, "Loulé": 82408.56, "Tavira": 62303.84, "Portimão": 45444.0, "Vila do Bispo": 30412.48, "Aljezur": 16734.69, "": 9750.0}}}, "prr": {}, "sciproj": {"total": 0, "count": 0}, "private_grants_count": 0, "skipped": {"sem montante": 0, "correspondência incerta": 0}, "press": [], "press_errors": {}, "press_note": "", "records": [{"source_id": "8826547", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de 6 Computadores Apple iMac para a Escola Superior de Educação", "amount_eur": 7746.0, "region": "Algarve", "category": "ensino superior", "vendor": "Apple", "fundos": "", "year": 2022, "headline": true, "product": "Apple", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9174090", "channel": "committed", "buyer": "Município de Vila Real de Santo António", "excerpt": "Renovação de 90 Licenças da Microsoft para as Escolas do Concelho de Vila Rea", "amount_eur": 7740.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real de Santo António", "district": "Faro"}, {"source_id": "9291533", "channel": "committed", "buyer": "CI-AMAL-Comunidade Intermunicipal do Algarve", "excerpt": "e ações de formação em Microsoft Word e Excel, a realizar no Município Albufeira - Pr", "amount_eur": 6661.44, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Excel", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9310441", "channel": "committed", "buyer": "Taviraverde, Empresa Municipal de Ambiente, E.M.", "excerpt": "to Microsoft Exchange Online, Microsoft Office 365 e Microsoft Visio Licenciamento Microso", "amount_eur": 17795.74, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Office 365", "url": "", "place": "Tavira", "district": "Faro"}, {"source_id": "9421283", "channel": "committed", "buyer": "EMARP - Empresa Municipal de Águas e Resíduos de Portimão, EM, SA", "excerpt": "isição de licenças e subscrição anual - Microsoft Office CPR 72/2022 - Aquisição de licen", "amount_eur": 10042.2, "region": "Algarve", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Portimão", "district": "Faro"}, {"source_id": "9417109", "channel": "committed", "buyer": "Município de Portimão", "excerpt": "ão de licenças Adobe Creative Cloud For Teams e Adobe Acrobat Pro DC Renovação da sub", "amount_eur": 12257.7, "region": "Algarve", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Teams", "url": "", "place": "Portimão", "district": "Faro"}, {"source_id": "9421165", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "-2022 UALG - Aquisição de Licenciamento Microsoft Concurso Público N.º 12-2022 UALG - Aqu", "amount_eur": 190664.32, "region": "Algarve", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9443425", "channel": "committed", "buyer": "Município de São Brás de Alportel", "excerpt": "omo objeto a Renovação de Licenciamento Microsoft Scholl Agreement por 36 Meses Renovação", "amount_eur": 6913.5, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "São Brás de Alportel", "district": "Faro"}, {"source_id": "9459354", "channel": "committed", "buyer": "MUNICÍPIO DE ALBUFEIRA", "excerpt": "apper 60 + Software Mobile Mapper Field Android) Ajuste direto para aquisição de equipa", "amount_eur": 6458.65, "region": "sem local", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2022, "headline": true, "product": "Android", "url": "", "place": "Albufeira", "district": "Faro"}, {"source_id": "9497710", "channel": "committed", "buyer": "Comissão de Coordenação e Desenvolvimento Regional do Algarve", "excerpt": "do licenciamento do software Microsoft Office 365 Renovação do licenciamento do software", "amount_eur": 13013.3, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Office 365", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9542834", "channel": "committed", "buyer": "Município de Vila Real de Santo António", "excerpt": "subscrição anual para 150 utilizadores microsoft do Município de Vila Real de Santo Antó", "amount_eur": 24775.95, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real de Santo António", "district": "Faro"}, {"source_id": "9569607", "channel": "committed", "buyer": "Infralobo - Empresa de Infra-Estruturas de Vale do Lobo, EM", "excerpt": "Aquisição de licenciamento Microsoft Dynamics CRM 365 - 26/22/IL Aquisição d", "amount_eur": 27104.0, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Loulé", "district": "Faro"}, {"source_id": "9551459", "channel": "committed", "buyer": "MUNICÍPIO DE ALBUFEIRA", "excerpt": "no JOUE para aquisição de licenciamento Microsoft para o município de Albufeira Concurso", "amount_eur": 635563.82, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "Albufeira", "district": "Faro"}, {"source_id": "9635180", "channel": "committed", "buyer": "Centro Ciência Viva do Algarve", "excerpt": "lo “OCEANO” para os dispositivos móveis Android e iOS da Apple e Web, com o frontend de", "amount_eur": 30000.0, "region": "Algarve", "category": "outra entidade pública", "vendor": "Google", "fundos": "", "year": 2022, "headline": true, "product": "Android", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9663142", "channel": "committed", "buyer": "Município de Faro", "excerpt": "s, gestão de redes sociais: facebook e  Instagram; Os serviços para o website da Assemble", "amount_eur": 11010.0, "region": "Algarve", "category": "administração local", "vendor": "Meta", "fundos": "", "year": 2022, "headline": true, "product": "Instagram", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9910863", "channel": "committed", "buyer": "Município de Lagoa", "excerpt": "Prestação de serviços \"Licenciamento MICROSOFT\" Prestação de serviços \"Licenciamento M", "amount_eur": 109370.3, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "", "place": "", "district": "Faro"}, {"source_id": "9810769", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de 1 iPad Air 10.9'' Aquisição de iPad nifEntCont", "amount_eur": 812.2, "region": "Algarve", "category": "ensino superior", "vendor": "Apple", "fundos": "", "year": 2023, "headline": true, "product": "iPad", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9820966", "channel": "committed", "buyer": "Associação In Loco de Intervenção, Formação e Estudos para o Desenvolvimento Local", "excerpt": "de cartazes A3 e A4, notas de imprensa, powerpoint/canva, etc)\n2. Consultoria de Design e", "amount_eur": 21228.0, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "PowerPoint", "url": "", "place": "São Brás de Alportel", "district": "Faro"}, {"source_id": "9854929", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de um iPad 10.9'' Wi-Fi 256Gb Aquisição de um iPad", "amount_eur": 649.59, "region": "Algarve", "category": "ensino superior", "vendor": "Apple", "fundos": "", "year": 2023, "headline": true, "product": "iPad", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9868019", "channel": "committed", "buyer": "CI-AMAL-Comunidade Intermunicipal do Algarve", "excerpt": "Aquisição de 50 Licenças Google Workspace Business Standard e serviços Devoteam G", "amount_eur": 22690.56, "region": "Algarve", "category": "outra entidade pública", "vendor": "Google", "fundos": "", "year": 2023, "headline": true, "product": "Workspace", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "9914676", "channel": "committed", "buyer": "Município de Faro", "excerpt": "sociais do ECRN, nomeadamente Facebook, Instagram e Linkedin, até 15 de novembro de 2024.", "amount_eur": 22000.0, "region": "Algarve", "category": "administração local", "vendor": "Meta", "fundos": "", "year": 2023, "headline": true, "product": "Instagram", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "10052145", "channel": "committed", "buyer": "Município de Lagoa", "excerpt": "- Prestação De Serviços - Licenciamento Microsoft Concurso Público - Prestação De Serviço", "amount_eur": 107819.58, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "", "district": "Faro"}, {"source_id": "10052917", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de Apple iPad Pro 2022 12,9'' Aquisição de Apple iPad", "amount_eur": 1300.0, "region": "Algarve", "category": "ensino superior", "vendor": "Apple", "fundos": "", "year": 2023, "headline": true, "product": "iPad", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "10062202", "channel": "committed", "buyer": "Município de Lagoa", "excerpt": "Amplificação Welcome to Lagoa: Facebook ADS, Google ADS & TikTok ADS 529/2023 n", "amount_eur": 14700.0, "region": "sem local", "category": "administração local", "vendor": "Meta", "fundos": "", "year": 2023, "headline": true, "product": "Facebook", "url": "", "place": "", "district": "Faro"}, {"source_id": "10100866", "channel": "committed", "buyer": "Município de Lagoa", "excerpt": "IPAD 10,2-INCH e PENCIL, no âmbito do Kit de", "amount_eur": 7286.1, "region": "sem local", "category": "administração local", "vendor": "Apple", "fundos": "", "year": 2023, "headline": true, "product": "iPad", "url": "", "place": "", "district": "Faro"}, {"source_id": "10173091", "channel": "committed", "buyer": "Taviraverde, Empresa Municipal de Ambiente, E.M.", "excerpt": "Licenciamento de software Microsoft Licenciamento de software Microsoft nif", "amount_eur": 24531.6, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Tavira", "district": "Faro"}, {"source_id": "10172906", "channel": "committed", "buyer": "Município de Lagos", "excerpt": "o de serviços  - Subscrição de Licenças Microsoft Aquisição de serviços  - Subscrição de", "amount_eur": 547122.2, "region": "Algarve", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Lagos", "district": "Faro"}, {"source_id": "10307380", "channel": "committed", "buyer": "Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP", "excerpt": "Renovação de licenciamento do software Microsoft 365 CP_05_CCDRAlgarve_2023 nifEntContrato=5", "amount_eur": 14097.67, "region": "Algarve", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft 365", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "10324694", "channel": "committed", "buyer": "Taviraverde, Empresa Municipal de Ambiente, E.M.", "excerpt": "e aquisição de licenciamento Microsoft Windows Server Renovação e aquisição de licenci", "amount_eur": 9246.4, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Windows", "url": "", "place": "Tavira", "district": "Faro"}, {"source_id": "10402183", "channel": "committed", "buyer": "Infralobo - Empresa de Infra-Estruturas de Vale do Lobo, EM", "excerpt": "Aquisição de licenciamento Microsoft Dynamics CRM 365 - 51/23/IL Aquisição d", "amount_eur": 29496.0, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Loulé", "district": "Faro"}, {"source_id": "10404883", "channel": "committed", "buyer": "Administração Regional de Saúde do Algarve, I.P.", "excerpt": "M/471/2023 - Aquisição de 3 Portáteis MacBook M/471/2023 - Aquisição de 3 Portáteis M", "amount_eur": 9642.0, "region": "Algarve", "category": "saúde", "vendor": "Apple", "fundos": "", "year": 2023, "headline": true, "product": "MacBook", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "10642893", "channel": "committed", "buyer": "Município de Silves", "excerpt": "e serviços de implementação de Licenças Microsoft  Prestação de serviços de implementação", "amount_eur": 124989.48, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "", "place": "Silves", "district": "Faro"}, {"source_id": "10424606", "channel": "committed", "buyer": "Associação In Loco de Intervenção, Formação e Estudos para o Desenvolvimento Local", "excerpt": "0 computadores de secretária a correr o Windows 10, 9 pontos de acesso WiFi ligando 50", "amount_eur": 6300.0, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Windows", "url": "", "place": "São Brás de Alportel", "district": "Faro"}, {"source_id": "10424623", "channel": "committed", "buyer": "Associação In Loco de Intervenção, Formação e Estudos para o Desenvolvimento Local", "excerpt": "das funções na rede informática local – Windows server 2019 e Windows 10;\nb) Equipament", "amount_eur": 5203.8, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Windows", "url": "", "place": "São Brás de Alportel", "district": "Faro"}, {"source_id": "10610813", "channel": "committed", "buyer": "Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP", "excerpt": "Aquisição de licenciamento do software Microsoft 365 CP_01_CCDRAlgarve_2024 nifEntContrato=5", "amount_eur": 5911.5, "region": "Algarve", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft 365", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "10641942", "channel": "committed", "buyer": "Município de Vila Real de Santo António", "excerpt": "Aquisição de licenciamento de Software \"Microsoft Office 2021 PLUS COA -1 PC Aquisição de", "amount_eur": 9717.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Vila Real de Santo António", "district": "Faro"}, {"source_id": "10657315", "channel": "committed", "buyer": "Taviraverde, Empresa Municipal de Ambiente, E.M.", "excerpt": "Aquisição de recursos AWS para armazenamento de dados Aquisição d", "amount_eur": 15000.0, "region": "sem local", "category": "outra entidade pública", "vendor": "Amazon", "fundos": "", "year": 2024, "headline": true, "product": "AWS", "url": "", "place": "Tavira", "district": "Faro"}, {"source_id": "10669265", "channel": "committed", "buyer": "Inframoura, E.M.", "excerpt": "Aquisição de Licenciamento de Software Microsoft e Aquisição de Bolsa de Horas de Serviç", "amount_eur": 34914.81, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Loulé", "district": "Faro"}, {"source_id": "10715397", "channel": "committed", "buyer": "Infraquinta - Empresa de Infraestruturas da Quinta do Lago, EM", "excerpt": "e serviços de licenciamento do software Office 365 (Proc. Ref.ª CPr SER 001/JAN/2024) CPr", "amount_eur": 26618.76, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Office 365", "url": "", "place": "Loulé", "district": "Faro"}, {"source_id": "10739348", "channel": "committed", "buyer": "Município de Olhão", "excerpt": "Aquisição de licenças de Software Microsoft Office Home & Business 2021 PT Aquisiçã", "amount_eur": 54000.0, "region": "Algarve", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Olhão", "district": "Faro"}, {"source_id": "10772195", "channel": "committed", "buyer": "Lagos em Forma, Gestão Desportiva, EM, SA", "excerpt": "das as funcionalidades da aplicação iOS/Android e das licenças necessárias para operar", "amount_eur": 2240.0, "region": "Algarve", "category": "privado", "vendor": "Google", "fundos": "", "year": 2024, "headline": true, "product": "Android", "url": "", "place": "Lagos", "district": "Faro"}, {"source_id": "10773650", "channel": "committed", "buyer": "Município de Loulé", "excerpt": "QUISIÇÃO DE MANUTENÇÃO DE LICENCIAMENTO MICROSOFT E SERVIÇOS CONEXOS CONTRATAÇÃO DA AQUIS", "amount_eur": 784255.41, "region": "Algarve", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Loulé", "district": "Faro"}, {"source_id": "10827048", "channel": "committed", "buyer": "Taviraverde, Empresa Municipal de Ambiente, E.M.", "excerpt": "Renovação e Aquisição de Licenciamento Microsoft Renovação e Aquisição de Licenciamento", "amount_eur": 30147.76, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Tavira", "district": ""}, {"source_id": "10847653", "channel": "committed", "buyer": "Unidade Local de Saúde do Algarve, E.P.E", "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do", "amount_eur": 161375.99, "region": "Algarve", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "10868616", "channel": "committed", "buyer": "Município de Lagoa", "excerpt": "Licenciamento Microsoft EA Licenciamento Microsoft EA nifEntCon", "amount_eur": 501907.59, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "", "district": "Faro"}, {"source_id": "10892383", "channel": "committed", "buyer": "Lagos em Forma, Gestão Desportiva, EM, SA", "excerpt": "ição de licenças de software “Microsoft Office 365”, de software “Veeam Backup” e de Upgra", "amount_eur": 7369.34, "region": "Algarve", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Office 365", "url": "", "place": "Lagos", "district": "Faro"}, {"source_id": "10890035", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de Licenciamento Microsoft  Aquisição de Licenciamento Microsoft n", "amount_eur": 175099.59, "region": "Algarve", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "10949446", "channel": "committed", "buyer": "Município de Portimão", "excerpt": "ENOVAÇÃO DE SUBSCRIÇÃO DE LICENCIAMENTO MICROSOFT RENOVAÇÃO DE SUBSCRIÇÃO DE LICENCIAMENT", "amount_eur": 709077.78, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "", "place": "Portimão", "district": ""}, {"source_id": "11012827", "channel": "committed", "buyer": "Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP", "excerpt": "Renovação de licenciamento do software Microsoft 365 Renovação de licenciamento do software", "amount_eur": 24246.67, "region": "Algarve", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft 365", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "11026421", "channel": "committed", "buyer": "Município de São Brás de Alportel", "excerpt": "h, placa gráfica para Cluster de VDIs e Windows Server Datacenter 2022 para 32 cores O", "amount_eur": 28310.31, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Windows", "url": "", "place": "São Brás de Alportel", "district": ""}, {"source_id": "11051504", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "14/12/2024 e alojamento em single BB no Amazon Hotel Athens (6 noites, 8-14/12) nifEnt", "amount_eur": 939.3, "region": "Algarve", "category": "ensino superior", "vendor": "Amazon", "fundos": "", "year": 2024, "headline": true, "product": "Amazon", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "11102392", "channel": "committed", "buyer": "Região de Turismo do Algarve", "excerpt": "ção de licenças dos softwares Microsoft Windows Virtual Desktop Access (VDA), VMware Ho", "amount_eur": 7639.5, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Windows", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "11412764", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Campanha Digital no Google Search e Social Média para Captação de", "amount_eur": 16500.0, "region": "Algarve", "category": "ensino superior", "vendor": "Google", "fundos": "", "year": 2025, "headline": true, "product": "Google", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "11453500", "channel": "committed", "buyer": "Município de Monchique", "excerpt": "novação de serviço de email  Microsoft Exchange Online. Renovação de serviço de email ?", "amount_eur": 8880.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Exchange", "url": "", "place": "Monchique", "district": "Faro"}, {"source_id": "11577451", "channel": "committed", "buyer": "Taviraverde, Empresa Municipal de Ambiente, E.M.", "excerpt": "Aquisição de Licenciamento Microsoft Aquisição de Licenciamento Microsoft ni", "amount_eur": 60407.34, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Tavira", "district": ""}, {"source_id": "11618688", "channel": "committed", "buyer": "Lagos em Forma, Gestão Desportiva, EM, SA", "excerpt": "o e licenciamento de aplicação para iOS/Android e Webservices Aquisição de serviços de", "amount_eur": 17480.0, "region": "Algarve", "category": "privado", "vendor": "Google", "fundos": "", "year": 2025, "headline": true, "product": "Android", "url": "", "place": "Lagos", "district": "Faro"}, {"source_id": "11639297", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de Serviços de Licenciamento Microsoft Aquisição de Serviços de Licenciamento", "amount_eur": 550669.23, "region": "Algarve", "category": "ensino superior", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "11759823", "channel": "committed", "buyer": "Município de Faro", "excerpt": "s de Terminais de Pagamento Automático (Android) Aquisição de serviços de cobrança atra", "amount_eur": 19900.0, "region": "Algarve", "category": "administração local", "vendor": "Google", "fundos": "", "year": 2025, "headline": true, "product": "Android", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "11788637", "channel": "committed", "buyer": "MUNICÍPIO DE ALBUFEIRA", "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT PARA O MUNICÍPIO DE ALBUFEIRA AQUISIÇÃO", "amount_eur": 1066042.92, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Albufeira", "district": "Faro"}, {"source_id": "11902243", "channel": "committed", "buyer": "Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP", "excerpt": "lução de Segurança XDR para Endpoints e Microsoft 365 Aquisição de Solução de Segurança XDR p", "amount_eur": 8014.5, "region": "Algarve", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft 365", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "11902357", "channel": "committed", "buyer": "Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP", "excerpt": "lução de Segurança XDR para Endpoints e Microsoft 365 Aquisição de Solução de Segurança XDR p", "amount_eur": 31904.04, "region": "Algarve", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft 365", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "11963681", "channel": "committed", "buyer": "Município de Lagoa", "excerpt": "Plataforma de comunicação via whatsapp 495/2025 nifEntContrato=506804240|descE", "amount_eur": 18699.96, "region": "sem local", "category": "administração local", "vendor": "Meta", "fundos": "", "year": 2025, "headline": true, "product": "WhatsApp", "url": "", "place": "", "district": "Faro"}, {"source_id": "11984657", "channel": "committed", "buyer": "Infralobo - Empresa de Infra-Estruturas de Vale do Lobo, EM", "excerpt": "25-43-AD - Licença Microsoft para utilização de CRM 25-43-AD - Licen", "amount_eur": 8414.4, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "", "place": "Loulé", "district": "Faro"}, {"source_id": "12011082", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de Apple iPad Air Aquisição de Apple iPad Air nifEntC", "amount_eur": 830.0, "region": "Algarve", "category": "ensino superior", "vendor": "Apple", "fundos": "", "year": 2025, "headline": true, "product": "iPad", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "12237683", "channel": "committed", "buyer": "Município de Faro", "excerpt": "ento Microsoft para produtos servidores Windows Server 2025 Concurso público sem public", "amount_eur": 85864.26, "region": "Algarve", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Windows", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "12703830", "channel": "committed", "buyer": "Região de Turismo do Algarve", "excerpt": "icenças/suporte dos softwares Microsoft Windows Virtual Desktop Access (VDA) e VMware H", "amount_eur": 18861.0, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Windows", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "12676158", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de Computador Portátil Apple MacBook Air Aquisição de Computador Portátil Ap", "amount_eur": 1782.5, "region": "Algarve", "category": "ensino superior", "vendor": "Apple", "fundos": "", "year": 2026, "headline": true, "product": "MacBook", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "14869963", "channel": "committed", "buyer": "Direção Executiva do Serviço Nacional de Saúde, IP", "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do", "amount_eur": 7799.4, "region": "Algarve", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "14943827", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de Computadores Apple Aquisição de Computadores Apple nifEntC", "amount_eur": 6099.65, "region": "Algarve", "category": "ensino superior", "vendor": "Apple", "fundos": "", "year": 2026, "headline": true, "product": "Apple", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "14954585", "channel": "committed", "buyer": "Unidade Local de Saúde do Algarve, E.P.E", "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do", "amount_eur": 313132.72, "region": "Algarve", "category": "saúde", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "15095935", "channel": "committed", "buyer": "Município de Lagoa", "excerpt": "nentes Active Directory, Exchange, SQL, Sharepoint, SCCM, Intune e Azure 207/2026 nifEntCo", "amount_eur": 9750.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "SharePoint", "url": "", "place": "", "district": "Faro"}, {"source_id": "15258822", "channel": "committed", "buyer": "Universidade do Algarve", "excerpt": "Aquisição de MacBook Pro 14” M5 Space Black (M5 Max, 48GB RA", "amount_eur": 9622.77, "region": "Algarve", "category": "ensino superior", "vendor": "Apple", "fundos": "", "year": 2026, "headline": true, "product": "MacBook", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "15337355", "channel": "committed", "buyer": "Lagos em Forma, Gestão Desportiva, EM, SA", "excerpt": "nto de Licenças de Software \" Microsoft Office 365\" Contrato para Fornecimento de Licenças", "amount_eur": 7249.34, "region": "Algarve", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Office 365", "url": "", "place": "Lagos", "district": "Faro"}, {"source_id": "15368398", "channel": "committed", "buyer": "Município de Lagos", "excerpt": "serviços - Subscrição do licenciamento Microsoft Aquisição de serviços - Subscrição do l", "amount_eur": 280790.13, "region": "Algarve", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Lagos", "district": "Faro"}, {"source_id": "15476758", "channel": "committed", "buyer": "Taviraverde, Empresa Municipal de Ambiente, E.M.", "excerpt": "Renovação do Licenciamento Microsoft Renovação do Licenciamento Microsoft ni", "amount_eur": 62303.84, "region": "sem local", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Tavira", "district": ""}, {"source_id": "15483477", "channel": "committed", "buyer": "Município de Alcoutim", "excerpt": "Aquisição de licenças  Microsoft Open Value Subscription Governo e Sc", "amount_eur": 148287.18, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Alcoutim", "district": ""}, {"source_id": "15552766", "channel": "committed", "buyer": "Inframoura, E.M.", "excerpt": "m ambiente SaaS suportado na plataforma Microsoft Dynamics 365, incluindo todas as ativid", "amount_eur": 56000.0, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Loulé", "district": "Faro"}, {"source_id": "15758810", "channel": "committed", "buyer": "Município de Vila do Bispo", "excerpt": "Renovação de licenciamento Microsoft 365 Concurso Público para renovação de lice", "amount_eur": 30412.48, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Vila do Bispo", "district": "Faro"}, {"source_id": "15794809", "channel": "committed", "buyer": "Inframoura, E.M.", "excerpt": "mbiente Cloud/SaaS (CloudDR) abrangendo Microsoft 365, identidades e correio eletrónico para", "amount_eur": 26408.56, "region": "Algarve", "category": "outra entidade pública", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Loulé", "district": "Faro"}, {"source_id": "15846799", "channel": "committed", "buyer": "Município de Aljezur", "excerpt": "Serviços de Subscrição de Licenciamento Microsoft 365 Ajuste Direto para Serviços de Subscriç", "amount_eur": 16734.69, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Aljezur", "district": ""}, {"source_id": "15871359", "channel": "committed", "buyer": "EMARP - Empresa Municipal de Águas e Resíduos de Portimão, EM, SA", "excerpt": "CP 0541/2026 - Aquisição de Licenças Microsoft 365 Business Standard, Microsoft 365 Copilo", "amount_eur": 45444.0, "region": "Algarve", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "", "place": "Portimão", "district": "Faro"}, {"source_id": "15882094", "channel": "committed", "buyer": "Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP", "excerpt": "garve_2026 - Aquisição de licenciamento Microsoft no âmbito da candidatura DIGITAlgarve A", "amount_eur": 34883.72, "region": "Algarve", "category": "administração central", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "", "place": "Faro", "district": "Faro"}, {"source_id": "10851/2022", "channel": "requested", "buyer": "MUNICÍPIO DE ALBUFEIRA", "excerpt": "no JOUE para aquisição de licenciamento Microsoft para o município de Albufeira MUNICÍPIO", "amount_eur": 601905.93, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2022, "headline": true, "product": "Microsoft", "url": "https://dre.pt/application/file/200270209", "place": "Albufeira", "district": ""}, {"source_id": "6323/2023", "channel": "requested", "buyer": "Município de Lagos", "excerpt": "o de serviços  - Subscrição de Licenças Microsoft Município de Lagos 72260000-5 - Serviço", "amount_eur": 550000.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "https://dre.pt/application/file/212069009", "place": "Lagos", "district": ""}, {"source_id": "16158/2023", "channel": "requested", "buyer": "Município de Silves", "excerpt": "serviços de renovação do licenciamento Microsoft Município de Silves 72500000-0 - Serviç", "amount_eur": 141369.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2023, "headline": true, "product": "Microsoft", "url": "https://dre.pt/application/file/222180098", "place": "Silves", "district": ""}, {"source_id": "5259/2024", "channel": "requested", "buyer": "Município de Loulé", "excerpt": "QUISIÇÃO DE MANUTENÇÃO DE LICENCIAMENTO MICROSOFT E SERVIÇOS CONEXOS Município de Loulé 7", "amount_eur": 785000.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "https://files.diariodarepublica.pt/cp_hora/2024/03/059/417502734.pdf", "place": "Loulé", "district": ""}, {"source_id": "11476/2024", "channel": "requested", "buyer": "Município de Portimão", "excerpt": "ENOVAÇÃO DE SUBSCRIÇÃO DE LICENCIAMENTO MICROSOFT Município de Portimão 48517000-5 - Paco", "amount_eur": 725982.27, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2024, "headline": true, "product": "Microsoft", "url": "https://files.diariodarepublica.pt/cp_hora/2024/06/110/417758469.pdf", "place": "Portimão", "district": ""}, {"source_id": "20048/2025", "channel": "requested", "buyer": "Município de Faro", "excerpt": "ento Microsoft para produtos servidores Windows Server 2025 Município de Faro 48900000-", "amount_eur": 110000.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Windows", "url": "https://files.diariodarepublica.pt/cp_hora/2025/07/142/419347364.pdf", "place": "Faro", "district": ""}, {"source_id": "20883/2025", "channel": "requested", "buyer": "MUNICÍPIO DE ALBUFEIRA", "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT PARA O MUNICÍPIO DE ALBUFEIRA MUNICÍPIO", "amount_eur": 1015524.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2025, "headline": true, "product": "Microsoft", "url": "https://files.diariodarepublica.pt/cp_hora/2025/08/148/419377804.pdf", "place": "Albufeira", "district": ""}, {"source_id": "10401/2026", "channel": "requested", "buyer": "Município de Lagos", "excerpt": "serviços  Subscrição do licenciamento Microsoft Município de Lagos 72268000-1 - Serviço", "amount_eur": 282016.18, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "https://files.diariodarepublica.pt/cp_hora/2026/04/079/419958438.pdf", "place": "Lagos", "district": ""}, {"source_id": "15684/2026", "channel": "requested", "buyer": "Município de Alcoutim", "excerpt": "Aquisição de licenças Microsoft Open Value Subscription Governo e Sc", "amount_eur": 160000.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "https://files.diariodarepublica.pt/cp_hora/2026/06/116/419964620.pdf", "place": "Alcoutim", "district": ""}, {"source_id": "19432/2026", "channel": "requested", "buyer": "EMARP - Empresa Municipal de Águas e Resíduos de Portimão, EM, SA", "excerpt": "CP 0541/2026 - Aquisição de Licenças Microsoft 365 Business Standard, Microsoft 365 Copilo", "amount_eur": 103044.0, "region": "sem local", "category": "privado", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "https://files.diariodarepublica.pt/cp_hora/2026/07/145/419968768.pdf", "place": "Portimão", "district": ""}, {"source_id": "21572/2026", "channel": "requested", "buyer": "Município de Vila do Bispo", "excerpt": "Público para renovação de licenciamento Microsoft 365 Município de Vila do Bispo 72260000-5 -", "amount_eur": 43000.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft 365", "url": "https://files.diariodarepublica.pt/cp_hora/2026/08/165/419971219.pdf", "place": "Vila do Bispo", "district": ""}, {"source_id": "26255/2026", "channel": "requested", "buyer": "Município de Silves", "excerpt": "ão de Serviços de renovação de Licenças Microsoft Município de Silves 72500000-0 - Serviç", "amount_eur": 735000.0, "region": "sem local", "category": "administração local", "vendor": "Microsoft", "fundos": "", "year": 2026, "headline": true, "product": "Microsoft", "url": "https://files.diariodarepublica.pt/cp_hora/2026/10/211/419976202.pdf", "place": "Silves", "district": ""}]}</script>
+  <script>
+    const payload = JSON.parse(document.getElementById('report-data').textContent);
+    const yearLabels = ["2022", "2023", "2024", "2025", "2026"];
+    const placeData = {"Albufeira": 1066042.92, "Faro": 732543.03, "Tavira": 60407.34, "Lagos": 17480.0, "Monchique": 8880.0, "Loulé": 8414.4};
+    const eurTooltip = {
+      callbacks: {
+        label: function (ctx) {
+          const label = ctx.dataset.label ? ctx.dataset.label + ': ' : '';
+          const v = ctx.chart.options.indexAxis === 'y' ? ctx.parsed.x : ctx.parsed.y;
+          return label + eurTick(v != null ? v : ctx.raw);
+        }
+      }
+    };
+    function eurTick(v) {
+      return Number(v).toLocaleString('pt-PT', { maximumFractionDigits: 0 }) + ' €';
+    }
+    const slides = [...document.querySelectorAll('.slide')];
+    const dots = document.getElementById('dots');
+    const progress = document.getElementById('progress');
+    slides.forEach((slide) => {
+      const a = document.createElement('a');
+      a.href = '#' + slide.id;
+      a.title = slide.dataset.title || slide.id;
+      dots.appendChild(a);
+    });
+    const dotLinks = [...dots.querySelectorAll('a')];
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll('.reveal').forEach((el, idx) => {
+          el.style.transitionDelay = (idx * 50) + 'ms';
+          el.classList.add('is-in');
+        });
+        const i = slides.indexOf(entry.target);
+        if (i >= 0) {
+          dotLinks.forEach((d, j) => d.classList.toggle('is-active', j === i));
+          progress.style.width = (((i + 1) / slides.length) * 100) + '%';
+          if (entry.target.id === 's2' && window.__fitLeiriaMap) window.__fitLeiriaMap();
+        }
+      });
+    }, { threshold: 0.45 });
+    slides.forEach((slide) => io.observe(slide));
+    new Chart(document.getElementById('chartLeiriaYears'), {
+      type: 'bar',
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: eurTooltip
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { callback: (v) => eurTick(v) } }
+        }
+      },
+      data: {
+        labels: yearLabels,
+        datasets: [
+          {
+            label: 'contrato assinado',
+            data: yearLabels.map((y) => payload.totals[y].committed),
+            backgroundColor: '#fd5288', borderRadius: 6
+          },
+          {
+            label: 'pedido ao mercado',
+            data: yearLabels.map((y) => payload.totals[y].requested),
+            backgroundColor: '#72e123', borderRadius: 6
+          }
+        ]
+      }
+    });
+    const vendorByYear = Object.fromEntries(
+      yearLabels.map((y) => [y, (payload.breakdowns.committed_by_vendor || {})[y] || {}])
+    );
+    const vendorColors = yearLabels.map((_, i) => {
+      const t = yearLabels.length <= 1 ? 1 : i / (yearLabels.length - 1);
+      const shade = Math.round(210 - t * 185);
+      return 'rgb(' + shade + ',' + shade + ',' + shade + ')';
+    });
+    const vendorLabels = [...new Set(
+      yearLabels.flatMap((y) => Object.keys(vendorByYear[y]))
+    )].sort((a, b) => {
+      const sum = (name) => yearLabels.reduce(
+        (acc, y) => acc + (vendorByYear[y][name] || 0), 0
+      );
+      return sum(b) - sum(a);
+    });
+    new Chart(document.getElementById('chartLeiriaVendor'), {
+      type: 'bar',
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: eurTooltip
+        },
+        scales: {
+          x: { beginAtZero: true, ticks: { callback: (v) => eurTick(v) } },
+          y: { ticks: { autoSkip: false } }
+        }
+      },
+      data: {
+        labels: vendorLabels,
+        datasets: yearLabels.map((y, i) => ({
+          label: y,
+          data: vendorLabels.map((k) => vendorByYear[y][k] || 0),
+          backgroundColor: vendorColors[i],
+          borderRadius: 6
+        }))
+      }
+    });
+    (function drawLeiriaMap() {
+      if (!document.getElementById('mapLeiria')) return;
+      const bands = ['#f4ea15', '#eb5423', '#010101'];
+      const zeroFill = '#f4f4f0';
+      function fold(s) {
+        return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+      }
+      function eurLabel(v) {
+        return Number(v).toLocaleString('pt-PT', { maximumFractionDigits: 0 }) + ' €';
+      }
+      function amountFor(name) {
+        const g = fold(name);
+        for (const [k, v] of Object.entries(placeData)) {
+          if (fold(k) === g) return v;
+        }
+        if (g === fold("Distrito de Faro")) {
+          return Object.values(placeData).reduce((sum, v) => sum + Number(v), 0);
+        }
+        return 0;
+      }
+      function paint(munGeo) {
+        const values = Object.values(placeData).filter((v) => v > 0).sort((a, b) => a - b);
+        const cuts = [];
+        if (values.length) {
+          for (let i = 1; i <= 3; i++) {
+            const idx = Math.min(values.length - 1, Math.ceil((i / 3) * values.length) - 1);
+            cuts.push(values[idx]);
+          }
+        }
+        function bin(v) {
+          if (!cuts.length || v <= 0) return 0;
+          for (let i = 0; i < cuts.length; i++) {
+            if (v <= cuts[i]) return i + 1;
+          }
+          return cuts.length;
+        }
+        function binLabel(i) {
+          if (!cuts.length) return '—';
+          if (i === 1) return '< ' + eurLabel(cuts[0]);
+          if (i === cuts.length) return '≥ ' + eurLabel(cuts[Math.max(0, cuts.length - 2)]);
+          return '≤ ' + eurLabel(cuts[i - 1]);
+        }
+        const map = L.map('mapLeiria', {
+          zoomControl: false, attributionControl: false,
+          dragging: false, scrollWheelZoom: false,
+          doubleClickZoom: false, boxZoom: false, keyboard: false
+        });
+        const layer = L.geoJSON(munGeo, {
+          style: function (feat) {
+            const v = amountFor(feat.properties.name);
+            const b = bin(v);
+            if (b === 0) {
+              return {
+                color: '#9a9588', weight: 1,
+                fillColor: zeroFill, fillOpacity: 1
+              };
+            }
+            return {
+              color: b === 1 ? '#ffe9a0' : '#1c1c22',
+              weight: 1.2,
+              fillColor: bands[b - 1],
+              fillOpacity: 0.98,
+              className: b === 1 ? 'night-lit' : ''
+            };
+          },
+          onEachFeature: function (feat, lyr) {
+            const v = amountFor(feat.properties.name);
+            lyr.bindTooltip(feat.properties.name + ' — ' + eurLabel(v));
+          }
+        }).addTo(map);
+        function fit() {
+          map.invalidateSize();
+          const bounds = layer.getBounds();
+          if (bounds.isValid()) map.fitBounds(bounds, { padding: [12, 12] });
+        }
+        window.__fitLeiriaMap = fit;
+        fit();
+        requestAnimationFrame(fit);
+        setTimeout(fit, 200);
+        document.getElementById('mapLeiriaLegend').innerHTML =
+          'CAOP2025 DGT · <span style="background:' + zeroFill + '"></span>0 € · ' +
+          bands.map((c, i) => '<span style="background:' + c + '"></span>' + binLabel(i + 1)).join(' · ');
+      }
+      fetch('faro.geojson')
+        .then((r) => r.json())
+        .then(paint)
+        .catch(function () {
+          document.getElementById('mapLeiriaLegend').textContent =
+            'Mapa indisponível (falha a carregar CAOP).';
+        });
+    })();
+  </script>
+<footer class="cfp-bar"><a class="cfp-brand" href="https://codefor.pt" rel="noopener noreferrer" title="Realização: code for portugal — codefor.pt (em breve)"><img class="mark" src="../assets/favicon.png" width="28" height="28" alt="code for portugal" /><span class="name">Realização: code for portugal</span><span class="soon">codefor.pt · em breve</span></a><span class="cfp-lic"><a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener noreferrer license" title="Conteúdo · CC BY-SA 4.0"><img src="../assets/cc-by-sa.png" width="88" height="31" alt="CC BY-SA 4.0" /></a><a href="https://github.com/codeforportugal/gafam-portugal-report" rel="noopener noreferrer" title="Código · AGPL-3.0"><img src="../assets/agplv3.png" width="88" height="31" alt="AGPL-3.0" /></a></span></footer>
+</body>
+</html>

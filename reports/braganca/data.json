@@ -1,0 +1,933 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.250587+00:00",
+  "totals": {
+    "2022": {
+      "committed": 138543.04,
+      "requested": 0,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 75289.88,
+      "requested": 0,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 249062.73,
+      "requested": 0,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 230993.12,
+      "requested": 70000.0,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 564752.36,
+      "requested": 60000.0,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "sem local": 69699.75,
+        "Norte": 68843.29
+      },
+      "2023": {
+        "Norte": 69415.0,
+        "sem local": 5874.88
+      },
+      "2024": {
+        "Norte": 174147.51,
+        "sem local": 74915.22
+      },
+      "2025": {
+        "sem local": 188319.34000000003,
+        "Norte": 42673.78
+      },
+      "2026": {
+        "Norte": 457834.0,
+        "sem local": 106918.36
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "administração local": 69699.75,
+        "ensino superior": 61188.93,
+        "educação não superior": 6154.36,
+        "outra entidade pública": 1500.0
+      },
+      "2023": {
+        "ensino superior": 67000.0,
+        "administração local": 5874.88,
+        "educação não superior": 2415.0
+      },
+      "2024": {
+        "saúde": 130463.13,
+        "ensino superior": 67439.32,
+        "administração local": 48736.28,
+        "educação não superior": 2424.0
+      },
+      "2025": {
+        "administração local": 144870.8,
+        "ensino superior": 67065.82,
+        "educação não superior": 11056.5,
+        "administração central": 6000.0,
+        "outra entidade pública": 2000.0
+      },
+      "2026": {
+        "saúde": 445637.0,
+        "ensino superior": 52717.08,
+        "administração local": 37801.28,
+        "outra entidade pública": 16400.0,
+        "educação não superior": 12197.0
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 138543.04
+      },
+      "2023": {
+        "Microsoft": 69415.0,
+        "Google": 5874.88
+      },
+      "2024": {
+        "Microsoft": 249062.73
+      },
+      "2025": {
+        "Microsoft": 224993.12000000002,
+        "Meta": 6000.0
+      },
+      "2026": {
+        "Microsoft": 564752.36
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Mogadouro": 69699.75,
+        "Bragança": 68843.29
+      },
+      "2023": {
+        "Bragança": 69415.0,
+        "Macedo de Cavaleiros": 5874.88
+      },
+      "2024": {
+        "Bragança": 241586.83000000002,
+        "Miranda do Douro": 7475.9
+      },
+      "2025": {
+        "Bragança": 109739.6,
+        "Mogadouro": 57770.94,
+        "Freixo de Espada à Cinta": 18910.0,
+        "Vimioso": 15785.61,
+        "Torre de Moncorvo": 10868.85,
+        "Mirandela": 9918.12,
+        "Carrazeda de Ansiães": 6000.0,
+        "Alfândega da Fé": 2000.0
+      },
+      "2026": {
+        "Bragança": 510551.08,
+        "Mogadouro": 18301.65,
+        "Vila Flor": 17148.26,
+        "Miranda do Douro": 16400.0,
+        "Freixo de Espada à Cinta": 2351.37
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "8917834",
+      "channel": "committed",
+      "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança",
+      "excerpt": "/2022 - ALUGUER DE LICENÇA DE MICROSOFT OFFICE 365 PLAN A3 EDUCAÇÃO AEAB_CP N.º 141/2022 -",
+      "amount_eur": 6154.36,
+      "region": "Norte",
+      "category": "educação não superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "9058563",
+      "channel": "committed",
+      "buyer": "Agrupamento Europeu de Cooperação Territorial - ZASNET AECT",
+      "excerpt": "stência Técnica informática em ambiente Windows e suas aplicações Assistência Técnica e",
+      "amount_eur": 1500.0,
+      "region": "Norte",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "9340237",
+      "channel": "committed",
+      "buyer": "Município de Mogadouro",
+      "excerpt": "mento em volume enterprise agreement da microsoft Serviços de manutenção e atualização do",
+      "amount_eur": 69699.75,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Mogadouro",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "9427183",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Bragança",
+      "excerpt": "Renovação do Licenciamento do Software Microsoft 365 A3 para o Campus do Instituto Politécni",
+      "amount_eur": 61188.93,
+      "region": "Norte",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "9963298",
+      "channel": "committed",
+      "buyer": "Município de Macedo de Cavaleiros",
+      "excerpt": "Renovação do Google Workspace - Contas de E-mail Renovação do Google",
+      "amount_eur": 5874.88,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Workspace",
+      "url": "",
+      "place": "Macedo de Cavaleiros",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "10059154",
+      "channel": "committed",
+      "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança",
+      "excerpt": "de aluguer de 20 licenças de Microsoft OFFICE 365 Plan A5 Educação (EDU) AEAB CP 187/2023",
+      "amount_eur": 2415.0,
+      "region": "Norte",
+      "category": "educação não superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "10214199",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Bragança",
+      "excerpt": "Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S",
+      "amount_eur": 67000.0,
+      "region": "Norte",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "10671986",
+      "channel": "committed",
+      "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança",
+      "excerpt": "DE ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)” PARA UTILIZAÇÃO",
+      "amount_eur": 2424.0,
+      "region": "Norte",
+      "category": "educação não superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "10853054",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Nordeste, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 130463.13,
+      "region": "Norte",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Bragança",
+      "district": ""
+    },
+    {
+      "source_id": "10892351",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Bragança",
+      "excerpt": "Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S",
+      "amount_eur": 67439.32,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Bragança",
+      "district": ""
+    },
+    {
+      "source_id": "11035564",
+      "channel": "committed",
+      "buyer": "Município de Bragança",
+      "excerpt": "oftware e serviços conexos - subscrição Microsoft 365 Aquisição de licenciamento de software",
+      "amount_eur": 41260.38,
+      "region": "Norte",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "11087463",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Miranda do Douro",
+      "excerpt": "Aquisição de Licenciamento para Microsoft SQL Server 2022 Standard Aquisição de L",
+      "amount_eur": 7475.9,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Miranda do Douro",
+      "district": ""
+    },
+    {
+      "source_id": "11266672",
+      "channel": "committed",
+      "buyer": "Agência de Desenvolvimento Regional do Vale do Tua - Associação ADRVT",
+      "excerpt": "o conjunta de Redes Sociais (Facebook e Instagram);\n7.\tAdaptação e divulgação de conteúdo",
+      "amount_eur": 6000.0,
+      "region": "sem local",
+      "category": "administração central",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Instagram",
+      "url": "",
+      "place": "Carrazeda de Ansiães",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "11344978",
+      "channel": "committed",
+      "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança",
+      "excerpt": "”; “ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)”; “ALUGUER DE LI",
+      "amount_eur": 11056.5,
+      "region": "Norte",
+      "category": "educação não superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "11448369",
+      "channel": "committed",
+      "buyer": "Liga dos Amigos do Centro de Saúde da Alfândega de Fé",
+      "excerpt": "vo \na) Sistema operativo tipo Microsoft office 365 Familiar– 1 unidade;\n3. Material técnic",
+      "amount_eur": 2000.0,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Alfândega da Fé",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "11600536",
+      "channel": "committed",
+      "buyer": "Município de Mirandela",
+      "excerpt": "Aquisição de Microsoft SQL Server 2022 Standard – 6 Core (Lice",
+      "amount_eur": 9918.12,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Mirandela",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "11675230",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Bragança",
+      "excerpt": "Licenciamento do Software Microsoft para o Campus do IPB Licenciamento do S",
+      "amount_eur": 67065.82,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Bragança",
+      "district": ""
+    },
+    {
+      "source_id": "11763885",
+      "channel": "committed",
+      "buyer": "Município de Freixo de Espada à Cinta",
+      "excerpt": "Licenciamento Exchange Licenciamento Exchange nifEntContrato=5",
+      "amount_eur": 18910.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Freixo de Espada à Cinta",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "11764845",
+      "channel": "committed",
+      "buyer": "Município de Mogadouro",
+      "excerpt": "O LICENCIAMENTO EM VOLUME OPEN VALUE DA MICROSOFT CONTRATO DE MANUTENÇÃO E ATUALIZAÇÃO DO",
+      "amount_eur": 57770.94,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Mogadouro",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "12066515",
+      "channel": "committed",
+      "buyer": "Município de Torre de Moncorvo",
+      "excerpt": "Renovação Acrobat Pro for Teams e Aquisição Creative Cloud Pro for Team",
+      "amount_eur": 10868.85,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Torre de Moncorvo",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "12221363",
+      "channel": "committed",
+      "buyer": "Município de Vimioso",
+      "excerpt": "ÇÃO DE ENDPOINTS E EMAIL E AQUISIÇÃO DE MICROSOFT OFFICE HOME AND BUSINESS 2024 CONTRATO",
+      "amount_eur": 15785.61,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Vimioso",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "13193889",
+      "channel": "committed",
+      "buyer": "Município de Bragança",
+      "excerpt": "Renovação de subscrição Microsoft 365 Renovação de subscrição Microsoft 365 n",
+      "amount_eur": 31617.28,
+      "region": "Norte",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "13787558",
+      "channel": "committed",
+      "buyer": "Município de Vila Flor",
+      "excerpt": "6 – AQUISIÇÃO DE SERVIÇOS INFORMÁTICOS (MICROSOFT 365) AJUSTE DIRETO – AD-07/2026 – AQUISIÇÃO",
+      "amount_eur": 17148.26,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Vila Flor",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "14107476",
+      "channel": "committed",
+      "buyer": "Município de Freixo de Espada à Cinta",
+      "excerpt": "Aquisição de Licenciamento Microsoft Server 2025 Aquisição de Licenciamento",
+      "amount_eur": 2351.37,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Freixo de Espada à Cinta",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "14407146",
+      "channel": "committed",
+      "buyer": "Agrupamento de Escolas Abade de Baçal, Bragança",
+      "excerpt": "”, “ALUGUER DE 20 LICENÇAS DE MICROSOFT OFFICE 365 PLAN A5 EDUCAÇÃO (EDU)”, “ALUGUER DE LI",
+      "amount_eur": 12197.0,
+      "region": "Norte",
+      "category": "educação não superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Bragança",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "14990809",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Nordeste, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 445637.0,
+      "region": "Norte",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Bragança",
+      "district": ""
+    },
+    {
+      "source_id": "15300630",
+      "channel": "committed",
+      "buyer": "Associação para o Estudo e Protecção do Gado Asinino-AEPGA",
+      "excerpt": "de serviços para criação de plataforma SharePoint para gestão de dados sobre habitats no",
+      "amount_eur": 16400.0,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "SharePoint",
+      "url": "",
+      "place": "Miranda do Douro",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "15545078",
+      "channel": "committed",
+      "buyer": "Município de Mogadouro",
+      "excerpt": "“AQUISIÇÃO DE LICENCIAMENTO MICROSOFT 365 (CSP) E PRESTAÇÃO DE SERVIÇOS ASSOCIADO",
+      "amount_eur": 18301.65,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Mogadouro",
+      "district": "Braganca"
+    },
+    {
+      "source_id": "15573603",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Bragança",
+      "excerpt": "Renovação do Licenciamento do Software Microsoft 365 A3 para o Campus do Instituto Politécni",
+      "amount_eur": 52717.08,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Bragança",
+      "district": ""
+    },
+    {
+      "source_id": "21130/2025",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Bragança",
+      "excerpt": "Licenciamento do Software Microsoft para o Campus do IPB Universidade Polit",
+      "amount_eur": 70000.0,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/08/150/419405068.pdf",
+      "place": "Bragança",
+      "district": ""
+    },
+    {
+      "source_id": "18841/2026",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Bragança",
+      "excerpt": "Renovação do Licenciamento do Software Microsoft 365 A3 para o Campus do Instituto Politécni",
+      "amount_eur": 60000.0,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/07/141/419968171.pdf",
+      "place": "Bragança",
+      "district": ""
+    }
+  ]
+}

@@ -1,0 +1,1213 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.916265+00:00",
+  "totals": {
+    "2022": {
+      "committed": 860282.1100000001,
+      "requested": 0,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 864146.5800000001,
+      "requested": 0,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 3781460.93,
+      "requested": 0,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 1350796.25,
+      "requested": 0,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 1219355.72,
+      "requested": 0,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "Madeira": 860282.11
+      },
+      "2023": {
+        "Madeira": 864146.5800000001
+      },
+      "2024": {
+        "Madeira": 3781460.9299999997
+      },
+      "2025": {
+        "Madeira": 1350796.2500000002
+      },
+      "2026": {
+        "Madeira": 1219355.7200000002
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "privado": 625033.78,
+        "administração central": 76658.05,
+        "administração local": 70014.72,
+        "empresas públicas": 61885.56,
+        "ensino superior": 26690.0
+      },
+      "2023": {
+        "administração local": 701574.24,
+        "empresas públicas": 54704.0,
+        "administração central": 52385.49,
+        "ensino superior": 30521.54,
+        "privado": 17101.31,
+        "outra entidade pública": 7860.0
+      },
+      "2024": {
+        "empresas públicas": 3582419.16,
+        "administração central": 118324.01000000001,
+        "ensino superior": 31745.04,
+        "administração local": 21572.4,
+        "privado": 19466.4,
+        "outra entidade pública": 7933.92
+      },
+      "2025": {
+        "privado": 1082759.9200000002,
+        "administração local": 84441.71,
+        "administração central": 83005.98,
+        "outra entidade pública": 44756.6,
+        "ensino superior": 28838.04,
+        "empresas públicas": 26994.0
+      },
+      "2026": {
+        "administração local": 1133470.17,
+        "administração central": 50702.21,
+        "privado": 35183.34
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 833376.55,
+        "Apple": 26905.56
+      },
+      "2023": {
+        "Microsoft": 864146.5800000001
+      },
+      "2024": {
+        "Microsoft": 3773527.01,
+        "Google": 7933.92
+      },
+      "2025": {
+        "Microsoft": 1350796.2500000002
+      },
+      "2026": {
+        "Microsoft": 1219355.7200000002
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Funchal": 790267.39,
+        "Câmara de Lobos": 70014.72
+      },
+      "2023": {
+        "Funchal": 816632.88,
+        "Câmara de Lobos": 47513.7
+      },
+      "2024": {
+        "Funchal": 3759888.53,
+        "Câmara de Lobos": 21572.4
+      },
+      "2025": {
+        "Funchal": 1273888.5000000002,
+        "Câmara de Lobos": 76907.75
+      },
+      "2026": {
+        "Funchal": 1174504.82,
+        "Câmara de Lobos": 44850.9
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "9149644",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM",
+      "excerpt": "ta e uma) licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição do Licenci",
+      "amount_eur": 21213.31,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9338164",
+      "channel": "committed",
+      "buyer": "EEM - Empresa de Electricidade da Madeira, SA",
+      "excerpt": "iços de formação em Analysing Data with Power BI (DA-100) Consulta prévia tendente à cel",
+      "amount_eur": 4100.0,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Power BI",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9408985",
+      "channel": "committed",
+      "buyer": "IHM - Investimentos Habitacionais da Madeira, EPERAM",
+      "excerpt": "l de 204 licenças (incluindo 3 licenças macOS) ABS-C/15/2022 - Contratação de serviço",
+      "amount_eur": 26905.56,
+      "region": "Madeira",
+      "category": "empresas públicas",
+      "vendor": "Apple",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "macOS",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9410765",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Regional",
+      "excerpt": "ciamento de software e serviços conexos Microsoft 365. Aquisição de licenciamento de software",
+      "amount_eur": 17500.74,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9414518",
+      "channel": "committed",
+      "buyer": "EEM - Empresa de Electricidade da Madeira, SA",
+      "excerpt": "Fornecimento de licenças de software Microsoft em Enterprise Agreement (EA) Fornecimen",
+      "amount_eur": 610502.43,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9523961",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Câmara de Lobos",
+      "excerpt": "Renovação do contrato de licenciamento Microsoft Renovação do contrato de licenciamento",
+      "amount_eur": 70014.72,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Câmara de Lobos",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9540371",
+      "channel": "committed",
+      "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA",
+      "excerpt": "Fornecimento de Licenciamento de Office 365 Consulta Prévia para a Celebração do Co",
+      "amount_eur": 10431.35,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9548902",
+      "channel": "committed",
+      "buyer": "Instituto de Emprego da Madeira, IP-RAM",
+      "excerpt": "trónico e acesso à plataforma Microsoft Teams para o Instituto de Emprego da Madeira,",
+      "amount_eur": 37944.0,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9564874",
+      "channel": "committed",
+      "buyer": "IHM - Investimentos Habitacionais da Madeira, EPERAM",
+      "excerpt": "Aquisição de licenciamento Microsoft Office, conforme as condições fixadas n",
+      "amount_eur": 34980.0,
+      "region": "Madeira",
+      "category": "empresas públicas",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9567585",
+      "channel": "committed",
+      "buyer": "Universidade da Madeira",
+      "excerpt": "uer operacional de licenças de software Microsoft 'Campus Agreement M365 A3' 0002-22-DGF-",
+      "amount_eur": 26690.0,
+      "region": "Madeira",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9797346",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Regional",
+      "excerpt": "ciamento de software e serviços conexos Microsoft 365-2023 Aquisição de pacote de licenciamen",
+      "amount_eur": 36094.77,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9877951",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM",
+      "excerpt": "ços de 62 licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição de serviço",
+      "amount_eur": 16290.72,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "9924331",
+      "channel": "committed",
+      "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM",
+      "excerpt": "enção e assistência técnica ao Software Microsoft Dynamics NAV Prestação de serviços de m",
+      "amount_eur": 26994.0,
+      "region": "Madeira",
+      "category": "empresas públicas",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10241575",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Câmara de Lobos",
+      "excerpt": "Renovação das 130 licenças Microsoft Office Renovação das 130 licenças Micro",
+      "amount_eur": 47513.7,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Câmara de Lobos",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10274563",
+      "channel": "committed",
+      "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM",
+      "excerpt": "Contratualização de serviços Microsoft Exchange on-line Contratualização de serviços Mi",
+      "amount_eur": 27710.0,
+      "region": "Madeira",
+      "category": "empresas públicas",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10286338",
+      "channel": "committed",
+      "buyer": "Secretaria Regional das Finanças",
+      "excerpt": "e formações especializadas em Microsoft Excel. Aquisição de serviços para a realizaçã",
+      "amount_eur": 7860.0,
+      "region": "Madeira",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Excel",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10324499",
+      "channel": "committed",
+      "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA",
+      "excerpt": "Licenciamento de Office 365 Consulta prévia para a celebração do co",
+      "amount_eur": 17101.31,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10333910",
+      "channel": "committed",
+      "buyer": "Universidade da Madeira",
+      "excerpt": "uer operacional de licenças do software Microsoft “Campus Agreement M365 A3” para a Unive",
+      "amount_eur": 30521.54,
+      "region": "Madeira",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10385861",
+      "channel": "committed",
+      "buyer": "Município do Funchal",
+      "excerpt": "Renovação de Licenciamento de Software Microsoft Renovação de Licenciamento de Software",
+      "amount_eur": 654060.54,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10554000",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Regional",
+      "excerpt": "ciamento de software e serviços conexos Microsoft 365 ou equivalente - 2024 Aquisição de lice",
+      "amount_eur": 39013.85,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10573417",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Câmara de Lobos",
+      "excerpt": "Subscrições de 120 licenças Microsoft Windows Enterprise  Subscrições de 120 licenças",
+      "amount_eur": 21572.4,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Câmara de Lobos",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10606442",
+      "channel": "committed",
+      "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM",
+      "excerpt": "enção e assistência técnica ao Software Microsoft Dynamics NAV Prestação de serviços de m",
+      "amount_eur": 26994.0,
+      "region": "Madeira",
+      "category": "empresas públicas",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10642951",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM",
+      "excerpt": "a e duas) licenças do sistema operativo Microsoft 365 para o IDE, IP-RAM Aquisição de serviço",
+      "amount_eur": 26177.76,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10677686",
+      "channel": "committed",
+      "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM",
+      "excerpt": "DE SERVIÇOS DE LICENCIAMENTO MICROSOFT EXCHANGE, OFFICE M365/O365 PRESTAÇÃO DE SERVIÇOS",
+      "amount_eur": 3555425.16,
+      "region": "Madeira",
+      "category": "empresas públicas",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10800363",
+      "channel": "committed",
+      "buyer": "Agência de Inovação e Modernização da Região Autónoma da Madeira, IP-RAM",
+      "excerpt": "Aquisição de Licenciamento de Software Microsoft na modalidade de subscrição para a Loja",
+      "amount_eur": 53132.4,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10964200",
+      "channel": "committed",
+      "buyer": "Secretaria Regional de Saúde e Proteção Civil",
+      "excerpt": "ara participar no evento promovido pela Google Cloud - Executive Briefing Center, em São Fra",
+      "amount_eur": 7933.92,
+      "region": "Madeira",
+      "category": "outra entidade pública",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Google Cloud",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "10995040",
+      "channel": "committed",
+      "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA",
+      "excerpt": "prévia para a locação de licenciamento Office 365 2024  Consulta prévia para a locação de",
+      "amount_eur": 19466.4,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11002522",
+      "channel": "committed",
+      "buyer": "Universidade da Madeira",
+      "excerpt": "uer operacional de licenças do software Microsoft Campus Agreement M365 A3, para o func",
+      "amount_eur": 31745.04,
+      "region": "Madeira",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11222051",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Regional",
+      "excerpt": "ciamento de software e serviços conexos Microsoft 365 ou equivalente - 2025 PROC N.º 2024-AQU",
+      "amount_eur": 39018.17,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11223790",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Câmara de Lobos",
+      "excerpt": "Subscrição de 130 licenças Microsoft Windows 10/11 Enterprise E3 VDA Subscrição de 1",
+      "amount_eur": 23944.7,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Câmara de Lobos",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11276661",
+      "channel": "committed",
+      "buyer": "Assembleia Legislativa da Região Autónoma da Madeira",
+      "excerpt": "Prestação de Serviços de Licenciamento Microsoft 365 Prestação de Serviços de Licenciamento",
+      "amount_eur": 44756.6,
+      "region": "Madeira",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11292385",
+      "channel": "committed",
+      "buyer": "Associação de Municípios da Região Autónoma da Madeira",
+      "excerpt": "TÉCNICA AO NÍVEL DO CORREIO ELETRÓNICO [OUTLOOK];\n1.4. AQUISIÇÃO DE SERVIÇOS DE MANUTEN",
+      "amount_eur": 7533.96,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Outlook",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11294960",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM",
+      "excerpt": "a e duas) licenças do sistema operativo Microsoft 365 para o Instituto de Desenvolvimento Emp",
+      "amount_eur": 29665.81,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11367115",
+      "channel": "committed",
+      "buyer": "Serviço de Saúde da Região Autónoma da Madeira, EPERAM",
+      "excerpt": "enção e Assistência Técnica ao Software Microsoft Dynamics NAV Prestação de serviços de M",
+      "amount_eur": 26994.0,
+      "region": "Madeira",
+      "category": "empresas públicas",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11406361",
+      "channel": "committed",
+      "buyer": "Serviço Regional de Proteção Civil, IP-RAM",
+      "excerpt": "UISIÇÃO DE SERVIÇOS DE LICENCIAMENTO DO MICROSOFT 365, PELO PERÍODO DE 1 ANO\n\n AJUSTE DIRETO",
+      "amount_eur": 14322.0,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11700689",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Câmara de Lobos",
+      "excerpt": "Renovação do suporte Microsoft (Software Assurance) Renovação do supor",
+      "amount_eur": 52963.05,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Câmara de Lobos",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11718968",
+      "channel": "committed",
+      "buyer": "EEM - Empresa de Electricidade da Madeira, SA",
+      "excerpt": "Fornecimento de licenças de software Microsoft, através da modalidade Microsoft Enterp",
+      "amount_eur": 1065936.59,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "11868325",
+      "channel": "committed",
+      "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA",
+      "excerpt": "Locação de licenciamento Office 365 Consulta prévia para a locação de licen",
+      "amount_eur": 16823.33,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "12075111",
+      "channel": "committed",
+      "buyer": "Universidade da Madeira",
+      "excerpt": "uer operacional de licenças de software Microsoft Campus Agreement M365 A3 0004-25-DGF-",
+      "amount_eur": 28838.04,
+      "region": "Madeira",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "13121600",
+      "channel": "committed",
+      "buyer": "PATRIRAM - Titularidade e Gestão de Património Público Regional, SA",
+      "excerpt": "Subscrição de licenças de Software Microsoft Office Subscrição de licenças de Softwa",
+      "amount_eur": 6229.13,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "13431883",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Câmara de Lobos",
+      "excerpt": "Renovação do licenciamento Microsoft Windows Renovação do licenciamento Microsoft Wi",
+      "amount_eur": 16851.9,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Câmara de Lobos",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "13479129",
+      "channel": "committed",
+      "buyer": "GESBA - Empresa de Gestão do Sector da Banana, Lda",
+      "excerpt": "informáticos para renovação de licenças Microsoft 365, Microsoft  Exchange Online e Sala Micr",
+      "amount_eur": 9974.6,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "14411480",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM",
+      "excerpt": "Aquisição de licenciamento de Microsoft SQL Server Standard (4 cores) Aquisição",
+      "amount_eur": 8618.38,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "14547138",
+      "channel": "committed",
+      "buyer": "Instituto de Desenvolvimento Empresarial, IP-RAM",
+      "excerpt": "ços de 62 (sessenta e duas) licenças do Microsoft 365 para o IDE, IP-RAM Aquisição de serviço",
+      "amount_eur": 28065.47,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "15082510",
+      "channel": "committed",
+      "buyer": "Serviço Regional de Proteção Civil, IP-RAM",
+      "excerpt": "estação de serviços de licenciamento do Microsoft 365, pelo período de 1 ano.  CONSULTA PRÉVI",
+      "amount_eur": 14018.36,
+      "region": "Madeira",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "15193707",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Câmara de Lobos",
+      "excerpt": "Subscrição de 170 licenças do Microsoft 365 Business Standard e respetivos serviços",
+      "amount_eur": 27999.0,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Câmara de Lobos",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "15545166",
+      "channel": "committed",
+      "buyer": "Município do Funchal",
+      "excerpt": "Renovação do Licenciamento de Software Microsoft  Renovação do Licenciamento de Software",
+      "amount_eur": 1088619.27,
+      "region": "Madeira",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    },
+    {
+      "source_id": "15864171",
+      "channel": "committed",
+      "buyer": "APRAM - Administração dos Portos da Região Autónoma da Madeira, SA",
+      "excerpt": "Locação de licenciamento Office 365 Consulta prévia para a locação de licen",
+      "amount_eur": 18979.61,
+      "region": "Madeira",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Funchal",
+      "district": "Região Autónoma da Madeira"
+    }
+  ]
+}

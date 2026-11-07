@@ -15,6 +15,7 @@ from gafam_contratos.classify import (
     is_framework_ceiling,
     load_concelho_labels,
     load_concelho_map,
+    load_concelhos_by_distrito,
     load_distrito_concelhos,
     normalize_distrito_place,
     place_parts,
@@ -81,6 +82,9 @@ def test_classify_and_region():
     assert place_parts("Portugal\nPortugal\nPortugal\nPortugal") == ("", "")
     assert region_from_local("Portugal, Foo, Vila Inventada", mapping) == "sem local"
     assert region_from_local(" , , ", mapping) == "sem local"
+    by_district = load_concelhos_by_distrito(data_dir() / "concelho_distrito.csv")
+    assert by_district["leiria"]["leiria"] == "Leiria"
+    assert "porto" in by_district["porto"]
     mun = load_distrito_concelhos(data_dir() / "distrito_leiria.txt")
     assert "leiria" in mun and "pombal" in mun
     assert "pedrogao grande" in mun

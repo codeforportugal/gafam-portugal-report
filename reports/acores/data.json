@@ -1,0 +1,838 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.905962+00:00",
+  "totals": {
+    "2022": {
+      "committed": 267072.69999999995,
+      "requested": 0,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 285027.75,
+      "requested": 0,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 9511488.72,
+      "requested": 0,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 1451150.06,
+      "requested": 0,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 606959.78,
+      "requested": 0,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "Açores": 267072.69999999995
+      },
+      "2023": {
+        "Açores": 285027.75
+      },
+      "2024": {
+        "Açores": 9511488.72
+      },
+      "2025": {
+        "Açores": 1451150.06
+      },
+      "2026": {
+        "Açores": 606959.78
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "outra entidade pública": 175690.08,
+        "ensino superior": 69759.4,
+        "administração local": 21623.22
+      },
+      "2023": {
+        "outra entidade pública": 188259.12,
+        "ensino superior": 74704.23,
+        "administração local": 22064.4
+      },
+      "2024": {
+        "outra entidade pública": 9163951.290000001,
+        "educação não superior": 187333.44,
+        "ensino superior": 135308.79,
+        "administração local": 24895.2
+      },
+      "2025": {
+        "outra entidade pública": 1319326.92,
+        "ensino superior": 72759.53,
+        "administração local": 45263.61,
+        "administração central": 13800.0
+      },
+      "2026": {
+        "outra entidade pública": 290042.44,
+        "saúde": 227224.42,
+        "ensino superior": 65812.92,
+        "administração local": 23880.0
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 267072.69999999995
+      },
+      "2023": {
+        "Microsoft": 285027.75
+      },
+      "2024": {
+        "Microsoft": 9262966.49,
+        "Google": 187333.44,
+        "Amazon": 48000.0,
+        "Apple": 13188.79
+      },
+      "2025": {
+        "Microsoft": 1387150.06,
+        "Google": 64000.0
+      },
+      "2026": {
+        "Microsoft": 606959.78
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Horta": 175690.08,
+        "Ponta Delgada": 69759.4,
+        "Angra do Heroismo": 21623.22
+      },
+      "2023": {
+        "Horta": 188259.12,
+        "Ponta Delgada": 74704.23,
+        "Angra do Heroismo": 22064.4
+      },
+      "2024": {
+        "Ponta Delgada": 9321593.55,
+        "Horta": 164999.97,
+        "Angra do Heroismo": 24895.2
+      },
+      "2025": {
+        "Angra do Heroismo": 779579.0,
+        "Horta": 534811.53,
+        "Ponta Delgada": 136759.53
+      },
+      "2026": {
+        "Ponta Delgada": 326626.34,
+        "Horta": 190640.52,
+        "Angra do Heroismo": 89692.92
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "8848709",
+      "channel": "committed",
+      "buyer": "Universidade dos Açores",
+      "excerpt": "Licenciamento do Software Microsoft Licenciamento do Software Microsoft nif",
+      "amount_eur": 69759.4,
+      "region": "Açores",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "9373294",
+      "channel": "committed",
+      "buyer": "Município de Angra do Heroísmo",
+      "excerpt": "Serviços Microsoft 365 2022/50,01/31 - Aquisição dos Serviços",
+      "amount_eur": 21623.22,
+      "region": "Açores",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Angra do Heroismo",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "9544101",
+      "channel": "committed",
+      "buyer": "Assembleia Legislativa da Região Autónoma dos Açores",
+      "excerpt": "ativo de licenciamento para os produtos microsoft utilizados pela ALRAA Aquisição de um p",
+      "amount_eur": 175690.08,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Horta",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "9780625",
+      "channel": "committed",
+      "buyer": "Universidade dos Açores",
+      "excerpt": "Aquisição de licenciamento do software Microsoft Aquisição de licenciamento do software",
+      "amount_eur": 74704.23,
+      "region": "Açores",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "9863030",
+      "channel": "committed",
+      "buyer": "Assembleia Legislativa da Região Autónoma dos Açores",
+      "excerpt": "a aquisição dos serviços especializados Microsoft \"Unified Enterprise Support\" Concurso P",
+      "amount_eur": 188259.12,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Horta",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "10109739",
+      "channel": "committed",
+      "buyer": "Município de Angra do Heroísmo",
+      "excerpt": "Serviços Microsoft 365 - 15 de julho de 2023 a 15 de julho de",
+      "amount_eur": 22064.4,
+      "region": "Açores",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Angra do Heroismo",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "10610067",
+      "channel": "committed",
+      "buyer": "Universidade dos Açores",
+      "excerpt": "Aquisição do licenciamento do software Microsoft Aquisição do licenciamento do software",
+      "amount_eur": 74120.0,
+      "region": "Açores",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "10667038",
+      "channel": "committed",
+      "buyer": "Município de Angra do Heroísmo",
+      "excerpt": "Aquisição de serviços de Microsoft 365 Aquisição de serviços de Microsoft 365",
+      "amount_eur": 24895.2,
+      "region": "Açores",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Angra do Heroismo",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "10946824",
+      "channel": "committed",
+      "buyer": "Assembleia Legislativa da Região Autónoma dos Açores",
+      "excerpt": "amento de dados na plataforma Microsoft Azure ou equivalente Aquisição de alojamento",
+      "amount_eur": 164999.97,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Azure",
+      "url": "",
+      "place": "Horta",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11016950",
+      "channel": "committed",
+      "buyer": "Escola Básica Integrada de Canto da Maia",
+      "excerpt": "Tablet Tab S6 Lite - Android 14.0, 10.4\", Wi-Fi, 4GB de RAM, 128 GB",
+      "amount_eur": 187333.44,
+      "region": "Açores",
+      "category": "educação não superior",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Android",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11021997",
+      "channel": "committed",
+      "buyer": "Universidade dos Açores",
+      "excerpt": "Contrato de aquisição de serviços AWS (Amazon Web Services) Contrato de aquisição de serviços AWS",
+      "amount_eur": 48000.0,
+      "region": "Açores",
+      "category": "ensino superior",
+      "vendor": "Amazon",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Amazon Web Services",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11059708",
+      "channel": "committed",
+      "buyer": "Universidade dos Açores",
+      "excerpt": "Aquisição de 1 (um) APPLE MAC PRO CTO M2 ULTRA G76 8TB 19GB e 1 (",
+      "amount_eur": 13188.79,
+      "region": "Açores",
+      "category": "ensino superior",
+      "vendor": "Apple",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Apple",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11073385",
+      "channel": "committed",
+      "buyer": "Direção Regional das Comunicações e da Transição Digital",
+      "excerpt": "LICENCIAMENTO MICROSOFT PARA O GOVERNO REGIONAL DOS AÇORES LICE",
+      "amount_eur": 8998951.32,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11179026",
+      "channel": "committed",
+      "buyer": "Agência para a Modernização Administrativa e Qualidade do Serviço ao Cidadão - RIAC",
+      "excerpt": "anhamento e implementação da ferramenta Power BI Prestar os serviços que visam a criação",
+      "amount_eur": 13800.0,
+      "region": "Açores",
+      "category": "administração central",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Power BI",
+      "url": "",
+      "place": "Angra do Heroismo",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11278887",
+      "channel": "committed",
+      "buyer": "Universidade dos Açores",
+      "excerpt": "Aquisição de licenciamento do Software Microsoft Aquisição de licenciamento do Software",
+      "amount_eur": 72759.53,
+      "region": "Açores",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11386737",
+      "channel": "committed",
+      "buyer": "Município de Angra do Heroísmo",
+      "excerpt": "Aquisição de serviços de Microsoft 365 Aquisição de serviços de Microsoft 365",
+      "amount_eur": 25152.0,
+      "region": "Açores",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Angra do Heroismo",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11454754",
+      "channel": "committed",
+      "buyer": "Secretaria Regional da Juventude, Habitação e Emprego",
+      "excerpt": "2.0, com backend e frontend e aplicação Android Aquisição de serviços de desenvolviment",
+      "amount_eur": 64000.0,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Android",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11514258",
+      "channel": "committed",
+      "buyer": "Direção Regional da Educação e Administração Educativa",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT ENROLLMENT FOR EDUCATION SOLUTIONS AQUI",
+      "amount_eur": 740627.0,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Angra do Heroismo",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11786253",
+      "channel": "committed",
+      "buyer": "Município da Horta",
+      "excerpt": "Aquisição de Serviços Microsoft M365 Business Aquisição de Serviços Mic",
+      "amount_eur": 20111.61,
+      "region": "Açores",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Horta",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "11975543",
+      "channel": "committed",
+      "buyer": "Assembleia Legislativa da Região Autónoma dos Açores",
+      "excerpt": "ativo de licenciamento para os produtos Microsoft, ou equivalente Aquisição de um pacote",
+      "amount_eur": 514699.92,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Horta",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "13923833",
+      "channel": "committed",
+      "buyer": "Assembleia Legislativa da Região Autónoma dos Açores",
+      "excerpt": "Aquisição de serviços especializados da Microsoft Unified Enterprise Support ou equivalen",
+      "amount_eur": 190640.52,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Horta",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "13948903",
+      "channel": "committed",
+      "buyer": "Universidade dos Açores",
+      "excerpt": "Aquisição de licenciamento de software Microsoft  Aquisição de licenciamento de software",
+      "amount_eur": 65812.92,
+      "region": "Açores",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Angra do Heroismo",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "14488629",
+      "channel": "committed",
+      "buyer": "Município de Angra do Heroísmo",
+      "excerpt": "Aquisição de serviços de Microsoft 365 para ano 2026 Aquisição de serviços de",
+      "amount_eur": 23880.0,
+      "region": "Açores",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Angra do Heroismo",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "14872886",
+      "channel": "committed",
+      "buyer": "Direção Regional das Comunicações e da Transição Digital",
+      "excerpt": "ção de licenças SQL Server Enterprise e Windows Server Datacenter Aquisição de licenças",
+      "amount_eur": 99401.92,
+      "region": "Açores",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "15650477",
+      "channel": "committed",
+      "buyer": "Hospital do Divino Espírito Santo de Ponta Delgada, EPER",
+      "excerpt": "Aquisição de serviços Microsoft Unified, no âmbito de apoio técnico esp",
+      "amount_eur": 35820.41,
+      "region": "Açores",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    },
+    {
+      "source_id": "15836963",
+      "channel": "committed",
+      "buyer": "Hospital do Divino Espírito Santo de Ponta Delgada, EPER",
+      "excerpt": "Licenciamento de Software Microsoft, no âmbito do Plano de Recuperação e Re",
+      "amount_eur": 191404.01,
+      "region": "Açores",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ponta Delgada",
+      "district": "Região Autónoma dos Açores"
+    }
+  ]
+}

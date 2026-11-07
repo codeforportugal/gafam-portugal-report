@@ -75,6 +75,10 @@ def find_match(text: str, keywords: list[Keyword]) -> MatchHit | None:
             continue
         if fold(kw.pattern) == "exchange" and _exchange_is_false_friend(folded):
             continue
+        if fold(kw.pattern) == "excel":
+            found = _excel_match(folded)
+            if found is None:
+                continue
         start = max(0, found.start() - 40)
         end = min(len(text), found.end() + 40)
         excerpt = text[start:end].strip()
@@ -112,6 +116,16 @@ _EXCHANGE_SOFTWARE = (
     "correio eletronico",
     "licenciamento",
 )
+
+
+def _excel_match(folded: str) -> re.Match[str] | None:
+    """«CUSA Excel» é um aspirador cirúrgico da Integra, não o Microsoft Excel."""
+    for found in _compile("Excel").finditer(folded):
+        before = folded[max(0, found.start() - 5) : found.start()]
+        if before.endswith("cusa "):
+            continue
+        return found
+    return None
 
 
 def _exchange_is_false_friend(folded: str) -> bool:

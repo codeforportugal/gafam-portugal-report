@@ -1,0 +1,1220 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.175957+00:00",
+  "totals": {
+    "2022": {
+      "committed": 179973.93,
+      "requested": 0,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 410808.88,
+      "requested": 0,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 421326.29,
+      "requested": 1472905.56,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 1141462.2,
+      "requested": 195000.0,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 163448.55,
+      "requested": 0,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "Alentejo": 138432.88,
+        "sem local": 41541.05
+      },
+      "2023": {
+        "Alentejo": 398980.41000000003,
+        "sem local": 11828.47
+      },
+      "2024": {
+        "Alentejo": 282528.97,
+        "sem local": 138797.32
+      },
+      "2025": {
+        "sem local": 827733.07,
+        "Alentejo": 313729.13
+      },
+      "2026": {
+        "Alentejo": 81903.12,
+        "sem local": 81545.43
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "administração local": 80621.05,
+        "saúde": 57925.92,
+        "outra entidade pública": 41426.96
+      },
+      "2023": {
+        "privado": 255937.2,
+        "saúde": 120477.58,
+        "administração local": 26099.1,
+        "outra entidade pública": 8295.0
+      },
+      "2024": {
+        "administração local": 178132.82,
+        "saúde": 176301.05,
+        "privado": 66892.42
+      },
+      "2025": {
+        "administração local": 841675.07,
+        "saúde": 201371.99,
+        "privado": 92707.14000000001,
+        "outra entidade pública": 5708.0
+      },
+      "2026": {
+        "administração local": 101272.43,
+        "privado": 62176.12
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 125586.97,
+        "Meta": 54386.96
+      },
+      "2023": {
+        "Microsoft": 410808.88000000006
+      },
+      "2024": {
+        "Microsoft": 421326.29
+      },
+      "2025": {
+        "Microsoft": 1135754.2,
+        "Meta": 5708.0
+      },
+      "2026": {
+        "Microsoft": 163448.55000000002
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Beja": 138432.88,
+        "Vidigueira": 12960.0,
+        "Mértola": 12100.0,
+        "Aljustrel": 11495.25,
+        "Castro Verde": 4985.8
+      },
+      "2023": {
+        "Beja": 398980.41000000003,
+        "Aljustrel": 11828.47
+      },
+      "2024": {
+        "Beja": 282528.97,
+        "Mértola": 90971.4,
+        "Ourique": 25699.420000000002,
+        "Aljustrel": 12226.5,
+        "Castro Verde": 9900.0
+      },
+      "2025": {
+        "Odemira": 721402.82,
+        "Beja": 313729.13,
+        "Mértola": 75565.0,
+        "Vidigueira": 18415.0,
+        "Aljustrel": 12350.25
+      },
+      "2026": {
+        "Beja": 81903.12,
+        "Odemira": 50941.979999999996,
+        "Aljustrel": 14392.5,
+        "Vidigueira": 9686.5,
+        "Alvito": 6524.45
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "9124489",
+      "channel": "committed",
+      "buyer": "Associação para o Estudo e Defesa do Património Natural e Cultural do Concelho de Mértola",
+      "excerpt": "1 post semanal no perfil de Facebook e Instagram do projeto. \n•\t3.5 Ferramentas visuais",
+      "amount_eur": 19861.01,
+      "region": "Alentejo",
+      "category": "outra entidade pública",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Instagram",
+      "url": "",
+      "place": "Beja",
+      "district": ""
+    },
+    {
+      "source_id": "9130679",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Beja",
+      "excerpt": "o de Licenciamento Adobe Creative Cloud Teams All Apps - novo contrato Vip Serviços p",
+      "amount_eur": 6930.0,
+      "region": "Alentejo",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "9139652",
+      "channel": "committed",
+      "buyer": "Município de Castro Verde",
+      "excerpt": "nciamento de software de produtividade (Microsoft 365) Renovação de licenciamento de software",
+      "amount_eur": 4985.8,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Castro Verde",
+      "district": "Beja"
+    },
+    {
+      "source_id": "9124172",
+      "channel": "committed",
+      "buyer": "Associação para o Estudo e Defesa do Património Natural e Cultural do Concelho de Mértola",
+      "excerpt": "1 post semanal no perfil de Facebook e Instagram do projeto. \n3.5 Ferramentas visuais de",
+      "amount_eur": 9465.95,
+      "region": "Alentejo",
+      "category": "outra entidade pública",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Instagram",
+      "url": "",
+      "place": "Beja",
+      "district": ""
+    },
+    {
+      "source_id": "9191433",
+      "channel": "committed",
+      "buyer": "Associação para o Estudo e Defesa do Património Natural e Cultural do Concelho de Mértola",
+      "excerpt": "áfica)\nb)\tDivulgação nas redes sociais (facebook, instragram e youtube). Produção de um",
+      "amount_eur": 12100.0,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Facebook",
+      "url": "",
+      "place": "Mértola",
+      "district": "Beja"
+    },
+    {
+      "source_id": "9289548",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Beja",
+      "excerpt": "Licenciamento Microsoft - Office 2021 Licenciamento Microsoft -",
+      "amount_eur": 44250.0,
+      "region": "Alentejo",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "9408960",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Baixo Alentejo, EPE",
+      "excerpt": "aquisição de licenciamento de software Microsoft e serviços conexos para Unidade Local d",
+      "amount_eur": 57925.92,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "9413211",
+      "channel": "committed",
+      "buyer": "Município de Vidigueira",
+      "excerpt": "serviços para gestão da página oficial INSTAGRAM do Município  @municipiovidigueira Pres",
+      "amount_eur": 12960.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Instagram",
+      "url": "",
+      "place": "Vidigueira",
+      "district": "Beja"
+    },
+    {
+      "source_id": "9430463",
+      "channel": "committed",
+      "buyer": "Município de Aljustrel",
+      "excerpt": "Renovação Anual de Licenciamento Microsoft VDA - 75 Licenças Renovação Anual de Li",
+      "amount_eur": 11495.25,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Aljustrel",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10070304",
+      "channel": "committed",
+      "buyer": "Edia - Empresa de Desenvolvimento e Infra-Estruturas do Alqueva, SA",
+      "excerpt": "Contrato de Licenciamento de produtos Microsoft Contrato de Licenciamento de produtos M",
+      "amount_eur": 58943.64,
+      "region": "Alentejo",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10091983",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Baixo Alentejo, EPE",
+      "excerpt": "e Serviços de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 114970.12,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10107712",
+      "channel": "committed",
+      "buyer": "Município de Aljustrel",
+      "excerpt": "Renovação anual de licenciamento microsoft VDA - 75 Licenças Renovação anual de li",
+      "amount_eur": 11828.47,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Aljustrel",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10327442",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Beja",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT EM REGIME DE SPLA AD/092/2023 nifEntCon",
+      "amount_eur": 14270.63,
+      "region": "Alentejo",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10472323",
+      "channel": "committed",
+      "buyer": "AgdA - Águas Públicas do Alentejo, SA",
+      "excerpt": "CP - Subscrição de licenças de Software Microsoft e serviços de suporte para as empresas",
+      "amount_eur": 196993.56,
+      "region": "Alentejo",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": ""
+    },
+    {
+      "source_id": "10704907",
+      "channel": "committed",
+      "buyer": "Estado Maior da Força Aérea",
+      "excerpt": "EXCHANGE DE TRÊS BLOCOS INJETORES PARA O EPSILON",
+      "amount_eur": 8295.0,
+      "region": "Alentejo",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11448532",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Baixo Alentejo, EPE",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO DE SOFTWARE MICROSOFT - 2ª FASE E SERVIÇOS CONEXOS PARA VÁRIA",
+      "amount_eur": 5507.46,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": ""
+    },
+    {
+      "source_id": "10613480",
+      "channel": "committed",
+      "buyer": "Município de Ourique",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT AQUISIÇÃO DE LICENCIAMENTO MICROSOFT ni",
+      "amount_eur": 6607.72,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ourique",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10637885",
+      "channel": "committed",
+      "buyer": "Município de Castro Verde",
+      "excerpt": "olvimento de Dashboards e relatórios em Power BI - águas Aquisição de serviços de bolsa",
+      "amount_eur": 9900.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Power BI",
+      "url": "",
+      "place": "Castro Verde",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10660396",
+      "channel": "committed",
+      "buyer": "Município de Ourique",
+      "excerpt": "AQUISIÇÃO DE SOFTWARE MICROSOFT WINDOWS SERVER 2022 DATACENTER 16 – CORE\n\n AQUI",
+      "amount_eur": 19091.7,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Ourique",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10713864",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Beja",
+      "excerpt": "ços para Subscrição de Exchange Online, Office 365 e Suporte Técnico à Implementação e Apo",
+      "amount_eur": 39335.5,
+      "region": "Alentejo",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10749823",
+      "channel": "committed",
+      "buyer": "Município de Aljustrel",
+      "excerpt": "Renovação anual de licenciamento Microsoft VDA - 75 licenças  Renovação anual de l",
+      "amount_eur": 12226.5,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Aljustrel",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10756119",
+      "channel": "committed",
+      "buyer": "Edia - Empresa de Desenvolvimento e Infra-Estruturas do Alqueva, SA",
+      "excerpt": "rnecimento de Licenciamento de produtos Microsoft Fornecimento de Licenciamento de produt",
+      "amount_eur": 66892.42,
+      "region": "Alentejo",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10913840",
+      "channel": "committed",
+      "buyer": "Município de Mértola",
+      "excerpt": "Subscrição de Software Microsoft, pelo Período de Um Ano Subscrição de S",
+      "amount_eur": 90971.4,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Mértola",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10941194",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Baixo Alentejo, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 176301.05,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": ""
+    },
+    {
+      "source_id": "11204987",
+      "channel": "committed",
+      "buyer": "Município de Odemira",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT PARA O MUNICIPIO DE ODEMIRA AQUISIÇÃO D",
+      "amount_eur": 686665.98,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Odemira",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11250696",
+      "channel": "committed",
+      "buyer": "Município de Odemira",
+      "excerpt": "ÃO AO SOFTWARE ADOBE CREATIVE CLOUD FOR TEAMS PARA O MUNICÍPIO DE ODEMIRA AQUISIÇÃO D",
+      "amount_eur": 5736.84,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Odemira",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11428381",
+      "channel": "committed",
+      "buyer": "Edia - Empresa de Desenvolvimento e Infra-Estruturas do Alqueva, SA",
+      "excerpt": "rnecimento de Licenciamento de produtos Microsoft, pelo período de 1 ano.\nOs serviços e f",
+      "amount_eur": 65747.46,
+      "region": "Alentejo",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11441144",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Beja",
+      "excerpt": "LICENCIAMENTO ANUAL DE 340 LICENÇAS DE EXCHANGE ONLINE (PLAN 1) E DE 30 LICENÇAS DO OFF",
+      "amount_eur": 19650.0,
+      "region": "Alentejo",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Beja",
+      "district": ""
+    },
+    {
+      "source_id": "11486518",
+      "channel": "committed",
+      "buyer": "Município de Aljustrel",
+      "excerpt": "Renovação Anual de Licenciamento Microsoft VDA - 75 Licenças Renovação Anual de Li",
+      "amount_eur": 12350.25,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Aljustrel",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11489408",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Baixo Alentejo, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 42013.59,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11489385",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Baixo Alentejo, EPE",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 159358.4,
+      "region": "Alentejo",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11584605",
+      "channel": "committed",
+      "buyer": "Edia - Empresa de Desenvolvimento e Infra-Estruturas do Alqueva, SA",
+      "excerpt": "nto de Servidores SAP produção na Cloud Azure. Fornecimento do alojamento na Cloud Az",
+      "amount_eur": 26959.68,
+      "region": "Alentejo",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Azure",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11665028",
+      "channel": "committed",
+      "buyer": "Associação para o Estudo e Defesa do Património Natural e Cultural do Concelho de Mértola",
+      "excerpt": "o do projeto, em formato de publicações Instagram e LinkedIn, sobre as temáticas relevant",
+      "amount_eur": 5708.0,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Instagram",
+      "url": "",
+      "place": "Mértola",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11765726",
+      "channel": "committed",
+      "buyer": "Município de Odemira",
+      "excerpt": "E SERVIÇOS DE ACOMPANHAMENTO À MIGRAÇÃO OFFICE 365 E IMPLEMENTAÇÃO DE LICENCIAMENTO MICROS",
+      "amount_eur": 29000.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Odemira",
+      "district": "Beja"
+    },
+    {
+      "source_id": "11766548",
+      "channel": "committed",
+      "buyer": "Município de Vidigueira",
+      "excerpt": "iços de licenciamento/solução Microsoft Office 365 Aquisição de serviços de licenciamento/",
+      "amount_eur": 18415.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Vidigueira",
+      "district": "Beja"
+    },
+    {
+      "source_id": "12211833",
+      "channel": "committed",
+      "buyer": "Município de Mértola",
+      "excerpt": "Contrato de Subscrição de Software Microsoft, Pelo Período de Um Ano Contrato de Sub",
+      "amount_eur": 69857.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Mértola",
+      "district": "Beja"
+    },
+    {
+      "source_id": "12870703",
+      "channel": "committed",
+      "buyer": "Município de Odemira",
+      "excerpt": "NCIAMENTO CODETWO EMAIL SIGNATURES 365, MICROSOFT 365 EEA E EXCHANGE ONLINE (PLAN 2)  AQUISIÇ",
+      "amount_eur": 42457.68,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Odemira",
+      "district": "Beja"
+    },
+    {
+      "source_id": "14242776",
+      "channel": "committed",
+      "buyer": "Município de Odemira",
+      "excerpt": "ÃO AO SOFTWARE ADOBE CREATIVE CLOUD FOR TEAMS PARA O MUNICÍPIO DE ODEMIRA AQUISIÇÃO D",
+      "amount_eur": 8484.3,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Teams",
+      "url": "",
+      "place": "Odemira",
+      "district": "Beja"
+    },
+    {
+      "source_id": "14893172",
+      "channel": "committed",
+      "buyer": "Município de Vidigueira",
+      "excerpt": "ara a renovação da subscrição Microsoft Windows VDA (Virtual Desktop Access) Aquisição",
+      "amount_eur": 9686.5,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Vidigueira",
+      "district": "Beja"
+    },
+    {
+      "source_id": "15056477",
+      "channel": "committed",
+      "buyer": "Município de Aljustrel",
+      "excerpt": "Renovação anual de licenciamento Microsoft VDA - 75 licenças por Device Renovação",
+      "amount_eur": 14392.5,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Aljustrel",
+      "district": "Beja"
+    },
+    {
+      "source_id": "15153316",
+      "channel": "committed",
+      "buyer": "Câmara Municipal de Beja",
+      "excerpt": "ÇÃO ANUAL DO EXCHANGE ONLINE (PLAN 1) E OFFICE 365 BUSINESS STANDARD AQUISIÇÃO DE SERVIÇOS",
+      "amount_eur": 19727.0,
+      "region": "Alentejo",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "15186412",
+      "channel": "committed",
+      "buyer": "Edia - Empresa de Desenvolvimento e Infra-Estruturas do Alqueva, SA",
+      "excerpt": "rnecimento de Licenciamento de produtos Microsoft Fornecimento de Licenciamento de produt",
+      "amount_eur": 62176.12,
+      "region": "Alentejo",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Beja",
+      "district": "Beja"
+    },
+    {
+      "source_id": "15282956",
+      "channel": "committed",
+      "buyer": "Município de Alvito",
+      "excerpt": "Aquisição de licencimento windows server 2025 e windows server 2025 remot",
+      "amount_eur": 6524.45,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Windows",
+      "url": "",
+      "place": "Alvito",
+      "district": "Beja"
+    },
+    {
+      "source_id": "10370/2024",
+      "channel": "requested",
+      "buyer": "Município de Mértola",
+      "excerpt": "Subscrição de Software Microsoft, pelo Período de Um Ano Município de Mé",
+      "amount_eur": 97500.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2024/05/100/417732037.pdf",
+      "place": "Mértola",
+      "district": ""
+    },
+    {
+      "source_id": "9962/2024",
+      "channel": "requested",
+      "buyer": "Município de Odemira",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT PARA O MUNICIPIO DE ODEMIRA Município d",
+      "amount_eur": 687702.78,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2024/05/097/417688055.pdf",
+      "place": "Odemira",
+      "district": ""
+    },
+    {
+      "source_id": "8779/2024",
+      "channel": "requested",
+      "buyer": "Município de Odemira",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT PARA O MUNICIPIO DE ODEMIRA Município d",
+      "amount_eur": 687702.78,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2024/05/087/417650932.pdf",
+      "place": "Odemira",
+      "district": ""
+    },
+    {
+      "source_id": "20420/2025",
+      "channel": "requested",
+      "buyer": "Município de Mértola",
+      "excerpt": "Subscrição de Software Microsoft, pelo Período de Um Ano Município de Mé",
+      "amount_eur": 97500.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/07/145/419371291.pdf",
+      "place": "Mértola",
+      "district": ""
+    },
+    {
+      "source_id": "29143/2025",
+      "channel": "requested",
+      "buyer": "Município de Mértola",
+      "excerpt": "Contrato de Subscrição de Software Microsoft, Pelo Período de Um Ano Município de Mé",
+      "amount_eur": 97500.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/11/217/419749449.pdf",
+      "place": "Mértola",
+      "district": ""
+    }
+  ]
+}

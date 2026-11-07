@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
+from dataclasses import replace
 from pathlib import Path
 
 from gafam_contratos.classify import (
     fold,
     in_distrito,
-    load_concelho_labels,
     load_concelho_map,
-    load_distrito_concelhos,
+    load_concelhos_by_distrito,
     normalize_distrito_place,
 )
 from gafam_contratos.constants import YEAR_LIST
@@ -37,7 +37,7 @@ from gafam_contratos.paths import (
     reports_dir,
 )
 from gafam_contratos.press import gather_press, load_press_domains
-from gafam_contratos.report import build_report_payload, write_report
+from gafam_contratos.report import AREA_PAGES, build_report_payload, write_report
 from gafam_contratos.sciproj import (
     sciproj_source,
     sciproj_terms_from_keywords,
@@ -83,46 +83,65 @@ def run(
     )
     write_report(out, payload, records)
 
-    leiria_mun = load_distrito_concelhos(root_data / "distrito_leiria.txt")
-    labels = load_concelho_labels(root_data / "concelho_nuts2.csv")
-    leiria_labels = {
-        key: labels[key] for key in leiria_mun if key in labels
-    }
-    for line in (root_data / "distrito_leiria.txt").read_text(encoding="utf-8").splitlines():
-        name = line.strip()
-        if name and not name.startswith("#"):
-            leiria_labels.setdefault(fold(name), name)
-    leiria_records: list[Record] = []
-    for record in records:
-        if not in_distrito(
-            district=record.district,
-            place=record.place,
-            buyer=record.buyer,
-            municipios=leiria_mun,
-        ):
-            continue
-        record.place = normalize_distrito_place(
-            place=record.place,
-            buyer=record.buyer,
-            labels=leiria_labels,
-            municipios=leiria_mun,
-        )
-        leiria_records.append(record)
-    leiria_payload = build_report_payload(
-        records=leiria_records,
+    _write_area_reports(
+        out,
+        records=records,
         sources=sources,
         keywords=keywords,
-        press=[],
-        press_errors={},
         skipped=skipped,
-    )
-    write_report(
-        out / "leiria",
-        leiria_payload,
-        leiria_records,
-        scope="leiria",
+        root_data=root_data,
     )
     return out
+
+
+def _write_area_reports(
+    out: Path,
+    *,
+    records: list[Record],
+    sources: list[SourceMeta],
+    keywords: list[Keyword],
+    skipped: dict[str, int],
+    root_data: Path,
+) -> None:
+    by_district = load_concelhos_by_distrito(root_data / "concelho_distrito.csv")
+    for area in AREA_PAGES:
+        picked: list[Record] = []
+        for record in records:
+            if area.unit == "regiao":
+                if fold(record.region) != fold(area.name):
+                    continue
+                picked.append(record)
+                continue
+            labels = by_district[fold(area.button)]
+            municipios = set(labels)
+            if not in_distrito(
+                district=record.district,
+                place=record.place,
+                buyer=record.buyer,
+                municipios=municipios,
+                district_name=area.button,
+            ):
+                continue
+            picked.append(
+                replace(
+                    record,
+                    place=normalize_distrito_place(
+                        place=record.place,
+                        buyer=record.buyer,
+                        labels=labels,
+                        municipios=municipios,
+                    ),
+                )
+            )
+        payload = build_report_payload(
+            records=picked,
+            sources=sources,
+            keywords=keywords,
+            press=[],
+            press_errors={},
+            skipped=skipped,
+        )
+        write_report(out / area.slug, payload, picked, scope=area.slug)
 
 
 def _run_fixtures(

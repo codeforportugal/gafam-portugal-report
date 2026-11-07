@@ -20,6 +20,27 @@ def test_excelencia_does_not_match_excel():
     assert is_rejected_false_friend("Projecto de excelência académica", keywords)
 
 
+def test_cusa_excel_is_not_microsoft():
+    keywords = load_lexicon(data_dir() / "lexicon.yml")
+    assert (
+        find_match(
+            "DE 2026 A 2028, PARA O EQUIPAMENTO CUSA EXCEL 8, SN. U5D EXISTENTE NO HOSPITAL DIVINO",
+            keywords,
+        )
+        is None
+    )
+    assert find_match("PONTA CUSA EXCEL STANDARD LONGA CURVA", keywords) is None
+    both = find_match(
+        "Manutenção do CUSA EXCEL e licença Microsoft Excel",
+        keywords,
+    )
+    assert both is not None
+    assert both.term == "Excel"
+    assert "Microsoft Excel" in both.excerpt
+    bare = find_match("Excel", keywords)
+    assert bare is not None and bare.term == "Excel"
+
+
 def test_excel_matches():
     keywords = load_lexicon(data_dir() / "lexicon.yml")
     hit = find_match("Aquisição de Microsoft Excel", keywords)

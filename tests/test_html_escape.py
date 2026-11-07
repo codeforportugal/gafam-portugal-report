@@ -78,26 +78,28 @@ def test_render_escapes_injected_fields():
     assert "scroll-snap" in html_out
     assert "Cloud Act" in html_out
     assert "antes de ela se tornar uma crise" not in html_out
-    assert "Portugal no dia 0" in html_out
+    assert "Onde um corte doeria mais" in html_out
+    assert "Esta conta é só dinheiro público" in html_out
     assert "Portugal à noite" not in html_out
     assert "Pedido ao mercado fica no cartão" not in html_out
     assert "pedido estava" in html_out or "sem pedido ao mercado" in html_out
-    assert "Cinco anos com Google, Amazon, Facebook, Apple, Microsoft" in html_out
+    assert "Cinco anos de contratos assinados" in html_out
     assert "Na imprensa" not in html_out
     assert "yearLabels.map((y, i)" in html_out
-    assert "Por fornecedor · 2022–2026" in html_out
+    assert "Quem levou os contratos" in html_out
     assert "indexAxis === 'y' ? ctx.parsed.x : ctx.parsed.y" in html_out
     assert "210 - t * 185" in html_out
-    assert "Assinatura VS pedidos" in html_out
+    assert "O que foi assinado e o que foi pedido" in html_out
     assert "Fontes e ficheiros" not in html_out
     assert ">Fontes<" in html_out or "Fontes</h2>" in html_out
-    assert "As algemas das Big Techs" in html_out
-    assert "algema-grid" in html_out
-    assert "algema-stack" in html_out
-    assert "algema-vendor" in html_out
-    assert "Google Cloud" in html_out
-    assert "Android" in html_out
-    assert "contratos nacionais" in html_out
+    assert "As algemas" in html_out
+    assert "cortar esses serviços" not in html_out
+    assert "class='algema-grid'" not in html_out
+    assert "Sem Microsoft nem Google nos contratos assinados" in html_out
+    assert "Portal Base" in html_out
+    assert "0 anos de algemas" not in html_out
+    assert "do país" in html_out
+    assert "github.com/codeforportugal/gafam-portugal-report" in html_out
     assert "remixicon" in html_out
     assert "contratos no top 100 ·" not in html_out
     assert "algema-note" not in html_out
@@ -205,21 +207,27 @@ def test_render_leiria_scope():
     )
     assert "Distrito de Leiria" in html_out
     assert "Cloud Act" in html_out
-    assert "16 concelhos" in html_out
-    assert "grants" in html_out
+    assert "apoios (grants)" not in html_out
     assert "Município de Leiria" in html_out
     assert "100 maiores" in html_out
     assert "mapLeiria" in html_out
-    assert "As Big Tech quem mandam" in html_out
-    assert "Assinatura VS Pedidos" in html_out
-    assert "Uso nos conselhos" in html_out
-    assert "As algemas das Big Techs" in html_out
-    assert "Top 100 das maiores algemas" in html_out
-    assert "€ contratado GAFAM" in html_out
+    assert "Quem levou os contratos" in html_out
+    assert "O que foi assinado e o que foi pedido" in html_out
+    assert "Onde um corte doeria mais" in html_out
+    assert "concelhos mais escuros" in html_out
+    assert "Esta conta é só dinheiro público" in html_out
+    assert "Uso nos conselhos" not in html_out
+    assert "As algemas" in html_out
+    assert "cortar esses serviços" not in html_out
+    assert "Os 100 maiores contratos" in html_out
+    assert "contrato assinado" in html_out
     assert "anos de algemas" in html_out or "ano de algemas" in html_out
     assert "algema-grid" in html_out
     assert "algema-stack" in html_out
-    assert "Google Cloud" in html_out
+    assert "Google Cloud" not in html_out
+    assert "0 anos de algemas" not in html_out
+    assert "Microsoft aparece em vários anos" in html_out
+    assert "github.com/codeforportugal/gafam-portugal-report" in html_out
     assert "contratos no top 100 ·" not in html_out
     assert "algema-note" not in html_out
     assert "Gerado em" not in html_out
@@ -228,12 +236,77 @@ def test_render_leiria_scope():
     assert "Pedrógão Grande é concelho" not in html_out
     assert 'id="dots"' in html_out
     assert 'class="slide' in html_out
-    assert "concelhos_leiria.geojson" in html_out
+    assert "leiria.geojson" in html_out
+    assert "['#f4ea15', '#eb5423', '#010101']" in html_out
+    assert "i <= 3" in html_out
     assert "Realização: code for portugal" in html_out
     assert 'class="cfp-bar"' in html_out
     assert 'href="../assets/favicon.png"' in html_out
     assert "cc-by-sa.png" in html_out
     assert "#72e123" in html_out
+
+
+def test_algema_lead_names_both_vendors():
+    html_out = render_html(
+        _base_payload(
+            records=[
+                {
+                    "source_id": "m",
+                    "channel": "committed",
+                    "buyer": "Câmara",
+                    "excerpt": "Office 365",
+                    "amount_eur": 10.0,
+                    "region": "Centro",
+                    "district": "Leiria",
+                    "place": "Leiria",
+                    "category": "administração local",
+                    "vendor": "Microsoft",
+                    "fundos": "",
+                    "year": 2025,
+                    "headline": True,
+                    "product": "Office 365",
+                    "url": "",
+                },
+                {
+                    "source_id": "z",
+                    "channel": "committed",
+                    "buyer": "Câmara",
+                    "excerpt": "",
+                    "amount_eur": 1.0,
+                    "region": "Centro",
+                    "district": "Leiria",
+                    "place": "Leiria",
+                    "category": "administração local",
+                    "vendor": "",
+                    "fundos": "",
+                    "year": 0,
+                    "headline": True,
+                    "product": "",
+                    "url": "",
+                },
+                {
+                    "source_id": "g",
+                    "channel": "committed",
+                    "buyer": "Câmara",
+                    "excerpt": "Google Cloud",
+                    "amount_eur": 8.0,
+                    "region": "Centro",
+                    "district": "Leiria",
+                    "place": "Leiria",
+                    "category": "administração local",
+                    "vendor": "Google",
+                    "fundos": "",
+                    "year": 2024,
+                    "headline": True,
+                    "product": "Google Cloud",
+                    "url": "",
+                },
+            ]
+        )
+    )
+    assert "Microsoft e Google aparecem em vários anos" in html_out
+    assert "Google Cloud" in html_out
+    assert "0 anos de algemas" not in html_out
 
 
 def test_render_leiria_lockin_empty_focus():
@@ -261,7 +334,8 @@ def test_render_leiria_lockin_empty_focus():
         ),
         scope="leiria",
     )
-    assert "Sem Microsoft / Google no top 100" in html_out
+    assert "Sem Microsoft nem Google nos contratos assinados" in html_out
+    assert "Portal Base" in html_out
 
 
 def test_year_card_pedido_percentage():

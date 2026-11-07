@@ -1,0 +1,1045 @@
+{
+  "sources": [
+    {
+      "id": "base-contratos",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Contratos",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-contratos-de-2012-a-2026/",
+      "file_name": "contratos2022…2026.xlsx",
+      "licence": "Domínio Público",
+      "coverage": "Contratos celebrados 2022–2026",
+      "updated": "2026-11-04"
+    },
+    {
+      "id": "base-anuncios",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Anúncios",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-anuncios-de-2012-a-2026/",
+      "file_name": "anuncios2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Anúncios publicados 2022–2026",
+      "updated": "2026-10-25"
+    },
+    {
+      "id": "base-mods",
+      "publisher": "IMPIC",
+      "title": "Contratos Públicos - Portal Base - Modificações",
+      "url": "https://dados.gov.pt/pt/datasets/contratos-publicos-portal-base-impic-modificacoes-contratuais-de-2012-a-2026/",
+      "file_name": "modcontrats2022…2026",
+      "licence": "Domínio Público",
+      "coverage": "Alterações de preço 2022–2026",
+      "updated": "2026-10-18"
+    },
+    {
+      "id": "pt2030",
+      "publisher": "Agência para o Desenvolvimento e Coesão",
+      "title": "Lista de Operações Aprovadas Portugal 2030",
+      "url": "https://portugal2030.pt/wp-content/uploads/sites/3/2026/10/PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "file_name": "PT2030-Lista-Operacoes-a-Publicar_30-set-2026.xlsx",
+      "licence": "Não especificada",
+      "coverage": "Operações com início em 2022–2026",
+      "updated": "2026-09-30"
+    },
+    {
+      "id": "prr-contratos",
+      "publisher": "Estrutura de Missão Recuperar Portugal",
+      "title": "Contratos Públicos do PRR",
+      "url": "https://dados.gov.pt/pt/datasets/dataset-estrutura-de-missao-prr-contratos-publicos/",
+      "file_name": "listagem-de-contratos-do-prr.xlsx",
+      "licence": "Aberta",
+      "coverage": "Marca contratos BASE financiados pelo PRR",
+      "updated": "2026-10-23"
+    },
+    {
+      "id": "sciproj",
+      "publisher": "FCT / PTCRIS",
+      "title": "Portal SciPROJ",
+      "url": "https://sciproj.ptcris.pt/",
+      "file_name": "pesquisa HTML",
+      "licence": "Acesso público",
+      "coverage": "Financiamento científico 2025–2026 (melhor esforço)",
+      "updated": "2026-11-06"
+    }
+  ],
+  "keywords": [
+    {
+      "pattern": "Excel",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Office 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft 365",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Windows",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Teams",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Azure",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "SharePoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "OneDrive",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Outlook",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Exchange",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Power BI",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Word",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "PowerPoint",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "Microsoft",
+      "vendor": "Microsoft",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPhone",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "iPad",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "MacBook",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "macOS",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Apple",
+      "vendor": "Apple",
+      "kind": "match"
+    },
+    {
+      "pattern": "Workspace",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Gmail",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Android",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Chromebook",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Cloud",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google Classroom",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "Google",
+      "vendor": "Google",
+      "kind": "match"
+    },
+    {
+      "pattern": "AWS",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon Web Services",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Amazon",
+      "vendor": "Amazon",
+      "kind": "match"
+    },
+    {
+      "pattern": "Facebook",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Instagram",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "WhatsApp",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "Meta Platforms",
+      "vendor": "Meta",
+      "kind": "match"
+    },
+    {
+      "pattern": "excelência",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "excelente",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "meta",
+      "vendor": "",
+      "kind": "reject"
+    },
+    {
+      "pattern": "office",
+      "vendor": "",
+      "kind": "reject"
+    }
+  ],
+  "generated_at": "2026-11-07T22:59:35.813310+00:00",
+  "totals": {
+    "2022": {
+      "committed": 572688.46,
+      "requested": 474455.08,
+      "grants": 0
+    },
+    "2023": {
+      "committed": 796994.53,
+      "requested": 425000.0,
+      "grants": 0
+    },
+    "2024": {
+      "committed": 64232.5,
+      "requested": 592073.64,
+      "grants": 0
+    },
+    "2025": {
+      "committed": 805814.3,
+      "requested": 726128.72,
+      "grants": 0
+    },
+    "2026": {
+      "committed": 248627.64,
+      "requested": 180000.0,
+      "grants": 0
+    }
+  },
+  "breakdowns": {
+    "committed_by_region": {
+      "2022": {
+        "sem local": 426523.42,
+        "Norte": 146165.03999999998
+      },
+      "2023": {
+        "Norte": 534792.61,
+        "sem local": 262201.92000000004
+      },
+      "2024": {
+        "Norte": 40080.1,
+        "sem local": 24152.4
+      },
+      "2025": {
+        "sem local": 805814.3
+      },
+      "2026": {
+        "Norte": 205078.64,
+        "sem local": 43549.0
+      }
+    },
+    "committed_by_category": {
+      "2022": {
+        "administração local": 445671.42,
+        "ensino superior": 106420.84,
+        "privado": 10696.2,
+        "saúde": 9900.0
+      },
+      "2023": {
+        "privado": 278061.36,
+        "outra entidade pública": 249468.0,
+        "saúde": 241601.25,
+        "ensino superior": 15130.0,
+        "administração local": 12733.92
+      },
+      "2024": {
+        "outra entidade pública": 40080.1,
+        "administração local": 24152.4
+      },
+      "2025": {
+        "administração local": 713811.9800000001,
+        "ensino superior": 92002.32
+      },
+      "2026": {
+        "saúde": 205078.64,
+        "administração local": 39287.8,
+        "outra entidade pública": 4261.2
+      }
+    },
+    "committed_by_vendor": {
+      "2022": {
+        "Microsoft": 572688.46
+      },
+      "2023": {
+        "Microsoft": 532396.53,
+        "Google": 249468.0,
+        "Meta": 15130.0
+      },
+      "2024": {
+        "Microsoft": 64232.5
+      },
+      "2025": {
+        "Microsoft": 805814.3
+      },
+      "2026": {
+        "Microsoft": 248627.64
+      }
+    },
+    "committed_by_place": {
+      "2022": {
+        "Paredes de Coura": 158955.99,
+        "Viana do Castelo": 146165.03999999998,
+        "Melgaço": 118300.0,
+        "Caminha": 96509.43,
+        "Ponte de Lima": 48990.0,
+        "Arcos de Valdevez": 3768.0
+      },
+      "2023": {
+        "Viana do Castelo": 534792.61,
+        "Ponte de Lima": 249468.0,
+        "Caminha": 12733.92
+      },
+      "2024": {
+        "Viana do Castelo": 40080.1,
+        "Caminha": 12906.0,
+        "Arcos de Valdevez": 11246.4
+      },
+      "2025": {
+        "Vila Nova de Cerveira": 588267.06,
+        "Caminha": 125544.92,
+        "Viana do Castelo": 92002.32
+      },
+      "2026": {
+        "Viana do Castelo": 205078.64,
+        "Caminha": 39287.8,
+        "Ponte da Barca": 4261.2
+      }
+    }
+  },
+  "prr": {},
+  "sciproj": {
+    "total": 0,
+    "count": 0
+  },
+  "private_grants_count": 0,
+  "skipped": {
+    "sem montante": 0,
+    "correspondência incerta": 0
+  },
+  "press": [],
+  "press_errors": {},
+  "press_note": "",
+  "records": [
+    {
+      "source_id": "8798075",
+      "channel": "committed",
+      "buyer": "Município de Paredes de Coura",
+      "excerpt": "Aquisição e Renovação de Licenças Microsoft - 2022-2024 Aquisição e Renovação de Li",
+      "amount_eur": 158955.99,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Paredes de Coura",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "8855035",
+      "channel": "committed",
+      "buyer": "Município de Caminha",
+      "excerpt": "LICENCIAMENTO MICROSOFT OV GOVERNO COM DIREITOS DE ATUALIZAÇÃO",
+      "amount_eur": 96509.43,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Caminha",
+      "district": ""
+    },
+    {
+      "source_id": "8668445",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alto Minho, EPE (ULSAM)",
+      "excerpt": "Suporte de Manutenção Power BI PRO-2022 Suporte de Manutenção Power BI",
+      "amount_eur": 9900.0,
+      "region": "Norte",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Power BI",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "8970544",
+      "channel": "committed",
+      "buyer": "Município de Viana do Castelo",
+      "excerpt": "Aquisição de licenciamento Exchange online Aquisição de licenciamento Excha",
+      "amount_eur": 19148.0,
+      "region": "Norte",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "9020426",
+      "channel": "committed",
+      "buyer": "Coopetape - Cooperativa de Ensino, CRL",
+      "excerpt": "ição da Cedência Temporária de Licenças Microsoft  Aquisição da Cedência Temporária de Li",
+      "amount_eur": 10696.2,
+      "region": "Norte",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": ""
+    },
+    {
+      "source_id": "9149828",
+      "channel": "committed",
+      "buyer": "Município de Melgaço",
+      "excerpt": "o, Atualização e Manutenção de Software Microsoft Renovação de Licenciamento, Atualização",
+      "amount_eur": 118300.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Melgaço",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "9269398",
+      "channel": "committed",
+      "buyer": "Município de Arcos de Valdevez",
+      "excerpt": "PF 744/2022 - CONTRATO MICROSOFT DO AGRUPAMENTO DE ESCOLAS DE VALDEVEZ (",
+      "amount_eur": 3768.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Arcos de Valdevez",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "9476176",
+      "channel": "committed",
+      "buyer": "Município de Ponte de Lima",
+      "excerpt": "Aquisição de licenciamento Microsoft para o Data Center do Município de Pont",
+      "amount_eur": 48990.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Ponte de Lima",
+      "district": ""
+    },
+    {
+      "source_id": "9554350",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Viana do Castelo",
+      "excerpt": "022/CP/002 - Renovação de Licenciamento Microsoft Educação 2022/CP/002 - Renovação de Lic",
+      "amount_eur": 106420.84,
+      "region": "Norte",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10096642",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alto Minho, EPE (ULSAM)",
+      "excerpt": "e Serviços de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 241444.65,
+      "region": "Norte",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10101867",
+      "channel": "committed",
+      "buyer": "Município de Caminha",
+      "excerpt": "RENOVAÇÃO MICROSOFT EXCHANGE ONLINE (239 LICENÇAS)”  RENOVAÇÃO MICRO",
+      "amount_eur": 12733.92,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Caminha",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10144991",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Viana do Castelo",
+      "excerpt": "s de divulgação Redes Sociais (Facebook/Instagram/GoogleAds 2022/CP/003 – Aquisição de Se",
+      "amount_eur": 15130.0,
+      "region": "Norte",
+      "category": "ensino superior",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Instagram",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10211087",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alto Minho, EPE (ULSAM)",
+      "excerpt": "Aquisição de teclado e microsoft basic optical Aquisição de teclado e mi",
+      "amount_eur": 156.6,
+      "region": "Norte",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10239584",
+      "channel": "committed",
+      "buyer": "Freguesia de Gondufe",
+      "excerpt": "ntacto de correio eletrónico jf.gondufe@gmail.com convida V. Ex.ª a apresentar propos",
+      "amount_eur": 149530.0,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Gmail",
+      "url": "",
+      "place": "Ponte de Lima",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10304762",
+      "channel": "committed",
+      "buyer": "Freguesia de Labrujó, Rendufe e Vilar do Monte",
+      "excerpt": "io eletrónico jf.labrujo.rendufe.vmonte@gmail.com, convida V. Ex.ª a apresentar propo",
+      "amount_eur": 99938.0,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Google",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Gmail",
+      "url": "",
+      "place": "Ponte de Lima",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10429405",
+      "channel": "committed",
+      "buyer": "A. D. A. M. - Águas do Alto Minho, SA",
+      "excerpt": "CP - Subscrição de licenças de Software Microsoft e serviços de suporte para as empresas",
+      "amount_eur": 278061.36,
+      "region": "Norte",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10536291",
+      "channel": "committed",
+      "buyer": "Comunidade Intermunicipal do Alto Minho",
+      "excerpt": "GÉNERO - WOMEN PRESCRIBE FIRE TRAINING EXCHANGE -WTREX2024 CP_01_2024 nifEntContrato=50",
+      "amount_eur": 34915.0,
+      "region": "Norte",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10755524",
+      "channel": "committed",
+      "buyer": "Município de Caminha",
+      "excerpt": "Renovação Microsoft exchange on-line Renovação Microsoft exchange on",
+      "amount_eur": 12906.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Exchange",
+      "url": "",
+      "place": "Caminha",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10818766",
+      "channel": "committed",
+      "buyer": "Município de Arcos de Valdevez",
+      "excerpt": "Contrato Microsoft do AGRUPAMENTO DE ESCOLAS DE VALDEVEZ (",
+      "amount_eur": 11246.4,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Arcos de Valdevez",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "10924354",
+      "channel": "committed",
+      "buyer": "Academia de Música de Viana do Castelo - Conservatório Regional do Alto Minho",
+      "excerpt": "Aquisição de licenças software Microsoft para a Academia de Música de Viana do C",
+      "amount_eur": 5165.1,
+      "region": "Norte",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "11208789",
+      "channel": "committed",
+      "buyer": "Município de Paredes de Coura",
+      "excerpt": "Aquisição e renovação de Licenças Microsoft - triénio 2025/2027 Aquisição e renovaç",
+      "amount_eur": 588267.06,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Vila Nova de Cerveira",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "11389879",
+      "channel": "committed",
+      "buyer": "Município de Caminha",
+      "excerpt": "MICROSOFT AZURE - ANUAL  MICROSOFT AZURE - ANUAL  nifEn",
+      "amount_eur": 1320.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Azure",
+      "url": "",
+      "place": "Caminha",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "11463339",
+      "channel": "committed",
+      "buyer": "Município de Caminha",
+      "excerpt": "ft Windows Server  3 anos e Plataforma Microsoft 365  Ferramentas de Produtividade - Subscr",
+      "amount_eur": 124224.92,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Caminha",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "11617284",
+      "channel": "committed",
+      "buyer": "Universidade Politécnica de Viana do Castelo",
+      "excerpt": "025/CP/009 - Renovação de Licenciamento Microsoft Educação 2025/CP/009 - Renovação de Lic",
+      "amount_eur": 92002.32,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": ""
+    },
+    {
+      "source_id": "14399181",
+      "channel": "committed",
+      "buyer": "Associação de Desenvolvimento das Regiões do Parque Nacional da Peneda Gerês - ADERE - Peneda Gerês",
+      "excerpt": "uintes serviços anuais: \na)\t1 Microsoft office 365 Apps for Business \nb)\t13 Microsoft offi",
+      "amount_eur": 4261.2,
+      "region": "sem local",
+      "category": "outra entidade pública",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Office 365",
+      "url": "",
+      "place": "Ponte da Barca",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "14851625",
+      "channel": "committed",
+      "buyer": "Unidade Local de Saúde do Alto Minho, EPE (ULSAM)",
+      "excerpt": "aquisição de Licenciamento de Software Microsoft e Serviços Conexos para as Entidades do",
+      "amount_eur": 205078.64,
+      "region": "Norte",
+      "category": "saúde",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "",
+      "place": "Viana do Castelo",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "15166434",
+      "channel": "committed",
+      "buyer": "Município de Caminha",
+      "excerpt": "“Plataforma Microsoft 365 – Ferramentas de Produtividade -renovaç",
+      "amount_eur": 39287.8,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "",
+      "place": "Caminha",
+      "district": "Viana do Castelo"
+    },
+    {
+      "source_id": "1109/2022",
+      "channel": "requested",
+      "buyer": "Município de Vila Nova de Cerveira",
+      "excerpt": "Renovação do Licenciamento Microsoft Município de Vila Nova de Cerveira 7250",
+      "amount_eur": 101014.02,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://dre.pt/application/file/178395024",
+      "place": "Vila Nova de Cerveira",
+      "district": ""
+    },
+    {
+      "source_id": "242/2022",
+      "channel": "requested",
+      "buyer": "Município de Melgaço",
+      "excerpt": "o, Atualização e Manutenção de Software Microsoft Município de Melgaço 72260000-5 - Servi",
+      "amount_eur": 118973.88,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://dre.pt/application/file/178857615",
+      "place": "Melgaço",
+      "district": ""
+    },
+    {
+      "source_id": "1283/2022",
+      "channel": "requested",
+      "buyer": "Município de Melgaço",
+      "excerpt": "o, Atualização e Manutenção de Software Microsoft Município de Melgaço nan",
+      "amount_eur": 118973.88,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://dre.pt/application/file/178643083",
+      "place": "Melgaço",
+      "district": ""
+    },
+    {
+      "source_id": "6020/2022",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Viana do Castelo",
+      "excerpt": "022/CP/002 - Renovação de Licenciamento Microsoft Educação Universidade Politécnica de Vi",
+      "amount_eur": 104993.3,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://dre.pt/application/file/183409339",
+      "place": "Viana do Castelo",
+      "district": ""
+    },
+    {
+      "source_id": "13772/2022",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Viana do Castelo",
+      "excerpt": "s de divulgação Redes Sociais (Facebook/Instagram/GoogleAds) Universidade Politécnica de",
+      "amount_eur": 30500.0,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Meta",
+      "fundos": "",
+      "year": 2022,
+      "headline": true,
+      "product": "Instagram",
+      "url": "https://dre.pt/application/file/202785721",
+      "place": "Viana do Castelo",
+      "district": ""
+    },
+    {
+      "source_id": "10516/2023",
+      "channel": "requested",
+      "buyer": "APDL - Administração dos Portos do Douro, Leixões e Viana do Castelo, SA",
+      "excerpt": "rviços software assurance e subscrições Microsoft APDL - Administração dos Portos do Dour",
+      "amount_eur": 425000.0,
+      "region": "sem local",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2023,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://dre.pt/application/file/214809777",
+      "place": "Viana do Castelo",
+      "district": ""
+    },
+    {
+      "source_id": "25581/2024",
+      "channel": "requested",
+      "buyer": "Município de Paredes de Coura",
+      "excerpt": "Aquisição e renovação de Licenças Microsoft  - Triénio 2025/2027 Município de Pared",
+      "amount_eur": 592073.64,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2024,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2024/11/230/418389078.pdf",
+      "place": "Paredes de Coura",
+      "district": ""
+    },
+    {
+      "source_id": "7102/2025",
+      "channel": "requested",
+      "buyer": "Município de Caminha",
+      "excerpt": "ft Windows Server  3 anos e Plataforma Microsoft 365  Ferramentas de Produtividade - Subscr",
+      "amount_eur": 124600.0,
+      "region": "sem local",
+      "category": "administração local",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/03/056/418829961.pdf",
+      "place": "Caminha",
+      "district": ""
+    },
+    {
+      "source_id": "12535/2025",
+      "channel": "requested",
+      "buyer": "APDL - Administração dos Portos do Douro, Leixões e Viana do Castelo, SA",
+      "excerpt": "AQUISIÇÃO DE LICENCIAMENTO MICROSOFT 365 APDL - Administração dos Portos do Dour",
+      "amount_eur": 490000.0,
+      "region": "sem local",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft 365",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/05/091/419044489.pdf",
+      "place": "Viana do Castelo",
+      "district": ""
+    },
+    {
+      "source_id": "17809/2025",
+      "channel": "requested",
+      "buyer": "Universidade Politécnica de Viana do Castelo",
+      "excerpt": "025/CP/009 - Renovação de Licenciamento Microsoft Educação Universidade Politécnica de Vi",
+      "amount_eur": 111528.72,
+      "region": "sem local",
+      "category": "ensino superior",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2025,
+      "headline": true,
+      "product": "Microsoft",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2025/07/127/419260889.pdf",
+      "place": "Viana do Castelo",
+      "district": ""
+    },
+    {
+      "source_id": "17669/2026",
+      "channel": "requested",
+      "buyer": "APDL - Administração dos Portos do Douro, Leixões e Viana do Castelo, SA",
+      "excerpt": "Aquisição de Serviços Microsoft Azure para Máquinas Transversais da JUL APDL",
+      "amount_eur": 180000.0,
+      "region": "sem local",
+      "category": "privado",
+      "vendor": "Microsoft",
+      "fundos": "",
+      "year": 2026,
+      "headline": true,
+      "product": "Azure",
+      "url": "https://files.diariodarepublica.pt/cp_hora/2026/07/131/419966877.pdf",
+      "place": "Viana do Castelo",
+      "district": ""
+    }
+  ]
+}

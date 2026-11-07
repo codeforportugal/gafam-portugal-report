@@ -253,31 +253,31 @@
       "kind": "reject"
     }
   ],
-  "generated_at": "2026-11-07T02:12:10.214044+00:00",
+  "generated_at": "2026-11-07T22:50:39.342519+00:00",
   "totals": {
     "2022": {
-      "committed": 54071735.04,
+      "committed": 54046625.04,
       "requested": 63467287.85,
       "grants": 66631.02
     },
     "2023": {
-      "committed": 73295050.92,
+      "committed": 73150425.92,
       "requested": 348766242.85,
       "grants": 1677237.65
     },
     "2024": {
-      "committed": 133942225.61,
+      "committed": 133928221.61,
       "requested": 150251125.22,
       "grants": 0
     },
     "2025": {
-      "committed": 107260600.27,
-      "requested": 109386723.07000001,
+      "committed": 107114590.27,
+      "requested": 109259543.07000001,
       "grants": 0
     },
     "2026": {
-      "committed": 106732877.89,
-      "requested": 145747585.65,
+      "committed": 106588747.89,
+      "requested": 145620405.65,
       "grants": 0
     }
   },
@@ -286,18 +286,18 @@
       "2022": {
         "Área Metropolitana de Lisboa": 33481750.90000001,
         "sem local": 12815985.71,
-        "Norte": 3996067.82,
-        "Centro": 1678077.6900000002,
+        "Norte": 3985237.82,
+        "Centro": 1663797.6900000002,
         "Madeira": 860282.11,
         "Alentejo": 663999.15,
         "Algarve": 308498.95999999996,
         "Açores": 267072.69999999995
       },
       "2023": {
-        "Área Metropolitana de Lisboa": 38975901.38,
+        "Área Metropolitana de Lisboa": 38852301.38,
         "sem local": 22825601.980000008,
         "Norte": 6771131.5200000005,
-        "Centro": 2392751.4699999997,
+        "Centro": 2371726.4699999997,
         "Madeira": 864146.5800000001,
         "Algarve": 647810.22,
         "Alentejo": 532680.0199999999,
@@ -306,43 +306,43 @@
       "2024": {
         "Área Metropolitana de Lisboa": 92097245.89000002,
         "sem local": 13993457.540000003,
-        "Norte": 9900375.899999999,
+        "Norte": 9898845.899999999,
         "Açores": 9511488.72,
         "Madeira": 3781460.9299999997,
-        "Centro": 2678645.95,
+        "Centro": 2666171.95,
         "Algarve": 1284610.87,
         "Alentejo": 694939.8099999999
       },
       "2025": {
-        "Área Metropolitana de Lisboa": 60079652.85999998,
+        "Área Metropolitana de Lisboa": 59953502.85999998,
         "sem local": 34074156.46,
-        "Norte": 5580445.720000001,
-        "Centro": 2987031.4599999995,
+        "Norte": 5579905.720000001,
+        "Centro": 2967711.4599999995,
         "Açores": 1451150.06,
         "Madeira": 1350796.2500000002,
         "Alentejo": 978930.03,
         "Algarve": 758437.43
       },
       "2026": {
-        "Área Metropolitana de Lisboa": 46330572.58,
+        "Área Metropolitana de Lisboa": 46203392.58,
         "sem local": 37185772.43999998,
         "Norte": 14503917.730000002,
         "Centro": 5461613.35,
         "Madeira": 1219355.7200000002,
         "Algarve": 789212.79,
-        "Açores": 623909.78,
-        "Alentejo": 618523.5
+        "Alentejo": 618523.5,
+        "Açores": 606959.78
       }
     },
     "committed_by_category": {
       "2022": {
         "outra entidade pública": 21892838.4,
         "administração local": 10161012.399999999,
-        "administração central": 9777337.099999996,
+        "administração central": 9775797.099999996,
         "privado": 7448889.93,
         "ensino superior": 3106875.2400000007,
-        "saúde": 854762.5800000002,
-        "empresas públicas": 822595.03,
+        "saúde": 840482.5800000002,
+        "empresas públicas": 813305.03,
         "educação não superior": 7424.36
       },
       "2023": {
@@ -350,26 +350,26 @@
         "privado": 14306620.46,
         "administração local": 12789814.349999998,
         "administração central": 11337151.38,
-        "saúde": 4797873.860000002,
         "empresas públicas": 4744991.909999999,
+        "saúde": 4653248.860000002,
         "ensino superior": 3844721.1500000004,
         "educação não superior": 15218.16
       },
       "2024": {
         "outra entidade pública": 40937744.459999986,
-        "administração central": 35537198.380000025,
+        "administração central": 35535668.380000025,
         "privado": 21142397.509999994,
         "administração local": 20880743.80999999,
         "empresas públicas": 6130483.45,
-        "saúde": 5251609.67,
+        "saúde": 5239135.67,
         "ensino superior": 3863351.89,
         "educação não superior": 198696.44
       },
       "2025": {
         "outra entidade pública": 39800816.71,
-        "administração central": 22346791.109999992,
+        "administração central": 22346251.109999992,
         "administração local": 20699461.740000013,
-        "saúde": 12133680.44,
+        "saúde": 11988210.44,
         "privado": 6355424.050000001,
         "ensino superior": 5243469.879999999,
         "empresas públicas": 537279.88,
@@ -379,7 +379,7 @@
         "administração central": 31002887.82,
         "outra entidade pública": 23385557.829999994,
         "administração local": 18507677.420000006,
-        "saúde": 13999927.179999998,
+        "saúde": 13855797.179999998,
         "empresas públicas": 7415231.920000001,
         "privado": 6610988.639999999,
         "ensino superior": 5781663.080000001,
@@ -388,35 +388,35 @@
     },
     "committed_by_vendor": {
       "2022": {
-        "Microsoft": 52658692.78000002,
+        "Microsoft": 52633582.78000002,
         "Google": 967176.6000000001,
         "Meta": 239200.06,
         "Amazon": 128890.0,
         "Apple": 77775.6
       },
       "2023": {
-        "Microsoft": 71389362.71999997,
+        "Microsoft": 71244737.71999997,
         "Google": 1140910.27,
         "Amazon": 439900.0,
         "Meta": 201495.0,
         "Apple": 123382.93
       },
       "2024": {
-        "Microsoft": 129398300.73000015,
+        "Microsoft": 129384296.73000015,
         "Google": 3888613.6999999997,
         "Meta": 335357.88,
         "Apple": 232544.00000000003,
         "Amazon": 87409.3
       },
       "2025": {
-        "Microsoft": 104744460.62,
+        "Microsoft": 104598450.62,
         "Google": 1726989.0500000003,
         "Meta": 486152.92000000004,
         "Amazon": 202522.0,
         "Apple": 100475.68000000001
       },
       "2026": {
-        "Microsoft": 99364119.88000001,
+        "Microsoft": 99219989.88000001,
         "Google": 5657282.34,
         "Amazon": 929885.34,
         "Meta": 491253.5,
@@ -428,7 +428,7 @@
         "Lisboa": 23891799.10000001,
         "": 7667432.0200000005,
         "Amadora": 2656802.48,
-        "Porto": 2323984.340000001,
+        "Porto": 2322444.3400000003,
         "Almada": 1928075.24,
         "Oeiras": 1838795.42,
         "Região Autónoma dos Açores": 910538.04,
@@ -442,16 +442,16 @@
         "Vila Nova de Gaia": 455893.80000000005,
         "Santarém": 433373.24000000005,
         "Loures": 360634.99,
-        "Braga": 318470.99,
         "Setúbal": 310758.39999999997,
+        "Braga": 309180.99,
         "Vila Franca de Xira": 297770.83999999997,
         "Leiria": 291771.01999999996,
         "Benavente": 283857.8,
         "Vila Real": 263816.64,
         "Aveiro": 260455.42,
         "Faro": 259095.06,
-        "Viseu": 250669.58,
         "Oliveira do Hospital": 241420.08,
+        "Viseu": 236389.58,
         "Peniche": 189027.38999999998,
         "Barreiro": 184779.30000000002,
         "Oliveira de Azemeis": 176540.04,
@@ -541,7 +541,7 @@
         "Gavião": 0.0
       },
       "2023": {
-        "Lisboa": 29685451.439999994,
+        "Lisboa": 29561851.439999994,
         "": 16827970.470000003,
         "Oeiras": 2941175.5000000005,
         "Porto": 2074579.14,
@@ -553,7 +553,7 @@
         "Amadora": 911073.03,
         "Funchal": 816632.88,
         "Vila Nova de Gaia": 738250.8699999999,
-        "Viseu": 654247.9,
+        "Viseu": 633222.9,
         "Vila Franca de Xira": 612961.65,
         "Lagos": 547122.2,
         "Viana do Castelo": 534792.61,
@@ -674,7 +674,7 @@
         "": 8861946.610000001,
         "Cascais": 7891903.630000001,
         "Funchal": 3759888.53,
-        "Porto": 3296653.66,
+        "Porto": 3295123.66,
         "Vila Nova de Gaia": 3070115.56,
         "Amadora": 1773243.65,
         "Coimbra": 1396377.52,
@@ -706,7 +706,7 @@
         "Fundão": 172872.06,
         "Sines": 168698.88,
         "Horta": 164999.97,
-        "Viseu": 159062.63,
+        "Viseu": 146588.63,
         "Braganca": 130463.13,
         "Região Autónoma da Madeira": 119325.84,
         "Setúbal": 105739.56,
@@ -791,11 +791,11 @@
         "Lousã": 1913.6
       },
       "2025": {
-        "Lisboa": 37885896.39999999,
+        "Lisboa": 37759746.39999999,
         "": 23516631.179999992,
         "Amadora": 7444975.43,
         "Oeiras": 7196757.73,
-        "Porto": 2609803.65,
+        "Porto": 2609263.65,
         "Vila Real\nPortugal": 2565157.3,
         "Seixal": 1424988.16,
         "Funchal": 1273888.5000000002,
@@ -821,8 +821,8 @@
         "Região Autónoma da Madeira": 498761.4,
         "Alcochete": 450318.03,
         "Santarém": 443416.45999999996,
-        "Viseu": 424451.69,
         "Almada": 406036.36,
+        "Viseu": 405131.69,
         "Cascais": 385712.63999999996,
         "Portugal Continental": 377082.46,
         "Aveiro": 316198.62,
@@ -920,7 +920,7 @@
         "Avis": 149.0
       },
       "2026": {
-        "Lisboa": 34513223.95000001,
+        "Lisboa": 34386043.95000001,
         "": 27928381.909999993,
         "Vila Real": 3652028.79,
         "Porto": 3492896.980000001,
@@ -946,8 +946,8 @@
         "Braganca": 445637.0,
         "Ovar": 409209.63,
         "Faro": 373320.76,
-        "Ponta Delgada": 343576.34,
         "Leiria": 334484.85,
+        "Ponta Delgada": 326626.34,
         "Lagos": 288039.47000000003,
         "Sabugal": 278910.66,
         "Tomar": 238675.76,
@@ -2559,23 +2559,6 @@
       "url": "",
       "place": "",
       "district": ""
-    },
-    {
-      "source_id": "9119220",
-      "channel": "committed",
-      "buyer": "Instituto Português de Oncologia do Porto Francisco Gentil, EPE",
-      "excerpt": "2022020151 - PONTA CUSA EXCEL STANDARD LONGA CURVA 2022020151 - PONTA",
-      "amount_eur": 1540.0,
-      "region": "Norte",
-      "category": "administração central",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2022,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Porto",
-      "district": "Porto"
     },
     {
       "source_id": "9124172",
@@ -6420,23 +6403,6 @@
       "district": "Lisboa"
     },
     {
-      "source_id": "9418655",
-      "channel": "committed",
-      "buyer": "Unidade Local Saúde de Braga, E.P.E.",
-      "excerpt": "de Electrodos ECG Adulto e Pontas Cusa Excel. Longa Precisão. Aquisição de Electrodo",
-      "amount_eur": 9290.0,
-      "region": "Norte",
-      "category": "empresas públicas",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2022,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Braga",
-      "district": "Braga"
-    },
-    {
       "source_id": "9453520",
       "channel": "committed",
       "buyer": "Município de Cascais",
@@ -7030,23 +6996,6 @@
       "url": "",
       "place": "Seixal",
       "district": "Setúbal"
-    },
-    {
-      "source_id": "9455028",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "KIT DE TUBOS CUSA EXCEL PEÇA DE MÃO 36KHZ (CX. 6 UNIDADES) KIT",
-      "amount_eur": 9660.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2022,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
     },
     {
       "source_id": "9497126",
@@ -9174,23 +9123,6 @@
       "district": "Lisboa"
     },
     {
-      "source_id": "9721715",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "PONTA CUSA EXCEL MACRO 23KHZ (CX. 4 UNIDADES) PONTA CUSA",
-      "amount_eur": 4620.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2022,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
-    },
-    {
       "source_id": "9731600",
       "channel": "committed",
       "buyer": "CENFIC - Centro de Formação Profissional da Indústria da Construção Civil e Obras Públicas do Sul",
@@ -10755,23 +10687,6 @@
       "district": "Braga"
     },
     {
-      "source_id": "9829397",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Santa Maria, E. P. E.",
-      "excerpt": "ão de Consumíveis para o Aspirador Cusa Excel para 2023 232G000990 – Aquisição de Con",
-      "amount_eur": 123600.0,
-      "region": "Área Metropolitana de Lisboa",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2023,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Lisboa",
-      "district": "Lisboa"
-    },
-    {
       "source_id": "9827840",
       "channel": "committed",
       "buyer": "Freguesia de Benfica",
@@ -11401,23 +11316,6 @@
       "district": "Lisboa"
     },
     {
-      "source_id": "9880791",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "DM CLINICO - PONTA CUSA EXCEL MACRO DM CLINICO - PONTA CUSA EXCEL MAC",
-      "amount_eur": 9600.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2023,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
-    },
-    {
       "source_id": "9882672",
       "channel": "committed",
       "buyer": "E. P. F. - Ensino Profissional de Felgueiras, EM, Unipessoal, Lda",
@@ -11994,23 +11892,6 @@
       "url": "",
       "place": "Porto",
       "district": ""
-    },
-    {
-      "source_id": "9942399",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "KIT DE TUBOS CUSA EXCEL PEÇA DE MÃO 23KHZ (CX. 6 UNIDADES) KIT",
-      "amount_eur": 8280.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2023,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
     },
     {
       "source_id": "9945967",
@@ -17708,23 +17589,6 @@
       "district": "Lisboa"
     },
     {
-      "source_id": "10359788",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "Reparação de Peça de Mão Cusa Excel Reparação de Peça de Mão Cusa Excel nif",
-      "amount_eur": 1470.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2023,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
-    },
-    {
       "source_id": "10364433",
       "channel": "committed",
       "buyer": "Águas e Energia do Porto E.M",
@@ -19372,23 +19236,6 @@
       "url": "",
       "place": "Lisboa",
       "district": "Lisboa"
-    },
-    {
-      "source_id": "10519284",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "TÉCNICA AO ASPIRADOR ULTRASSÓNICO CUSA EXCEL 9 SERVIÇOS DE MANUTENÇÃO  E ASSISTÊNCIA",
-      "amount_eur": 1675.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2023,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
     },
     {
       "source_id": "10512244",
@@ -22179,23 +22026,6 @@
       "district": "Braganca"
     },
     {
-      "source_id": "10677883",
-      "channel": "committed",
-      "buyer": "Instituto Português de Oncologia do Porto Francisco Gentil, EPE",
-      "excerpt": "PONTA CUSA EXCEL CURVA LONGA DE PRECISÃO 20177024 - PONT",
-      "amount_eur": 510.0,
-      "region": "Norte",
-      "category": "administração central",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2024,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Porto",
-      "district": "Porto"
-    },
-    {
       "source_id": "10676077",
       "channel": "committed",
       "buyer": "Município de Lisboa",
@@ -24083,23 +23913,6 @@
       "district": "Lisboa"
     },
     {
-      "source_id": "10809867",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "REPARAÇÃO DE PEÇA DE MÃE CUSA EXCEL C2600 NS.HAF1804002IE REPARAÇÃO DE PEÇA",
-      "amount_eur": 1344.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2024,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
-    },
-    {
       "source_id": "10814829",
       "channel": "committed",
       "buyer": "Instituto Nacional Engenharia Biomédica",
@@ -25290,23 +25103,6 @@
       "district": "Porto"
     },
     {
-      "source_id": "10846428",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "PEÇA MÃO DO ASPIRADOR ULTRASÓNICO CUSA EXCEL SN HAB2105003IE REPARAÇÃO DE PEÇA MÃO D",
-      "amount_eur": 1065.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2024,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
-    },
-    {
       "source_id": "10852568",
       "channel": "committed",
       "buyer": "Administração Regional de Saúde de Lisboa e Vale do Tejo, I. P.",
@@ -25681,23 +25477,6 @@
       "district": "Lisboa"
     },
     {
-      "source_id": "10867816",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "PONTA CUSA EXCEL STANDARD CURTA 36KHZ (CX. 4 UNIDADES)-",
-      "amount_eur": 5040.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2024,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
-    },
-    {
       "source_id": "10862662",
       "channel": "committed",
       "buyer": "Centro Formação Profissional Indústria de Cortiça",
@@ -25832,23 +25611,6 @@
       "url": "",
       "place": "Lisboa",
       "district": "Lisboa"
-    },
-    {
-      "source_id": "10874460",
-      "channel": "committed",
-      "buyer": "Instituto Português de Oncologia do Porto Francisco Gentil, EPE",
-      "excerpt": "PONTA CUSA EXCEL CURVA LONGA DE PRECISÃO  21040424 PONTA",
-      "amount_eur": 510.0,
-      "region": "Norte",
-      "category": "administração central",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2024,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Porto",
-      "district": "Porto"
     },
     {
       "source_id": "10881241",
@@ -26478,23 +26240,6 @@
       "url": "",
       "place": "",
       "district": ""
-    },
-    {
-      "source_id": "10899214",
-      "channel": "committed",
-      "buyer": "Instituto Português de Oncologia do Porto Francisco Gentil, EPE",
-      "excerpt": "PONTA CUSA EXCEL CURVA LONGA DE PRECISÃO 36KHZ\n 21007324",
-      "amount_eur": 510.0,
-      "region": "Norte",
-      "category": "administração central",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2024,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Porto",
-      "district": "Porto"
     },
     {
       "source_id": "10899353",
@@ -29404,23 +29149,6 @@
       "district": "Setúbal"
     },
     {
-      "source_id": "11092370",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "Técnica ao Aspirador Ultrassónico CUSA EXCEL 9  \tContrato de Manutenção e Assistênci",
-      "amount_eur": 5025.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2024,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
-    },
-    {
       "source_id": "11092630",
       "channel": "committed",
       "buyer": "ESTADO-MAIOR-GENERAL DAS FORÇAS ARMADAS",
@@ -31697,23 +31425,6 @@
       "url": "",
       "place": "Odemira",
       "district": "Beja"
-    },
-    {
-      "source_id": "11251904",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de Viseu Dão-Lafões, EPE",
-      "excerpt": "KIT DE TUBOS CUSA EXCEL PEÇA DE MÃO 23KHZ (CX. 6 UNIDADES) KIT",
-      "amount_eur": 19320.0,
-      "region": "Centro",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2025,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Viseu",
-      "district": "Viseu"
     },
     {
       "source_id": "11252588",
@@ -36068,23 +35779,6 @@
       "district": ""
     },
     {
-      "source_id": "11586708",
-      "channel": "committed",
-      "buyer": "Instituto Português de Oncologia do Porto Francisco Gentil, EPE",
-      "excerpt": "PONTA CUSA EXCEL STANDARD LONGA CURVA 36KH 20898825 - PO",
-      "amount_eur": 540.0,
-      "region": "Norte",
-      "category": "administração central",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2025,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Porto",
-      "district": "Porto"
-    },
-    {
       "source_id": "11584605",
       "channel": "committed",
       "buyer": "Edia - Empresa de Desenvolvimento e Infra-Estruturas do Alqueva, SA",
@@ -36814,40 +36508,6 @@
       "url": "",
       "place": "Porto",
       "district": "Porto"
-    },
-    {
-      "source_id": "11625363",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de São José, EPE",
-      "excerpt": "SE ADAPTEM AO EQUIPAMENTO INTEGRA CUSA EXCEL 12012625 - Socime II nifEntContrato=508",
-      "amount_eur": 24180.0,
-      "region": "Área Metropolitana de Lisboa",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2025,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Lisboa",
-      "district": "Lisboa"
-    },
-    {
-      "source_id": "11625358",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de São José, EPE",
-      "excerpt": "SE ADAPTEM AO EQUIPAMENTO INTEGRA CUSA EXCEL 12012625 - Lusopalex nifEntContrato=508",
-      "amount_eur": 101970.0,
-      "region": "Área Metropolitana de Lisboa",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2025,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Lisboa",
-      "district": "Lisboa"
     },
     {
       "source_id": "11625489",
@@ -50399,23 +50059,6 @@
       "district": ""
     },
     {
-      "source_id": "15514921",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de São José, EPE",
-      "excerpt": "veis que se adaptam ao Equipamento Cusa Excel LusoPalex nifEntContrato=508080142|desc",
-      "amount_eur": 103000.0,
-      "region": "Área Metropolitana de Lisboa",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2026,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Lisboa",
-      "district": "Lisboa"
-    },
-    {
       "source_id": "15514845",
       "channel": "committed",
       "buyer": "ORDEM DOS MÉDICOS",
@@ -50431,23 +50074,6 @@
       "url": "",
       "place": "Coimbra",
       "district": "Coimbra"
-    },
-    {
-      "source_id": "15514925",
-      "channel": "committed",
-      "buyer": "Unidade Local de Saúde de São José, EPE",
-      "excerpt": "veis que se adaptam ao Equipamento Cusa Excel Socime nifEntContrato=508080142|descEnt",
-      "amount_eur": 24180.0,
-      "region": "Área Metropolitana de Lisboa",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2026,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Lisboa",
-      "district": "Lisboa"
     },
     {
       "source_id": "15519989",
@@ -51009,23 +50635,6 @@
       "url": "",
       "place": "Vila do Conde",
       "district": "Porto"
-    },
-    {
-      "source_id": "15607590",
-      "channel": "committed",
-      "buyer": "Hospital do Divino Espírito Santo de Ponta Delgada, EPER",
-      "excerpt": "DE 2026 A 2028, PARA O EQUIPAMENTO CUSA EXCEL 8, SN. U5D EXISTENTE NO HOSPITAL DIVINO",
-      "amount_eur": 16950.0,
-      "region": "Açores",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2026,
-      "headline": true,
-      "product": "Excel",
-      "url": "",
-      "place": "Ponta Delgada",
-      "district": "Região Autónoma dos Açores"
     },
     {
       "source_id": "15602289",
@@ -62741,23 +62350,6 @@
       "district": ""
     },
     {
-      "source_id": "9343/2025",
-      "channel": "requested",
-      "buyer": "Unidade Local de Saúde de São José, EPE",
-      "excerpt": "SE ADAPTEM AO EQUIPAMENTO INTEGRA CUSA EXCEL, DESTINADO À  Unidade Local de Saúde de",
-      "amount_eur": 127180.0,
-      "region": "sem local",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2025,
-      "headline": true,
-      "product": "Excel",
-      "url": "https://files.diariodarepublica.pt/cp_hora/2025/04/070/418917976.pdf",
-      "place": "",
-      "district": ""
-    },
-    {
       "source_id": "9436/2025",
       "channel": "requested",
       "buyer": "Instituto Nacional de Emergência Médica, IP",
@@ -66817,23 +66409,6 @@
       "headline": true,
       "product": "Exchange",
       "url": "https://files.diariodarepublica.pt/cp_hora/2026/07/132/419967014.pdf",
-      "place": "",
-      "district": ""
-    },
-    {
-      "source_id": "17510/2026",
-      "channel": "requested",
-      "buyer": "Unidade Local de Saúde de São José, EPE",
-      "excerpt": "SE ADAPTEM AO EQUIPAMENTO INTEGRA CUSA EXCEL, DESTINADO À Unidade Local de Saúde de",
-      "amount_eur": 127180.0,
-      "region": "sem local",
-      "category": "saúde",
-      "vendor": "Microsoft",
-      "fundos": "",
-      "year": 2026,
-      "headline": true,
-      "product": "Excel",
-      "url": "https://files.diariodarepublica.pt/cp_hora/2026/07/130/419966493.pdf",
       "place": "",
       "district": ""
     },

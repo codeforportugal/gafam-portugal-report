@@ -151,6 +151,7 @@ Square corners (`0`). Charts sit in ruled panels, not rounded metric tiles.
 - Chart panels (2×2 on wide viewports) with Chart.js colours from tokens.
 - Keyword lists (correspondências / rejeitadas).
 - Press list (`Na imprensa`), SciPROJ note, sources, caveats, CSV/JSON footer links.
+- Footer mark and license badges come from the Code for Portugal commons (`../assets/` when this repo sits in that tree, otherwise `data/brand/`). See `../DESIGN.md`.
 - Text selection tinted with accent wash; `:focus-visible` outline uses primary (`#c59300`).
 
 ## Do's and Don'ts
