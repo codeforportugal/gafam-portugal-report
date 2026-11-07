@@ -20,6 +20,6 @@ hadolint -c .hadolint.yaml Dockerfile
 echo "== yamllint =="
 yamllint -c .yamllint.yml docker-compose.yml docker-compose.ci.yml .github/workflows
 echo "== actionlint =="
-actionlint .github/workflows
+actionlint .github/workflows/*.yml
 
 echo "Quality pipeline OK"
