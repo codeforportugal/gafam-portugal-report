@@ -88,12 +88,8 @@ def test_classify_and_region():
     mun = load_distrito_concelhos(data_dir() / "distrito_leiria.txt")
     assert "leiria" in mun and "pombal" in mun
     assert "pedrogao grande" in mun
-    assert in_distrito(
-        district="Leiria", place="", buyer="X", municipios=mun
-    )
-    assert in_distrito(
-        district="", place="Marinha Grande", buyer="X", municipios=mun
-    )
+    assert in_distrito(district="Leiria", place="", buyer="X", municipios=mun)
+    assert in_distrito(district="", place="Marinha Grande", buyer="X", municipios=mun)
     assert in_distrito(
         district="", place="", buyer="Câmara Municipal de Peniche", municipios=mun
     )
@@ -110,9 +106,7 @@ def test_classify_and_region():
     leiria_labels = {k: labels[k] for k in mun if k in labels}
     for name in ("Pedrógão Grande", "Leiria", "Peniche", "Óbidos"):
         leiria_labels.setdefault(fold(name), name)
-    assert (
-        infer_place_from_buyer("Município de Peniche", leiria_labels) == "Peniche"
-    )
+    assert infer_place_from_buyer("Município de Peniche", leiria_labels) == "Peniche"
     assert infer_place_from_buyer("Estado Maior da Força Aérea", leiria_labels) == ""
     assert (
         normalize_distrito_place(

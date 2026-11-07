@@ -70,18 +70,12 @@ def breakdowns(records: list[Record]) -> dict[str, Any]:
     by_place: dict[str, dict[str, float]] = {}
     for year in YEAR_LIST:
         key = str(year)
-        by_region[key] = _sum_by(
-            records, channel="committed", key="region", year=year
-        )
+        by_region[key] = _sum_by(records, channel="committed", key="region", year=year)
         by_category[key] = _sum_by(
             records, channel="committed", key="category", year=year
         )
-        by_vendor[key] = _sum_by(
-            records, channel="committed", key="vendor", year=year
-        )
-        by_place[key] = _sum_by(
-            records, channel="committed", key="place", year=year
-        )
+        by_vendor[key] = _sum_by(records, channel="committed", key="vendor", year=year)
+        by_place[key] = _sum_by(records, channel="committed", key="place", year=year)
     return {
         "committed_by_region": by_region,
         "committed_by_category": by_category,

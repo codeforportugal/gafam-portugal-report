@@ -102,15 +102,29 @@ def test_fixture_pipeline(tmp_path: Path):
     assert "cortar esses serviços" not in html
     assert "algema-grid" in html
     assert "Realização: code for portugal" in html
-    assert (out / "assets" / "favicon.png").exists() and (out / "assets" / "cc-by-sa.png").exists() and (out / "assets" / "agplv3.png").exists()
+    assert (
+        (out / "assets" / "favicon.png").exists()
+        and (out / "assets" / "cc-by-sa.png").exists()
+        and (out / "assets" / "agplv3.png").exists()
+    )
     assert "Rejeitadas" not in html
     assert "Classroom" in html
     assert "apoio aprovado" in html
-    assert (out / "contratos.csv").exists() and (out / "anuncios.csv").exists() and (out / "pt2030.csv").exists()
+    assert (
+        (out / "contratos.csv").exists()
+        and (out / "anuncios.csv").exists()
+        and (out / "pt2030.csv").exists()
+    )
     assert (out / "leiria" / "index.html").exists()
-    assert (out / "porto" / "index.html").exists() and (out / "acores" / "acores.geojson").exists()
+    assert (out / "porto" / "index.html").exists() and (
+        out / "acores" / "acores.geojson"
+    ).exists()
     assert not (out / "norte" / "index.html").exists()
-    assert 'href="porto/"' in html and 'href="acores/"' in html and 'href="norte/"' not in html
+    assert (
+        'href="porto/"' in html
+        and 'href="acores/"' in html
+        and 'href="norte/"' not in html
+    )
     assert "Abrir Leiria" not in html
     leiria_html = (out / "leiria" / "index.html").read_text(encoding="utf-8")
     assert "Distrito de Leiria" in leiria_html

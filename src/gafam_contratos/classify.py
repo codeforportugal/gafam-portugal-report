@@ -109,6 +109,7 @@ def load_concelho_labels(path: Path) -> dict[str, str]:
             labels[fold(row["concelho"])] = row["concelho"].strip()
     return labels
 
+
 _PLACE_JUNK = frozenset(
     {
         "portugal",
@@ -170,6 +171,7 @@ def infer_place_from_buyer(
         if key and key in folded_buyer:
             return labels[key]
     return ""
+
 
 def region_from_local(local: str, concelho_map: dict[str, str]) -> str:
     """Interpreta «Portugal, Distrito, Concelho»."""
@@ -259,6 +261,7 @@ def normalize_distrito_place(
     if fold(inferred) in municipios:
         return inferred
     return ""
+
 
 def is_framework_ceiling(text: str) -> bool:
     folded = fold(text)

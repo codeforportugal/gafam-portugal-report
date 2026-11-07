@@ -16,9 +16,9 @@ from jsonschema import Draft202012Validator
 
 from gafam_contratos.aggregate import breakdowns, national_totals, prr_subtotal
 from gafam_contratos.amounts import format_eur, format_eur_compact
-from gafam_contratos.classify import fold, load_concelhos_by_distrito
+from gafam_contratos.classify import load_concelhos_by_distrito
 from gafam_contratos.constants import YEAR_LIST
-from gafam_contratos.lexicon import keywords_for_report
+from gafam_contratos.lexicon import fold, keywords_for_report
 from gafam_contratos.models import PressLink, Record, SourceMeta
 from gafam_contratos.paths import data_dir, project_root, schema_path
 
@@ -254,11 +254,11 @@ def _fmt_date(iso: str) -> str:
     return iso
 
 
-def eur(value: object) -> str:
+def eur(value: float | str | None) -> str:
     return format_eur(float(value or 0))
 
 
-def eur_compact(value: object) -> str:
+def eur_compact(value: float | str | None) -> str:
     return format_eur_compact(float(value or 0))
 
 
@@ -275,7 +275,9 @@ class AreaPage:
 
 def _district_pages() -> tuple[AreaPage, ...]:
     seen: list[str] = []
-    with (data_dir() / "concelho_distrito.csv").open(encoding="utf-8", newline="") as handle:
+    with (data_dir() / "concelho_distrito.csv").open(
+        encoding="utf-8", newline=""
+    ) as handle:
         for row in csv.DictReader(handle):
             name = row["distrito"].strip()
             if name not in seen:
@@ -1238,11 +1240,7 @@ def _algema_card(product: str, years_n: int) -> str:
     chain = "".join(
         f"<span class='bead{' is-on' if i < years_n else ''}'></span>" for i in range(5)
     )
-    anos = (
-        f"{years_n} ano de algemas"
-        if years_n == 1
-        else f"{years_n} anos de algemas"
-    )
+    anos = f"{years_n} ano de algemas" if years_n == 1 else f"{years_n} anos de algemas"
     return (
         "<article class='algema reveal'>"
         f"<i class='{_ALGEMA_ICONS.get(product, 'ri-lock-2-fill')}' aria-hidden='true'></i>"
@@ -1307,8 +1305,7 @@ def _algema_cards_html(records: list[dict[str, Any]]) -> str:
         )
     if not rows_html:
         return (
-            "<p class='reveal'>Estes produtos não aparecem nos contratos "
-            "assinados.</p>"
+            "<p class='reveal'>Estes produtos não aparecem nos contratos assinados.</p>"
         )
     return f"<div class='algema-stack'>{''.join(rows_html)}</div>"
 
@@ -1400,7 +1397,9 @@ def render_leiria_html(
             "claros dependem menos."
         )
         map_title = "Contratos assinados em 2025, por concelho"
-        map_aria = f"Contratos assinados em 2025, por concelho do distrito de {area.button}"
+        map_aria = (
+            f"Contratos assinados em 2025, por concelho do distrito de {area.button}"
+        )
     else:
         map_lead = (
             "Se os Estados Unidos desligarem estes serviços, o mapa mostra "

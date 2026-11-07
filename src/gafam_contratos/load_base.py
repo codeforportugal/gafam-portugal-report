@@ -185,16 +185,12 @@ def _split_regions(
         parts = []
     if len(parts) <= 1:
         district, place = place_parts(local)
-        return [
-            (region_from_local(local, concelho_map), amount, district, place)
-        ]
+        return [(region_from_local(local, concelho_map), amount, district, place)]
     share = amount / len(parts)
     out: list[tuple[str, float, str, str]] = []
     for part in parts:
         district, place = place_parts(part)
-        out.append(
-            (region_from_local(part, concelho_map), share, district, place)
-        )
+        out.append((region_from_local(part, concelho_map), share, district, place))
     return out
 
 

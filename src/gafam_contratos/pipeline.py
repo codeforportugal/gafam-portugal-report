@@ -7,7 +7,6 @@ from dataclasses import replace
 from pathlib import Path
 
 from gafam_contratos.classify import (
-    fold,
     in_distrito,
     load_concelho_map,
     load_concelhos_by_distrito,
@@ -15,7 +14,7 @@ from gafam_contratos.classify import (
 )
 from gafam_contratos.constants import YEAR_LIST
 from gafam_contratos.http_cache import cached_get
-from gafam_contratos.lexicon import Keyword, load_lexicon
+from gafam_contratos.lexicon import Keyword, fold, load_lexicon
 from gafam_contratos.load_base import (
     DATASET_ANUNCIOS,
     DATASET_CONTRATOS,
